@@ -1,5 +1,6 @@
 package com.fang.controller;
 
+import com.fang.common.AjaxResult;
 import com.fang.pojo.SysUser;
 import com.fang.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,21 +21,21 @@ public class SysUserController {
     private SysUserService sysUserService;
 
     @GetMapping("/selAll")
-    public List<SysUser> BaseSelectAll(){
-        return sysUserService.list();
+    public AjaxResult BaseSelectAll(){
+        return AjaxResult.success(sysUserService.list());
     }
     @PutMapping("updateById")
-    public String updateById(SysUser sysUser){
-        return sysUserService.editById(sysUser)+"";
+    public AjaxResult updateById(SysUser sysUser){
+        return AjaxResult.success(sysUserService.editById(sysUser));
     }
     @DeleteMapping("deleteByIds")
-    public String deleteById(Integer[] ids){
-        return sysUserService.removeByIds(Arrays.asList(ids))+"";
+    public AjaxResult deleteById(Integer[] ids){
+        return AjaxResult.success(sysUserService.removeByIds(Arrays.asList(ids)));
     }
 
     @PostMapping("add")
-    public String insertUser(@Valid SysUser sysUser){
-        return sysUserService.save(sysUser)+"";
+    public AjaxResult insertUser(@Valid SysUser sysUser){
+        return AjaxResult.success(sysUserService.save(sysUser));
     }
 
 }
