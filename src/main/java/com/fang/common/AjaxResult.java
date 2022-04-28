@@ -39,7 +39,7 @@ public class AjaxResult extends HashMap<String,Object> {
     }
 //成功的：
     public static AjaxResult success(String msg,Object data){
-        return new AjaxResult(200,msg,data);
+        return new AjaxResult(HttpStatus.SUCCESS,msg,data);
     }
 
     public static AjaxResult success(String msg){
@@ -69,7 +69,7 @@ public class AjaxResult extends HashMap<String,Object> {
     }
 
     public static AjaxResult error(String msg,Object data){
-        return AjaxResult.error(500,msg, data);
+        return AjaxResult.error(HttpStatus.ERROR,msg, data);
     }
 
     @Override
