@@ -1,14 +1,19 @@
 package com.fang.controller;
 
 import com.fang.common.AjaxResult;
-import com.fang.pojo.SysUser;
-import com.fang.service.SysUserService;
+import com.fang.pojo.entity.SysUser;
+import com.fang.pojo.vo.SysUserVO;
+import com.fang.service.impl.UserTestService;
+import com.fang.service.manage.SysUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author FPH
@@ -16,26 +21,15 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/sysUser")
+@RequiredArgsConstructor
+@Api(tags = "用户管理")
 public class SysUserController {
-    @Autowired
-    private SysUserService sysUserService;
+    private final UserTestService userTestService;
 
     @GetMapping("/selAll")
-    public AjaxResult BaseSelectAll(){
-        return AjaxResult.success(sysUserService.list());
-    }
-    @PutMapping("updateById")
-    public AjaxResult updateById(SysUser sysUser){
-        return AjaxResult.success(sysUserService.editById(sysUser));
-    }
-    @DeleteMapping("deleteByIds")
-    public AjaxResult deleteById(Integer[] ids){
-        return AjaxResult.success(sysUserService.removeByIds(Arrays.asList(ids)));
-    }
-
-    @PostMapping("add")
-    public AjaxResult insertUser(@Valid SysUser sysUser){
-        return AjaxResult.success(sysUserService.save(sysUser));
+    @ApiOperation(value = "查询User表所有信息（无分页）",response = SysUserVO.class)
+    public AjaxResult baseSelectAll(){
+        return AjaxResult.success(userTestService.getList());
     }
 
 }

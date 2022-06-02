@@ -1,14 +1,14 @@
-package com.fang.configuration;
+package com.fang.config.mybatisPlus;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
  * @author FPH
+ * mybatisPlus新增修改拦截
  * @since 2022年4月27日04:17:56
  */
 @Component

@@ -27,17 +27,6 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 系统异常
-     * @param e
-     * @param request
-     * @return
-     */
-    @ExceptionHandler(Exception.class)
-    public AjaxResult handlerException(Exception e,HttpServletRequest request){
-        return AjaxResult.error( "系统异常",e.getMessage()+",请求路径为->"+request.getRequestURI());
-    }
-
-    /**
      * 自定义验证异常
      * @param e
      * @param request
@@ -48,5 +37,17 @@ public class GlobalExceptionHandler {
         String message=e.getAllErrors().get(0).getDefaultMessage();
         return AjaxResult.error("自定义验证异常",message+",请求路径为->"+request.getRequestURI());
     }
+
+    /**
+     * 系统异常
+     * @param e
+     * @param request
+     * @return
+     */
+    @ExceptionHandler(Exception.class)
+    public AjaxResult handlerException(Exception e,HttpServletRequest request){
+        return AjaxResult.error( "系统异常",e.getMessage()+",请求路径为->"+request.getRequestURI());
+    }
+
 
 }

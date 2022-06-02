@@ -1,7 +1,7 @@
 package com.fang.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.fang.pojo.SysUser;
+import com.fang.pojo.entity.SysUser;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

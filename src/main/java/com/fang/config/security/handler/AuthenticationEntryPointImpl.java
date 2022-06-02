@@ -1,4 +1,4 @@
-package com.fang.security.handler;
+package com.fang.config.security.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.fang.common.AjaxResult;
