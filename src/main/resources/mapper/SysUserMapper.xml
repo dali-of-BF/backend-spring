@@ -5,25 +5,24 @@
 <mapper namespace="com.fang.mapper.SysUserMapper">
     <resultMap id="resMap" type="com.fang.pojo.entity.SysUser">
         <result property="id" column="id"/>
-        <result property="name" column="name"/>
+        <result property="username" column="name"/>
         <result property="password" column="password"/>
         <result property="email" column="email"/>
-        <result property="state" column="state"/>
+        <result property="status" column="state"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="deleted" column="deleted"/>
-        <result property="version" column="version"/>
     </resultMap>
 
-    <sql id="sysUserList">
-        select id,name,password,email,state,create_time,update_time,deleted,version
-        from sys_user
-    </sql>
-    <select id="queryVersionById" resultType="int" parameterType="int">
-        select version from sys_user where deleted=0 and id in
-        <foreach collection="ids" item="id" open="(" close=")" separator=",">
-            ${id}
-        </foreach>
-    </select>
+<!--    <sql id="sysUserList">-->
+<!--        select id,name,password,email,state,create_time,update_time,deleted-->
+<!--        from sys_user-->
+<!--    </sql>-->
+<!--    <select id="queryVersionById" resultType="int" parameterType="int">-->
+<!--        select version from sys_user where deleted=0 and id in-->
+<!--        <foreach collection="ids" item="id" open="(" close=")" separator=",">-->
+<!--            ${id}-->
+<!--        </foreach>-->
+<!--    </select>-->
 
 </mapper>
