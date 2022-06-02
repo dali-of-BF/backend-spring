@@ -1,19 +1,14 @@
 package com.fang.controller;
 
 import com.fang.common.AjaxResult;
-import com.fang.pojo.entity.SysUser;
 import com.fang.pojo.vo.SysUserVO;
 import com.fang.service.impl.UserTestService;
-import com.fang.service.manage.SysUserService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.Arrays;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author FPH
@@ -28,7 +23,7 @@ public class SysUserController {
 
     @GetMapping("/selAll")
     @ApiOperation(value = "查询User表所有信息（无分页）",response = SysUserVO.class)
-    public AjaxResult baseSelectAll() throws Exception {
+    public AjaxResult baseSelectAll() {
         return AjaxResult.success(userTestService.getList());
     }
 

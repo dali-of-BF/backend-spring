@@ -7,7 +7,6 @@ import com.fang.utils.BeanUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +18,7 @@ import java.util.List;
 public class UserTestService {
     private final SysUserService userService;
 
-    public List<SysUserVO> getList()throws Exception{
+    public List<SysUserVO> getList(){
         List<SysUser> list = userService.list();
         List<SysUserVO> arrayLists = BeanUtil.copyListProperties(list, SysUserVO::new);
         return arrayLists;
