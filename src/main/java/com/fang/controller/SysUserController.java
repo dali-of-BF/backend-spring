@@ -28,7 +28,7 @@ public class SysUserController {
 
     @GetMapping("/selAll")
     @ApiOperation(value = "查询User表所有信息（无分页）",response = SysUserVO.class)
-    public AjaxResult baseSelectAll(){
+    public AjaxResult baseSelectAll() throws Exception {
         return AjaxResult.success(userTestService.getList());
     }
 

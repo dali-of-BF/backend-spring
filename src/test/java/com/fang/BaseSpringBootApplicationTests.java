@@ -1,12 +1,11 @@
 package com.fang;
 
-import com.fang.utils.BeanUtils;
+import com.fang.utils.BeanUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
 
 @SpringBootTest
 class BaseSpringBootApplicationTests {
@@ -25,7 +24,7 @@ class BaseSpringBootApplicationTests {
     @Test
     public void test(){
         String[] asd={"111","222","22233"};
-        System.out.println(BeanUtils.test(asd));
+        System.out.println(BeanUtil.test(asd));
     }
 
 }
