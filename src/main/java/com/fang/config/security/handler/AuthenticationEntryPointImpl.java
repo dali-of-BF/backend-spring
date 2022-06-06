@@ -21,10 +21,10 @@ import java.io.IOException;
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
 
     @Override
-    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse  response, AuthenticationException e) throws IOException {
+    public void commence(HttpServletRequest request, HttpServletResponse  response, AuthenticationException e) throws IOException {
 
         Integer code= HttpStatus.UNAUTHORIZED;
-        String msg="请求访问："+httpServletRequest.getRequestURI()+"，认证失败，无法访问系统资源";
+        String msg="请求访问："+request.getRequestURI()+"，认证失败，无法访问系统资源";
 
         // 允许跨域
         response.setHeader("Access-Control-Allow-Origin", "*");
