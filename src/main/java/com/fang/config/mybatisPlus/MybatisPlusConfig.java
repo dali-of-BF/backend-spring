@@ -1,4 +1,4 @@
-package com.fang.configuration;
+package com.fang.config.mybatisPlus;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
