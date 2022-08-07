@@ -1,10 +1,10 @@
-package com.fang.common;
+package com.fang.constants;
 
 /**
  * @author FPH
  * @since 2022年4月28日18:46:26
  */
-public class Constants {
+public class SecurityConstants {
     /**
      * 令牌前缀
      */

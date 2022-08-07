@@ -1,11 +1,8 @@
 package com.fang.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.fang.pojo.SysUser;
-import org.apache.ibatis.annotations.Param;
+import com.fang.entity.SysUser;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * @author FPH
@@ -13,10 +10,4 @@ import java.util.List;
  */
 @Repository
 public interface SysUserMapper extends BaseMapper<SysUser> {
-    /**
-     * 通过id集合查询版本
-     * @param ids
-     * @return
-     */
-    List<Integer> queryVersionById(@Param("ids") Integer[] ids);
 }

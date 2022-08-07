@@ -1,6 +1,6 @@
 package com.fang.common.service;
 
-import com.fang.common.Constants;
+import com.fang.constants.SecurityConstants;
 import com.fang.common.redis.RedisCache;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -52,15 +52,15 @@ public class TokenService {
     private String getToken(HttpServletRequest request){
         //获取header中的token
         String token = request.getHeader(this.header);
-        if(token!=""&&token.startsWith(Constants.TOKEN_PREFIX)){
+        if(token!=""&&token.startsWith(SecurityConstants.TOKEN_PREFIX)){
             //去除前缀
-            token=token.replace(Constants.TOKEN_PREFIX,"");
+            token=token.replace(SecurityConstants.TOKEN_PREFIX,"");
         }
         return token;
     }
 
     private String getTokenKey(String uuid){
-        return Constants.LOGIN_TOKEN_KEY+uuid;
+        return SecurityConstants.LOGIN_TOKEN_KEY+uuid;
     }
 
     /**

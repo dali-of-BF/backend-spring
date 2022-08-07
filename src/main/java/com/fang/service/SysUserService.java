@@ -1,19 +1,14 @@
 package com.fang.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.fang.pojo.SysUser;
-
-import java.util.List;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fang.entity.SysUser;
+import com.fang.mapper.SysUserMapper;
+import org.springframework.stereotype.Service;
 
 /**
  * @author FPH
- * @since 2022年4月27日04:06:07
+ * @since 2022年8月7日14:35:06
  */
-public interface SysUserService extends IService<SysUser> {
-    /**
-     * 通过id集合查询version集合
-     * @param sysUser
-     * @return
-     */
-    Integer editById(SysUser sysUser);
+@Service
+public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> {
 }
