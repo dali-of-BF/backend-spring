@@ -1,27 +1,42 @@
 package com.fang.controller;
 
-import com.fang.common.AjaxResult;
-import com.fang.constants.WebConstants;
-import com.fang.service.SysUserService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.fang.common.utils.ResultUtil;
+import com.fang.constants.ApiPathConstants;
+import com.fang.domain.dto.BasePageDTO;
+import com.fang.domain.dto.SysAccountDTO;
+import com.fang.domain.entity.sys.SysAccount;
+import com.fang.service.sys.SysAccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author FPH
  * @since 2022年8月7日14:40:04
  */
 @RestController
-@RequestMapping(WebConstants.SYS)
+@RequestMapping(ApiPathConstants.SYS_ACCOUNT)
 @RequiredArgsConstructor
-@Api(tags = "系统用户")
+@Api(tags = "系统用户管理")
 public class SysUserController {
-    private final SysUserService sysUserService;
+    private final SysAccountService sysAccountService;
 
-    @ApiOperation("获取所有用户信息")
-    public AjaxResult getUser(){
-        return AjaxResult.success(sysUserService.list());
+    @GetMapping("page")
+    @ApiOperation("分页")
+    public ResponseEntity<IPage<SysAccount>> getPage(@Valid BasePageDTO dto){
+        return ResultUtil.success(sysAccountService.getPage(dto.getPage(), dto.getRow()));
+    }
+
+    @GetMapping("save")
+    @ApiOperation("保存")
+    public ResponseEntity<IPage<SysAccount>> save( @Valid SysAccountDTO dto){
+        sysAccountService.saveEntity(dto);
+        return ResultUtil.success("保存成功");
     }
 }
