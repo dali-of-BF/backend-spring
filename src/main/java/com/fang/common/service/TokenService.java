@@ -1,7 +1,7 @@
 package com.fang.common.service;
 
-import com.fang.constants.SecurityConstants;
 import com.fang.common.redis.RedisCache;
+import com.fang.constants.SecurityConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

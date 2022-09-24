@@ -46,7 +46,6 @@ spring:
         login-username: admin
         login-password: admin123
         allow:
-
 server:
   port: 8080
   servlet:

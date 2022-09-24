@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author FPH
@@ -33,9 +32,9 @@ public class SysUserController {
         return ResultUtil.success(sysAccountService.getPage(dto.getPage(), dto.getRow()));
     }
 
-    @GetMapping("save")
+    @PostMapping("save")
     @ApiOperation("保存")
-    public ResponseEntity<IPage<SysAccount>> save( @Valid SysAccountDTO dto){
+    public ResponseEntity<IPage<SysAccount>> save(@RequestBody @Valid SysAccountDTO dto){
         sysAccountService.saveEntity(dto);
         return ResultUtil.success("保存成功");
     }
