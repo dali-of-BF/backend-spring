@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class BaseSpringBootApplicationTests {
 
     @Test
-    public void initTest(){
-        System.out.println();
+    void initTest(){
+        System.out.println(1 << 16);
     }
 }
