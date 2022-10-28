@@ -4,6 +4,7 @@ server:
 spring:
   redis:
     host: 47.107.47.184
+    # MTIzNDU2
     password: ENC(et31hW0zXucxdtnGQWBFw4vvxE8ekNOfxL9ABiIZ1kFtXNQ/gOqiT3TpjA9SE+x1)
     database: 5
   datasource:
@@ -12,6 +13,7 @@ spring:
     druid:
       url: jdbc:postgresql://47.107.47.184:5432/base_spring?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&yearIsDateType=false&stringtype=unspecified
       username: postgres
+      # MTIzNDU2
       password: ENC(et31hW0zXucxdtnGQWBFw4vvxE8ekNOfxL9ABiIZ1kFtXNQ/gOqiT3TpjA9SE+x1)
       # 连接池配置
       # 初始化大小，最小，最大
@@ -49,5 +51,13 @@ spring:
         url-pattern: /druid/*
         reset-enable: true
         login-username: fang
+        #YWRtaW4xMjM=
         login-password: ENC(jRfyAn53MGCVZbU6vfn7iRqcnnp66QGXscsQfN2kZD/3Yco/U3rhkPKk3Zd8F90g)
         allow:
+
+logging:
+  file:
+    name: fang.log
+    path: ./log
+  level:
+    root: error

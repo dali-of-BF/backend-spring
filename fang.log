@@ -1,0 +1,111 @@
+2022-10-28 14:22:25.193  INFO 83928 --- [main] com.fang.BaseSpringBootApplication       : Starting BaseSpringBootApplication using Java 1.8.0_202 on LR0CQ5TC with PID 83928 (F:\base-spring-boot\target\classes started by Lenovo in F:\base-spring-boot)
+2022-10-28 14:22:25.196  INFO 83928 --- [main] com.fang.BaseSpringBootApplication       : The following profiles are active: dev
+2022-10-28 14:22:26.008  INFO 83928 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-10-28 14:22:26.008  INFO 83928 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-10-28 14:22:26.021  INFO 83928 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 JDBC repository interfaces.
+2022-10-28 14:22:26.033  INFO 83928 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-10-28 14:22:26.034  INFO 83928 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-10-28 14:22:26.044  INFO 83928 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2022-10-28 14:22:26.328  INFO 83928 --- [main] ptablePropertiesBeanFactoryPostProcessor : Post-processing PropertySource instances
+2022-10-28 14:22:26.329  INFO 83928 --- [main] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+2022-10-28 14:22:26.330  INFO 83928 --- [main] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2022-10-28 14:22:26.330  INFO 83928 --- [main] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2022-10-28 14:22:26.331  INFO 83928 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2022-10-28 14:22:26.332  INFO 83928 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2022-10-28 14:22:26.332  INFO 83928 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2022-10-28 14:22:26.333  INFO 83928 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [config/application-dev.yml]' via location 'optional:classpath:/config/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2022-10-28 14:22:26.333  INFO 83928 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [config/application.yml]' via location 'optional:classpath:/config/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2022-10-28 14:22:26.457  INFO 83928 --- [main] c.u.j.filter.DefaultLazyPropertyFilter   : Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2022-10-28 14:22:26.466  INFO 83928 --- [main] c.u.j.r.DefaultLazyPropertyResolver      : Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2022-10-28 14:22:26.468  INFO 83928 --- [main] c.u.j.d.DefaultLazyPropertyDetector      : Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2022-10-28 14:22:26.665  INFO 83928 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2022-10-28 14:22:26.673  INFO 83928 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-28 14:22:26.674  INFO 83928 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-10-28 14:22:26.744  INFO 83928 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/fang]   : Initializing Spring embedded WebApplicationContext
+2022-10-28 14:22:26.744  INFO 83928 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1506 ms
+2022-10-28 14:22:26.749  INFO 83928 --- [main] c.u.j.encryptor.DefaultLazyEncryptor     : String Encryptor custom Bean not found with name 'jasyptStringEncryptor'. Initializing Default String Encryptor
+2022-10-28 14:22:26.758  INFO 83928 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.algorithm, using default value: PBEWITHHMACSHA512ANDAES_256
+2022-10-28 14:22:26.758  INFO 83928 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.key-obtention-iterations, using default value: 1000
+2022-10-28 14:22:26.758  INFO 83928 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.pool-size, using default value: 1
+2022-10-28 14:22:26.758  INFO 83928 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.provider-name, using default value: null
+2022-10-28 14:22:26.758  INFO 83928 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.provider-class-name, using default value: null
+2022-10-28 14:22:26.758  INFO 83928 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.salt-generator-classname, using default value: org.jasypt.salt.RandomSaltGenerator
+2022-10-28 14:22:26.759  INFO 83928 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.iv-generator-classname, using default value: org.jasypt.iv.RandomIvGenerator
+2022-10-28 14:22:26.761  INFO 83928 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.string-output-type, using default value: base64
+2022-10-28 14:22:27.448  INFO 83928 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2022-10-28 14:22:28.028  INFO 83928 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2022-10-28 14:22:28.859  INFO 83928 --- [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: cbb3092b-2aa8-48e1-9a28-2e67b0305db4
+
+2022-10-28 14:22:28.931  INFO 83928 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@79135a38, org.springframework.security.web.context.SecurityContextPersistenceFilter@7b7e4b20, org.springframework.security.web.header.HeaderWriterFilter@2cdcfaa6, org.springframework.security.web.authentication.logout.LogoutFilter@19c1f6f4, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6fefc5ea, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@519b0f00, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@77fceac6, org.springframework.security.web.session.SessionManagementFilter@3580134d, org.springframework.security.web.access.ExceptionTranslationFilter@785ef70f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@572b4072]
+2022-10-28 14:22:29.337  INFO 83928 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path '/fang'
+2022-10-28 14:22:29.338  INFO 83928 --- [main] u.j.c.RefreshScopeRefreshedEventListener : Refreshing cached encryptable property sources on ServletWebServerInitializedEvent
+2022-10-28 14:22:29.339  INFO 83928 --- [main] CachingDelegateEncryptablePropertySource : Property Source systemProperties refreshed
+2022-10-28 14:22:29.339  INFO 83928 --- [main] CachingDelegateEncryptablePropertySource : Property Source systemEnvironment refreshed
+2022-10-28 14:22:29.339  INFO 83928 --- [main] CachingDelegateEncryptablePropertySource : Property Source random refreshed
+2022-10-28 14:22:29.339  INFO 83928 --- [main] CachingDelegateEncryptablePropertySource : Property Source Config resource 'class path resource [config/application-dev.yml]' via location 'optional:classpath:/config/' refreshed
+2022-10-28 14:22:29.339  INFO 83928 --- [main] CachingDelegateEncryptablePropertySource : Property Source Config resource 'class path resource [config/application.yml]' via location 'optional:classpath:/config/' refreshed
+2022-10-28 14:22:29.339  INFO 83928 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource server.ports [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2022-10-28 14:22:29.339  INFO 83928 --- [main] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+2022-10-28 14:22:29.339  INFO 83928 --- [main] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2022-10-28 14:22:29.340  INFO 83928 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletContextInitParams [org.springframework.web.context.support.ServletContextPropertySource] to EncryptableEnumerablePropertySourceWrapper
+2022-10-28 14:22:29.703  INFO 83928 --- [main] com.fang.BaseSpringBootApplication       : Started BaseSpringBootApplication in 5.119 seconds (JVM running for 6.028)
+2022-10-28 14:22:45.493  INFO 83928 --- [http-nio-8081-exec-4] o.a.c.c.C.[Tomcat].[localhost].[/fang]   : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-28 14:22:45.493  INFO 83928 --- [http-nio-8081-exec-4] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-28 14:22:45.494  INFO 83928 --- [http-nio-8081-exec-4] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-10-28 14:23:44.102  INFO 83928 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2022-10-28 14:23:44.104  INFO 83928 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2022-10-28 14:23:47.326  INFO 86288 --- [main] com.fang.BaseSpringBootApplication       : Starting BaseSpringBootApplication using Java 1.8.0_202 on LR0CQ5TC with PID 86288 (F:\base-spring-boot\target\classes started by Lenovo in F:\base-spring-boot)
+2022-10-28 14:23:47.330  INFO 86288 --- [main] com.fang.BaseSpringBootApplication       : The following profiles are active: dev
+2022-10-28 14:23:48.244  INFO 86288 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-10-28 14:23:48.245  INFO 86288 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-10-28 14:23:48.259  INFO 86288 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 0 JDBC repository interfaces.
+2022-10-28 14:23:48.271  INFO 86288 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-10-28 14:23:48.272  INFO 86288 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-10-28 14:23:48.284  INFO 86288 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2022-10-28 14:23:48.567  INFO 86288 --- [main] ptablePropertiesBeanFactoryPostProcessor : Post-processing PropertySource instances
+2022-10-28 14:23:48.568  INFO 86288 --- [main] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+2022-10-28 14:23:48.569  INFO 86288 --- [main] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2022-10-28 14:23:48.569  INFO 86288 --- [main] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2022-10-28 14:23:48.570  INFO 86288 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2022-10-28 14:23:48.571  INFO 86288 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2022-10-28 14:23:48.571  INFO 86288 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2022-10-28 14:23:48.571  INFO 86288 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [config/application-dev.yml]' via location 'optional:classpath:/config/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2022-10-28 14:23:48.571  INFO 86288 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [config/application.yml]' via location 'optional:classpath:/config/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2022-10-28 14:23:48.705  INFO 86288 --- [main] c.u.j.filter.DefaultLazyPropertyFilter   : Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2022-10-28 14:23:48.715  INFO 86288 --- [main] c.u.j.r.DefaultLazyPropertyResolver      : Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2022-10-28 14:23:48.717  INFO 86288 --- [main] c.u.j.d.DefaultLazyPropertyDetector      : Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2022-10-28 14:23:48.931  INFO 86288 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2022-10-28 14:23:48.938  INFO 86288 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-28 14:23:48.939  INFO 86288 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-10-28 14:23:49.006  INFO 86288 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/fang]   : Initializing Spring embedded WebApplicationContext
+2022-10-28 14:23:49.006  INFO 86288 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1621 ms
+2022-10-28 14:23:49.011  INFO 86288 --- [main] c.u.j.encryptor.DefaultLazyEncryptor     : String Encryptor custom Bean not found with name 'jasyptStringEncryptor'. Initializing Default String Encryptor
+2022-10-28 14:23:49.021  INFO 86288 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.algorithm, using default value: PBEWITHHMACSHA512ANDAES_256
+2022-10-28 14:23:49.021  INFO 86288 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.key-obtention-iterations, using default value: 1000
+2022-10-28 14:23:49.022  INFO 86288 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.pool-size, using default value: 1
+2022-10-28 14:23:49.022  INFO 86288 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.provider-name, using default value: null
+2022-10-28 14:23:49.022  INFO 86288 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.provider-class-name, using default value: null
+2022-10-28 14:23:49.022  INFO 86288 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.salt-generator-classname, using default value: org.jasypt.salt.RandomSaltGenerator
+2022-10-28 14:23:49.023  INFO 86288 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.iv-generator-classname, using default value: org.jasypt.iv.RandomIvGenerator
+2022-10-28 14:23:49.024  INFO 86288 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.string-output-type, using default value: base64
+2022-10-28 14:23:49.729  INFO 86288 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2022-10-28 14:23:50.149  INFO 86288 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2022-10-28 14:23:50.998  INFO 86288 --- [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: e6a74b48-72a5-4bb6-8a4c-ba9b35ff5aec
+
+2022-10-28 14:23:51.065  INFO 86288 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@c6244e7, org.springframework.security.web.context.SecurityContextPersistenceFilter@4aba7617, org.springframework.security.web.header.HeaderWriterFilter@5d8fd077, org.springframework.security.web.authentication.logout.LogoutFilter@718ad3a6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1031c1a0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@73958426, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@25dad235, org.springframework.security.web.session.SessionManagementFilter@86bf90b, org.springframework.security.web.access.ExceptionTranslationFilter@611587f7, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@77fceac6]
+2022-10-28 14:23:51.471  INFO 86288 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path '/fang'
+2022-10-28 14:23:51.471  INFO 86288 --- [main] u.j.c.RefreshScopeRefreshedEventListener : Refreshing cached encryptable property sources on ServletWebServerInitializedEvent
+2022-10-28 14:23:51.472  INFO 86288 --- [main] CachingDelegateEncryptablePropertySource : Property Source systemProperties refreshed
+2022-10-28 14:23:51.472  INFO 86288 --- [main] CachingDelegateEncryptablePropertySource : Property Source systemEnvironment refreshed
+2022-10-28 14:23:51.472  INFO 86288 --- [main] CachingDelegateEncryptablePropertySource : Property Source random refreshed
+2022-10-28 14:23:51.472  INFO 86288 --- [main] CachingDelegateEncryptablePropertySource : Property Source Config resource 'class path resource [config/application-dev.yml]' via location 'optional:classpath:/config/' refreshed
+2022-10-28 14:23:51.472  INFO 86288 --- [main] CachingDelegateEncryptablePropertySource : Property Source Config resource 'class path resource [config/application.yml]' via location 'optional:classpath:/config/' refreshed
+2022-10-28 14:23:51.472  INFO 86288 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource server.ports [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2022-10-28 14:23:51.473  INFO 86288 --- [main] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+2022-10-28 14:23:51.473  INFO 86288 --- [main] c.u.j.EncryptablePropertySourceConverter : Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+2022-10-28 14:23:51.473  INFO 86288 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletContextInitParams [org.springframework.web.context.support.ServletContextPropertySource] to EncryptableEnumerablePropertySourceWrapper
+2022-10-28 14:23:51.669  INFO 86288 --- [main] com.fang.BaseSpringBootApplication       : Started BaseSpringBootApplication in 4.87 seconds (JVM running for 5.763)

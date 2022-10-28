@@ -1,43 +1,55 @@
 /*
-SQLyog Community v13.1.6 (64 bit)
-MySQL - 8.0.27 : Database - fang_dev
-*********************************************************************
+ Navicat Premium Data Transfer
+
+ Source Server         : 47.107.47.184_5432
+ Source Server Type    : PostgreSQL
+ Source Server Version : 140001 (140001)
+ Source Host           : 47.107.47.184:5432
+ Source Catalog        : base_spring
+ Source Schema         : public
+
+ Target Server Type    : PostgreSQL
+ Target Server Version : 140001 (140001)
+ File Encoding         : 65001
+
+ Date: 28/10/2022 14:29:04
 */
 
-/*!40101 SET NAMES utf8 */;
 
-/*!40101 SET SQL_MODE=''*/;
+-- ----------------------------
+-- Table structure for sys_account
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."sys_account";
+CREATE TABLE "public"."sys_account" (
+                                        "id" varchar(36) COLLATE "pg_catalog"."default" NOT NULL,
+                                        "username" varchar(50) COLLATE "pg_catalog"."default",
+                                        "phone" varchar(11) COLLATE "pg_catalog"."default" NOT NULL,
+                                        "password" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
+                                        "deleted" bool NOT NULL DEFAULT false,
+                                        "created_by" varchar(50) COLLATE "pg_catalog"."default",
+                                        "created_date" timestamp(6),
+                                        "last_modified_by" varchar(50) COLLATE "pg_catalog"."default",
+                                        "last_modified_date" timestamp(6),
+                                        "gender" varchar(2) COLLATE "pg_catalog"."default",
+                                        "status" bool NOT NULL DEFAULT true,
+                                        "id_card" varchar(18) COLLATE "pg_catalog"."default"
+)
+;
+COMMENT ON COLUMN "public"."sys_account"."id" IS 'id';
+COMMENT ON COLUMN "public"."sys_account"."username" IS '用户名';
+COMMENT ON COLUMN "public"."sys_account"."phone" IS '手机号';
+COMMENT ON COLUMN "public"."sys_account"."password" IS '密码';
+COMMENT ON COLUMN "public"."sys_account"."deleted" IS '删除位';
+COMMENT ON COLUMN "public"."sys_account"."created_by" IS '创建人';
+COMMENT ON COLUMN "public"."sys_account"."created_date" IS '创建时间';
+COMMENT ON COLUMN "public"."sys_account"."last_modified_by" IS '最后修改人';
+COMMENT ON COLUMN "public"."sys_account"."last_modified_date" IS '最后修改时间';
+COMMENT ON COLUMN "public"."sys_account"."gender" IS '0:男 1：女';
+COMMENT ON COLUMN "public"."sys_account"."status" IS '账号状态：true 启用  false 停用';
+COMMENT ON COLUMN "public"."sys_account"."id_card" IS '身份证';
+COMMENT ON TABLE "public"."sys_account" IS '账号信息';
 
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`fang_dev` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
-
-USE `fang_dev`;
-
-/*Table structure for table `sys_user` */
-
-DROP TABLE IF EXISTS `sys_user`;
-
-CREATE TABLE `sys_user` (
-  `id` varchar(36) NOT NULL,
-  `username` varchar(50) NOT NULL COMMENT '账号',
-  `password` varchar(500) NOT NULL COMMENT '密码',
-  `phone` varchar(11) NOT NULL COMMENT '电话',
-  `nickname` varchar(50) DEFAULT NULL COMMENT '昵称',
-  `address` varchar(500) DEFAULT NULL COMMENT '地址',
-  `deleted` smallint DEFAULT '0' COMMENT '删除标志',
-  `create_by` varchar(50) NOT NULL,
-  `create_date` date NOT NULL,
-  `update_by` varchar(50) DEFAULT NULL,
-  `update_date` date DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
-/*Data for the table `sys_user` */
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+-- ----------------------------
+-- Primary Key structure for table sys_account
+-- ----------------------------
+ALTER TABLE "public"."sys_account" ADD CONSTRAINT "sys_account_copy1_pkey" PRIMARY KEY ("id");
