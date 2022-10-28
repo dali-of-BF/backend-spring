@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: BaseSpringBoot
+  profiles:
+    active: dev
+server:
+  servlet:
+    context-path: /fang
+
+mybatis-plus:
+  global-config:
+    db-config:
+      #      逻辑删除，删除标志
+      logic-delete-value: true
+      #      逻辑删除，未删除标志
+      logic-not-delete-value: false
+  type-aliases-package: com.fang.entity
+  configuration:
+    #    mybatis-plus日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# token配置
+token:
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌密钥
+  secret: abcdefghijklmnopqrstuvwxyz
+  # 令牌有效期（默认30分钟）
+  expireTime: 30
+
+jasypt:
+  encryptor:
+    password: vwqetgsrthwr6tuysrgjnsrtyhsejn

@@ -72,6 +72,17 @@
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <version>2.0.4</version>
         </dependency>
+        <!-- 处理swagger 报错：illegal defaultValue null for param type integer异常，  -->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.22</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>1.5.22</version>
+        </dependency>
 
         <!-- Mysql驱动包 -->
 <!--        <dependency>-->
@@ -98,7 +109,7 @@
             <version>3.4.3.4</version>
         </dependency>
 
-<!--        自定义数据校验-->
+        <!-- 自定义数据校验-->
         <!-- 自定义验证注解 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -112,14 +123,14 @@
             <version>0.9.1</version>
         </dependency>
 
-<!--        fastJson-->
+        <!-- fastJson-->
 
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.80</version>
         </dependency>
-<!--        apacheUtils-->
+        <!-- apacheUtils-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -134,7 +145,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-<!--        数据库加密-->
+        <!-- 数据库加密-->
         <dependency>
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
