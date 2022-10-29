@@ -1,11 +1,11 @@
 server:
   port: 8081
-
+#vwqetgsrthwr6tuysrgjnsrtyhsejn
 spring:
   redis:
     host: 47.107.47.184
     # MTIzNDU2
-    password: ENC(et31hW0zXucxdtnGQWBFw4vvxE8ekNOfxL9ABiIZ1kFtXNQ/gOqiT3TpjA9SE+x1)
+    password: ENC(xR2ZOKCn6ilg8y1HtCeL2KKVNxe11+gHVFmDMqrNiTtOK42k4SQ9nmFYQvAodkIS)
     database: 5
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -13,8 +13,8 @@ spring:
     druid:
       url: jdbc:postgresql://47.107.47.184:5432/base_spring?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&yearIsDateType=false&stringtype=unspecified
       username: postgres
-      # MTIzNDU2
-      password: ENC(et31hW0zXucxdtnGQWBFw4vvxE8ekNOfxL9ABiIZ1kFtXNQ/gOqiT3TpjA9SE+x1)
+      # 44A8B4F7C0723A4C2A12858C7DD0FEE0
+      password: ENC(2e/d4bVCClGHKue4/gn+RAVNOSgsakYfHzBteMJN6w/Fdw/89PpZcK/dAFqFwSYV7ux56W3XU0yJhNAEo77WHg==)
       # 连接池配置
       # 初始化大小，最小，最大
       initialSize: 1
@@ -52,7 +52,7 @@ spring:
         reset-enable: true
         login-username: fang
         #YWRtaW4xMjM=
-        login-password: ENC(jRfyAn53MGCVZbU6vfn7iRqcnnp66QGXscsQfN2kZD/3Yco/U3rhkPKk3Zd8F90g)
+        login-password: ENC(bfjILfCxGFVDa+zyvyO0fZ2SLv2H8VzE1XAf0rb6m7J/71ZXrjlahVoTm5FD2Zvh)
         allow:
 
 logging:

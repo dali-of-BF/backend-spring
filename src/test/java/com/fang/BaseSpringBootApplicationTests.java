@@ -16,6 +16,6 @@ class BaseSpringBootApplicationTests {
      */
     @Test
     void encrypt(){
-        System.out.println(stringEncryptor.encrypt(""));
+        System.out.println(stringEncryptor.decrypt("bfjILfCxGFVDa+zyvyO0fZ2SLv2H8VzE1XAf0rb6m7J/71ZXrjlahVoTm5FD2Zvh"));
     }
 }
