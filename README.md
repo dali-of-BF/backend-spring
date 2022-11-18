@@ -1,7 +1,7 @@
 # BaseSpringBoot
 
 #### 介绍
-springboot整合springsecurity的demo
+springboot整合一些工具的demo
 
 #### 软件架构
 1、SpringBoot
@@ -14,19 +14,21 @@ springboot整合springsecurity的demo
 
 5、Postgresql
 
-6、Jasypt 配置文件密码加密
+6、Jasypt (配置文件密码加密)
 
 7、Redis+jjwt
 
 8、Swagger2+knife4j
 
-9、validation 数据校验
+9、validation (数据校验)
 
 10、lombok
 
 11、apache 工具包
 
 12、fastjson
+
+13、userAgentUtils(浏览器解析工具)
 
 
 
@@ -61,5 +63,5 @@ springboot整合springsecurity的demo
 6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
 
 #### 主要提交日志
-
+vwqetgsrthwr6tuysrgjnsrtyhsejn
 整合一系列框架，数据库密码加密，测试redis、postgresql是否正常连通、解决swagger2报错
