@@ -35,14 +35,14 @@ public class SysAccount extends BaseEntity implements Serializable {
     private String password;
 
     /**
-     * 性别
+     * 性别 1男0女
      */
-    private String gender;
+    private Integer gender;
 
     /**
-     * 状态
+     * 状态 0关1开
      */
-    private Boolean status;
+    private String status;
 
     /**
      * 身份证号码

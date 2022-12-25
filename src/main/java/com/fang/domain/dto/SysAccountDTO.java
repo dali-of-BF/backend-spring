@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author FPH
@@ -34,12 +35,9 @@ public class SysAccountDTO {
     @Length(max = 100,message = "密码长度不可超出100位")
     private String password;
 
-    @ApiModelProperty("性别")
-    @NotBlank(message = "性别不可为空")
-    private String gender;
-
-    @ApiModelProperty("状态")
-    private Boolean status;
+    @ApiModelProperty("性别 男1女0")
+    @NotNull(message = "性别不可为空")
+    private Integer gender;
 
     @ApiModelProperty("身份证号码")
     private String idCard;
