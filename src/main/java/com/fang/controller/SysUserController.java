@@ -38,4 +38,10 @@ public class SysUserController {
         sysAccountService.saveEntity(dto);
         return ResultUtil.success("保存成功");
     }
+
+    @PostMapping("login")
+    @ApiOperation("登录")
+    public ResponseEntity<SysAccount> login(String username,String password){
+        return ResultUtil.success(sysAccountService.login(username,password));
+    }
 }
