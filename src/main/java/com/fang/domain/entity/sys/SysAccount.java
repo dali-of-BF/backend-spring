@@ -16,7 +16,6 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @TableName("sys_account")
 public class SysAccount extends BaseEntity implements Serializable {
     /**

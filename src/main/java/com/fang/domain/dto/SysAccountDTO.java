@@ -1,6 +1,5 @@
 package com.fang.domain.dto;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +15,6 @@ import javax.validation.constraints.NotBlank;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("保存用户实体类")
 public class SysAccountDTO {
 
     @ApiModelProperty("用户名")

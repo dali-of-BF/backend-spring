@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * 分页
@@ -16,7 +17,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BasePageDTO {
+public class BasePageDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull(message = "当前页不能为空")

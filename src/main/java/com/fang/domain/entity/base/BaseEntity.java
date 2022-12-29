@@ -1,16 +1,22 @@
 package com.fang.domain.entity.base;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.Instant;
 
+/**
+ * @author FPH
+ * @since 2022年12月29日10:27:27
+ */
 @Data
-public class BaseEntity {
+@AllArgsConstructor
+@NoArgsConstructor
+public class BaseEntity implements Serializable {
     /**
      * 主键
      */
@@ -47,5 +53,6 @@ public class BaseEntity {
      * 删除标志位
      */
     @TableField(value = "deleted")
+    @TableLogic
     private Boolean deleted;
 }
