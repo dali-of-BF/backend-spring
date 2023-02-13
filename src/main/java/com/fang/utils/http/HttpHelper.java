@@ -1,15 +1,11 @@
 package com.fang.utils.http;
 
 import cn.hutool.core.io.IoUtil;
-import cn.hutool.extra.spring.SpringUtil;
 import com.fang.constants.Constant;
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;

@@ -1,7 +1,7 @@
 package com.fang.utils.http;
 
-import com.onesports.open.k12.common.core.constants.HeaderConstant;
-import com.onesports.open.k12.common.core.utils.servlet.CurrentReqResp;
+
+import com.fang.constants.HeaderConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpRequest;
@@ -23,6 +23,7 @@ import javax.net.ssl.X509TrustManager;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.UUID;
 
 /**
  * http连接管理
@@ -88,7 +89,7 @@ public final class HttpConnectionManager {
         return HttpClients.custom().setConnectionManager(clientConnectionManager)
                 .addInterceptorLast((HttpRequestInterceptor) (httpRequest, httpContext) -> {
             //  将traceId加上（目前先随机uuid）
-            headerAdd(httpRequest, HeaderConstant.TRACE_KEY, CurrentReqResp.getTraceId());
+            headerAdd(httpRequest, HeaderConstant.TRACE_KEY, UUID.randomUUID().toString());
         }).build();
     }
 
