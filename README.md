@@ -14,7 +14,7 @@ springboot整合一些工具的demo
 
 5、Postgresql
 
-6、Jasypt (配置文件密码加密)
+~~6、Jasypt (配置文件密码加密)已弃用~~
 
 7、Redis+jjwt
 

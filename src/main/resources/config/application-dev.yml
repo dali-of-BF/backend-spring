@@ -5,7 +5,7 @@ spring:
   redis:
     host: 47.107.47.184
     # MTIzNDU2
-    password: ENC(xR2ZOKCn6ilg8y1HtCeL2KKVNxe11+gHVFmDMqrNiTtOK42k4SQ9nmFYQvAodkIS)
+    password: 123456
     database: 5
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -14,7 +14,7 @@ spring:
       url: jdbc:postgresql://47.107.47.184:5432/base_spring?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&yearIsDateType=false&stringtype=unspecified
       username: postgres
       # 44A8B4F7C0723A4C2A12858C7DD0FEE0
-      password: ENC(2e/d4bVCClGHKue4/gn+RAVNOSgsakYfHzBteMJN6w/Fdw/89PpZcK/dAFqFwSYV7ux56W3XU0yJhNAEo77WHg==)
+      password: fvwqefqgrhgbwefqwvcqwe
       # 连接池配置
       # 初始化大小，最小，最大
       initialSize: 1
@@ -52,7 +52,7 @@ spring:
         reset-enable: true
         login-username: fang
         #YWRtaW4xMjM=
-        login-password: ENC(bfjILfCxGFVDa+zyvyO0fZ2SLv2H8VzE1XAf0rb6m7J/71ZXrjlahVoTm5FD2Zvh)
+        login-password: admin123
         allow:
 
 logging:
