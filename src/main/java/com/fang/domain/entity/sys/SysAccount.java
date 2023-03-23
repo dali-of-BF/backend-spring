@@ -3,7 +3,6 @@ package com.fang.domain.entity.sys;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fang.domain.entity.base.BaseEntity;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @TableName("sys_account")
 public class SysAccount extends BaseEntity implements Serializable {
+
     /**
      * 用户名
      */
@@ -41,7 +41,7 @@ public class SysAccount extends BaseEntity implements Serializable {
     /**
      * 状态
      */
-    private Boolean status;
+    private Integer status;
 
     /**
      * 身份证号码

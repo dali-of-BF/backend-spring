@@ -37,7 +37,7 @@ public class SysAccountDTO {
     private String gender;
 
     @ApiModelProperty("状态")
-    private Boolean status;
+    private Integer status;
 
     @ApiModelProperty("身份证号码")
     private String idCard;

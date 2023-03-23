@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.Date;
 
 /**
  * @author FPH
@@ -34,7 +34,7 @@ public class BaseEntity implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @TableField(value = "created_date", fill = FieldFill.INSERT)
-    private Instant createdDate;
+    private Date createdDate;
 
     /**
      * 更新者
@@ -47,12 +47,12 @@ public class BaseEntity implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @TableField(value = "last_modified_date", fill = FieldFill.INSERT_UPDATE)
-    private Instant lastModifiedDate;
+    private Date lastModifiedDate;
 
     /**
      * 删除标志位
      */
     @TableField(value = "deleted")
     @TableLogic
-    private Boolean deleted;
+    private Integer deleted;
 }
