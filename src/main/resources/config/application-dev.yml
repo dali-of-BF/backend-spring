@@ -9,12 +9,12 @@ spring:
     database: 5
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: org.postgresql.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
-      url: jdbc:postgresql://47.107.47.184:5432/base_spring?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&yearIsDateType=false&stringtype=unspecified
-      username: postgres
+      url: jdbc:mysql://47.107.47.184:3306/base_spring?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&yearIsDateType=false&stringtype=unspecified
+      username: root
       # 44A8B4F7C0723A4C2A12858C7DD0FEE0
-      password: fvwqefqgrhgbwefqwvcqwe
+      password: abc123
       # 连接池配置
       # 初始化大小，最小，最大
       initialSize: 1
