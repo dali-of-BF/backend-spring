@@ -35,9 +35,10 @@ public class GlobalExceptionHandler {
     /**
      * 拦截业务exception返回消息
      */
-    @ExceptionHandler(value = BusinessException.class)
-    public Result<Object> handleBusinessExceptionHandler(BusinessException e) {
-        return Result.error(e.getErrData(),e.getMessage());
+    @ExceptionHandler(BusinessException.class)
+    public Result<Object> handlerBindException(HttpServletRequest request, BusinessException e) {
+        log.error("API 地址：[{}]，业务处理异常！错误原因：[{}]", request.getRequestURL(), e.getMessage(), e);
+        return Result.error(e.getStackCode(), e.getStackMsg());
     }
 
     /**
