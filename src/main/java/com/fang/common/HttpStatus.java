@@ -5,6 +5,8 @@ package com.fang.common;
  * @since 2022年4月28日12:59:26
  */
 public class HttpStatus {
+
+    public static final int FAIL = 0;
     /**
      * 操作成功
      */

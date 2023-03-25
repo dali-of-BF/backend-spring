@@ -1,7 +1,7 @@
 package com.fang.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.fang.common.utils.ResultUtil;
+import com.fang.common.result.Result;
 import com.fang.constants.ApiPathConstants;
 import com.fang.domain.dto.BasePageDTO;
 import com.fang.domain.dto.SysAccountDTO;
@@ -10,7 +10,6 @@ import com.fang.service.sys.SysAccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,14 +27,21 @@ public class SysUserController {
 
     @GetMapping("page")
     @ApiOperation("分页")
-    public ResponseEntity<IPage<SysAccount>> getPage(@Valid BasePageDTO dto){
-        return ResultUtil.success(sysAccountService.getPage(dto.getPage(), dto.getRow()));
+    public Result<IPage<SysAccount>> getPage(@Valid BasePageDTO dto){
+        return Result.success(sysAccountService.getPage(dto.getPage(), dto.getRow()));
     }
 
     @PostMapping("save")
     @ApiOperation("保存")
-    public ResponseEntity<IPage<SysAccount>> save(@RequestBody @Valid SysAccountDTO dto){
+    public Result<String> save(@RequestBody @Valid SysAccountDTO dto){
         sysAccountService.saveEntity(dto);
-        return ResultUtil.success("保存成功");
+        return Result.success("保存成功");
+    }
+
+    @DeleteMapping("delete")
+    @ApiOperation("删除")
+    public Result<String> delete(){
+        sysAccountService.remove(null);
+        return Result.success("保存成功");
     }
 }

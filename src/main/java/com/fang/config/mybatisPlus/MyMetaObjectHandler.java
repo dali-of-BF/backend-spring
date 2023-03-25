@@ -17,6 +17,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         this.setFieldValByName("createdDate",new Date(),metaObject);
+        // TODO: 2023/3/25 配好springSecurity后将会对此进行替换
         this.setFieldValByName("createdBy","System",metaObject);
     }
 

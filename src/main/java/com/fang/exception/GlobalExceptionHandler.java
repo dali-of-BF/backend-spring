@@ -1,8 +1,9 @@
 package com.fang.exception;
 
-import com.fang.common.utils.ResultUtil;
+import com.fang.common.HttpStatus;
+import com.fang.common.result.Result;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,23 +28,23 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity handlerHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e,HttpServletRequest request){
-        return ResultUtil.error("请求方式异常",e.getMessage()+",请求路径为->"+request.getRequestURI());
+    public Result<Object> handlerHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e,HttpServletRequest request){
+        return Result.error(e.getMessage(),"请求路径为->"+request.getRequestURI(),"请求方式异常");
     }
 
     /**
      * 拦截业务exception返回消息
      */
     @ExceptionHandler(value = BusinessException.class)
-    public ResponseEntity handleBusinessExceptionHandler(BusinessException e) {
-        return ResultUtil.error(e.getMessage(), e.getErrData());
+    public Result<Object> handleBusinessExceptionHandler(BusinessException e) {
+        return Result.error(e.getErrData(),e.getMessage());
     }
 
     /**
      * 拦截DTO校验错误，同时返回详细字段消息
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public ResponseEntity handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
+    public Result<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         log.warn("请求参数校验", ex);
         BindingResult result = ex.getBindingResult();
         List<String> fieldErrors = result.getFieldErrors().stream()
@@ -51,7 +52,17 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.toList()).stream().map(FieldErrorVO::getMessage).collect(Collectors.toList());
 
         String fieldMsg = String.join(",", fieldErrors);
-        return ResultUtil.error(fieldMsg);
+        return Result.error(fieldMsg);
+    }
+
+    /**
+     * 拦截MybatisPlus异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = MyBatisSystemException.class)
+    public Result<String> handleMyBatisSystemException(MyBatisSystemException e){
+        return Result.error(e.getMessage());
     }
 
     /**
@@ -61,7 +72,7 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity handlerException(Exception e,HttpServletRequest request){
-        return ResultUtil.error( "系统异常",e.getMessage()+",请求路径为->"+request.getRequestURI());
+    public Result<Object> handlerException(Exception e,HttpServletRequest request){
+        return Result.error( e.getMessage(),"","系统异常", String.valueOf(HttpStatus.ERROR),"请求路径为->"+request.getRequestURI());
     }
 }

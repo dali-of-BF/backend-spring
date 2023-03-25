@@ -1,15 +1,13 @@
 package com.fang.controller;
 
-import com.fang.common.utils.ResultUtil;
+import com.fang.common.result.Result;
 import com.fang.constants.ApiPathConstants;
 import com.fang.service.userAgent.UserAgentService;
 import eu.bitwalker.useragentutils.Browser;
-import eu.bitwalker.useragentutils.OperatingSystem;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,19 +29,19 @@ public class UserAgentController {
 
     @GetMapping("/get-agent")
     @ApiOperation("获取用户Agent")
-    public ResponseEntity<String> getAgent(HttpServletRequest request){
-        return ResultUtil.success(userAgentService.getAgent(request));
+    public Result<String> getAgent(HttpServletRequest request){
+        return Result.success(userAgentService.getAgent(request),"");
     }
 
     @GetMapping("/get-browser")
     @ApiOperation("获取浏览器对象")
-    public ResponseEntity<Browser> getBrowserDetail(HttpServletRequest request){
-        return ResultUtil.success(userAgentService.getBrowserDetail(request));
+    public Result<Browser> getBrowserDetail(HttpServletRequest request){
+        return Result.success(userAgentService.getBrowserDetail(request));
     }
 
     @GetMapping("/get-operation-system")
     @ApiOperation("获取操作系统对象")
-    public ResponseEntity<OperatingSystem> getOperationSystem(HttpServletRequest request){
-        return ResultUtil.success(userAgentService.getOperationSystem(request));
+    public Result<Browser> getOperationSystem(HttpServletRequest request){
+        return Result.success(userAgentService.getOperationSystem(request));
     }
 }
