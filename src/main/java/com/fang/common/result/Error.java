@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * 异常信息
  *
@@ -15,10 +17,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(description = "异常信息")
-public class Error {
+public class Error implements Serializable {
 
+    private static final long serialVersionUID = 613746879694790362L;
     @ApiModelProperty(value = "异常码")
-    private String code;
+    private Integer code;
 
     @ApiModelProperty(value = "异常提示信息")
     private String message;

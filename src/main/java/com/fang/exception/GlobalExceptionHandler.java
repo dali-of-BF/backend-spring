@@ -74,6 +74,6 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public Result<Object> handlerException(Exception e,HttpServletRequest request){
-        return Result.error( e.getMessage(),"","系统异常", String.valueOf(HttpStatus.ERROR),"请求路径为->"+request.getRequestURI());
+        return Result.error( e.getMessage(),"","系统异常", HttpStatus.ERROR,"请求路径为->"+request.getRequestURI());
     }
 }

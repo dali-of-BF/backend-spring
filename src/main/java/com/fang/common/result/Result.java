@@ -74,7 +74,7 @@ public class Result<T> implements Serializable {
         return buildResult(data, null, HttpStatus.FAIL, null);
     }
 
-    public static <T> Result<T> fail(T data, String stackCode, String stackMessage) {
+    public static <T> Result<T> fail(T data, Integer stackCode, String stackMessage) {
         return buildResult(data, null, HttpStatus.FAIL, null, stackCode, stackMessage);
     }
 
@@ -82,11 +82,11 @@ public class Result<T> implements Serializable {
         return buildResult(null, null, HttpStatus.FAIL, message);
     }
 
-    public static <T> Result<T> fail(String message, String stackCode, String stackMessage) {
+    public static <T> Result<T> fail(String message, Integer stackCode, String stackMessage) {
         return buildResult(null, null, HttpStatus.FAIL, message, stackCode, stackMessage);
     }
 
-    public static <T> Result<T> fail(String stackCode, String stackMessage) {
+    public static <T> Result<T> fail(Integer stackCode, String stackMessage) {
         return buildResult(null, null, HttpStatus.FAIL, null, stackCode, stackMessage);
     }
 
@@ -94,7 +94,7 @@ public class Result<T> implements Serializable {
         return buildResult(data, null, HttpStatus.FAIL, message);
     }
 
-    public static <T> Result<T> fail(T data, String message, String stackCode, String stackMessage) {
+    public static <T> Result<T> fail(T data, String message, Integer stackCode, String stackMessage) {
         return buildResult(data, null, HttpStatus.FAIL, message, stackCode, stackMessage);
     }
 
@@ -102,7 +102,7 @@ public class Result<T> implements Serializable {
         return buildResult(data, extend, HttpStatus.FAIL, message);
     }
 
-    public static <T> Result<T> fail(T data, T extend, String message, String stackCode, String stackMessage) {
+    public static <T> Result<T> fail(T data, T extend, String message, Integer stackCode, String stackMessage) {
         return buildResult(data, extend, HttpStatus.FAIL, message, stackCode, stackMessage);
     }
 
@@ -114,7 +114,7 @@ public class Result<T> implements Serializable {
         return buildResult(data, null, HttpStatus.ERROR, null);
     }
 
-    public static <T> Result<T> error(T data, String stackCode, String stackMessage) {
+    public static <T> Result<T> error(T data, Integer stackCode, String stackMessage) {
         return buildResult(data, null, HttpStatus.ERROR, null, stackCode, stackMessage);
     }
 
@@ -122,11 +122,11 @@ public class Result<T> implements Serializable {
         return buildResult(null, null, HttpStatus.ERROR, message);
     }
 
-    public static <T> Result<T> error(String message, String stackCode, String stackMessage) {
+    public static <T> Result<T> error(String message, Integer stackCode, String stackMessage) {
         return buildResult(null, null, HttpStatus.ERROR, message, stackCode, stackMessage);
     }
 
-    public static <T> Result<T> error(String stackCode, String stackMessage) {
+    public static <T> Result<T> error(Integer stackCode, String stackMessage) {
         return buildResult(null, null, HttpStatus.ERROR, null, stackCode, stackMessage);
     }
 
@@ -134,7 +134,7 @@ public class Result<T> implements Serializable {
         return buildResult(data, null, HttpStatus.ERROR, message);
     }
 
-    public static <T> Result<T> error(T data, String message, String stackCode, String stackMessage) {
+    public static <T> Result<T> error(T data, String message, Integer stackCode, String stackMessage) {
         return buildResult(data, null, HttpStatus.ERROR, message, stackCode, stackMessage);
     }
 
@@ -142,7 +142,7 @@ public class Result<T> implements Serializable {
         return buildResult(data, extend, HttpStatus.ERROR, message);
     }
 
-    public static <T> Result<T> error(T data, T extend, String message, String stackCode, String stackMessage) {
+    public static <T> Result<T> error(T data, T extend, String message, Integer stackCode, String stackMessage) {
         return buildResult(data, extend, HttpStatus.ERROR, message, stackCode, stackMessage);
     }
 
@@ -155,7 +155,7 @@ public class Result<T> implements Serializable {
         return result;
     }
 
-    private static <T> Result<T> buildResult(T data, T extend, int code, String message, String stackCode, String StackMessage) {
+    private static <T> Result<T> buildResult(T data, T extend, int code, String message, Integer stackCode, String StackMessage) {
         Result<T> result = new Result<>();
         result.setCode(code);
         result.setData(data);
@@ -177,7 +177,7 @@ public class Result<T> implements Serializable {
     /**
      * 追加数据条数
      */
-    public Result<T> stack(String stackCode, String stackMessage) {
+    public Result<T> stack(Integer stackCode, String stackMessage) {
         this.error.setCode(stackCode);
         this.error.setMessage(stackMessage);
         return this;

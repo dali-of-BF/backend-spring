@@ -32,7 +32,7 @@ public class LoginFailHandler implements AuthenticationFailureHandler {
             msg = e.getMessage();
         }
         result.setCode(HttpStatus.UNAUTHORIZED);
-        result.getError().setCode(String.valueOf(HttpStatus.UNAUTHORIZED));
+        result.getError().setCode(HttpStatus.UNAUTHORIZED);
         result.getError().setMessage(msg);
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json;charset=UTF-8");
