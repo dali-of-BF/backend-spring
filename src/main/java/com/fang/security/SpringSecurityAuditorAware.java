@@ -9,7 +9,7 @@ import java.util.Optional;
  * 审计<br\>
  *  {@see <a href = "https://blog.csdn.net/wiselyman/article/details/84917143">审计作用</a> }
  */
-public class SpringSecurityAuditorAwre implements AuditorAware<String> {
+public class SpringSecurityAuditorAware implements AuditorAware<String> {
     /**
      * @return
      */
