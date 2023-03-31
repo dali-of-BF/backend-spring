@@ -5,7 +5,7 @@ spring:
   redis:
     host: 47.107.47.184
     # MTIzNDU2
-    password: 123456
+    password: 654321
     database: 5
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
