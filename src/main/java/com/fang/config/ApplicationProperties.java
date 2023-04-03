@@ -21,5 +21,9 @@ public class ApplicationProperties {
          * base64密钥
          */
         private String base64Secret;
+        /**
+         * jwt加密key
+         */
+        private String tokenSignKey;
     }
 }

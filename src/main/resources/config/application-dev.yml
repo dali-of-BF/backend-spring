@@ -65,3 +65,4 @@ logging:
 application:
   security:
     base64Secret: 123123123sdqs
+    tokenSignKey: bcdedit
