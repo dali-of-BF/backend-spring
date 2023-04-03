@@ -61,3 +61,7 @@ logging:
 #    path: ./log
   level:
     root: info
+
+application:
+  security:
+    base64Secret: 123123123sdqs
