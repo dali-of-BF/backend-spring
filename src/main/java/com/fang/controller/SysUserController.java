@@ -6,7 +6,6 @@ import com.fang.constants.ApiPathConstants;
 import com.fang.domain.dto.BasePageDTO;
 import com.fang.domain.dto.SysAccountDTO;
 import com.fang.domain.entity.sys.SysAccount;
-import com.fang.exception.BusinessException;
 import com.fang.service.sys.SysAccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,9 +38,10 @@ public class SysUserController {
         return Result.success("保存成功");
     }
 
-    @DeleteMapping("delete")
-    @ApiOperation("删除")
-    public Result<String> delete(){
-        throw new BusinessException("asd");
+    @DeleteMapping("deleteById/{id}")
+    @ApiOperation("通过用户ID删除用户")
+    public Result<String> deleteById(@PathVariable("id") String id){
+        sysAccountService.removeById(id);
+        return Result.success("删除成功");
     }
 }
