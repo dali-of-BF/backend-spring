@@ -69,3 +69,4 @@ application:
     expirationTime_rememberMe: 720000000
     #两小时过期
     expirationTime_no_rememberMe: 7200000
+    tokenPrefix: Bearer

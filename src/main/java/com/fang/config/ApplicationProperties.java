@@ -33,5 +33,9 @@ public class ApplicationProperties {
          * 不记住我-过期时间
          */
         private Long expirationTime_no_rememberMe;
+        /**
+         * token前缀
+         */
+        private String tokenPrefix;
     }
 }
