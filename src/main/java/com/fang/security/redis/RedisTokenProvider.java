@@ -76,4 +76,15 @@ public class RedisTokenProvider implements TokenProvider {
                 .get(SecurityRedisConstants.AUTHORITIES_KEY.concat(authToken));
         return Objects.nonNull(userDetails);
     }
+
+
+    @Override
+    public Boolean refreshExpiration(String token, String loginUserId,boolean rememberMe) {
+        String key = SecurityRedisConstants.AUTHORITIES_KEY.concat(token);
+        //重置其时间
+        redisTemplate.expire(key,rememberMe ?
+                properties.getSecurity().getExpirationTime_rememberMe()
+                :properties.getSecurity().getExpirationTime_no_rememberMe(), TimeUnit.MILLISECONDS);
+        return true;
+    }
 }

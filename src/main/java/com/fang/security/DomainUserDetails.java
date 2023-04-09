@@ -70,6 +70,10 @@ public class DomainUserDetails implements UserDetails, Serializable {
      * 是否首次登录
      */
     private boolean firstTimeLogin;
+    /**
+     * 是否记住密码
+     */
+    private boolean rememberMe;
 
     /**
      * 权限

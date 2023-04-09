@@ -99,4 +99,15 @@ public class JwtTokenProvider implements TokenProvider {
         }
         return false;
     }
+
+    /**
+     * @param token
+     * @param loginUserId redis中的key值，通过此才能准确定位到哪条redis
+     * @return
+     */
+    @Override
+    public Boolean refreshExpiration(String token, String loginUserId,boolean rememberMe) {
+        //jwt更新其过期时间需要重新编码
+        return false;
+    }
 }

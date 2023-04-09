@@ -31,4 +31,13 @@ public interface TokenProvider {
      * @return
      */
     boolean validateToken(String authToken);
+
+    /**
+     * token续期
+     * @param token
+     * @param loginUserId redis中的key值，通过此才能准确定位到哪条redis
+     * @param rememberMe
+     * @return
+     */
+    Boolean refreshExpiration(String token, String loginUserId,boolean rememberMe);
 }
