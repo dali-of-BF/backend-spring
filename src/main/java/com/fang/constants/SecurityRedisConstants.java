@@ -1,6 +1,4 @@
-package com.fang.security.constans;
-
-import com.fang.constants.Constant;
+package com.fang.constants;
 
 /**
  * @author FPH

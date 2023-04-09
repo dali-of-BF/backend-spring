@@ -1,9 +1,9 @@
 package com.fang.security.redis;
 
 import com.fang.config.ApplicationProperties;
+import com.fang.constants.SecurityRedisConstants;
 import com.fang.security.DomainUserDetails;
 import com.fang.security.TokenProvider;
-import com.fang.security.constans.SecurityRedisConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

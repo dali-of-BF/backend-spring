@@ -10,6 +10,10 @@ public class SecurityConstants {
      */
     public static final String TOKEN_PREFIX="Bearer ";
 
+    public static final String AUTHORITIES_KEY = "auth";
+    public static final String ORIGIN_CLIENT_CODE = "Origin-Client-Code";
+
+
     /**
      * 登录用户 redis key
      */

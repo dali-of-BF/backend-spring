@@ -1,9 +1,9 @@
 package com.fang.security.jwt;
 
 import com.fang.config.ApplicationProperties;
+import com.fang.constants.SecurityConstants;
 import com.fang.security.DomainUserDetails;
 import com.fang.security.TokenProvider;
-import com.fang.security.constans.SecurityConstants;
 import com.google.common.collect.Lists;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
