@@ -25,5 +25,17 @@ public class ApplicationProperties {
          * jwt加密key
          */
         private String tokenSignKey;
+        /**
+         * 记住我-过期时间
+         */
+        private Long expirationTime_rememberMe;
+        /**
+         * 不记住我-过期时间
+         */
+        private Long expirationTime_no_rememberMe;
+        /**
+         * token前缀
+         */
+        private String tokenPrefix;
     }
 }

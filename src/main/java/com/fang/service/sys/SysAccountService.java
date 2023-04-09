@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fang.domain.dto.SysAccountDTO;
 import com.fang.domain.entity.sys.SysAccount;
 import com.fang.mapper.sys.SysAccountMapper;
-import com.fang.utils.BeanUtil;
+import com.fang.utils.JsonMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +34,7 @@ public class SysAccountService extends ServiceImpl<SysAccountMapper, SysAccount>
      * @param dto 保存实体
      */
     public void saveEntity(SysAccountDTO dto){
-        SysAccount sysAccount = new SysAccount();
-        BeanUtil.copyProperties(dto,sysAccount);
+        SysAccount sysAccount = JsonMapper.covertValue(dto, SysAccount.class);
         save(sysAccount);
     }
 }

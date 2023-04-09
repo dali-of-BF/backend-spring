@@ -1,0 +1,11 @@
+version: '3'
+services:
+  base-spring:
+    container_name: base-spring
+    image: base-spring:1.0
+    ports:
+      - "8081:8081"
+    volumes:
+      - /etc/localtime:/etc/localtime
+    #environment:
+    restart: always

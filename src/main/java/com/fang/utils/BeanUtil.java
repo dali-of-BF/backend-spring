@@ -13,6 +13,7 @@ import java.util.function.Supplier;
  * BeanUtils重写
  */
 @Slf4j
+@Deprecated
 public class BeanUtil extends BeanUtils {
 
     /**

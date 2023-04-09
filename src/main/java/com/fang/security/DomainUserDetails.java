@@ -18,7 +18,10 @@ import java.util.Collection;
 @AllArgsConstructor
 public class DomainUserDetails implements UserDetails, Serializable {
     private static final long serialVersionUID = 2928965590106589921L;
-
+    /**
+     * 用户ID
+     */
+    private String current;
     private String username;
     private String nickname;
     /**
@@ -67,6 +70,10 @@ public class DomainUserDetails implements UserDetails, Serializable {
      * 是否首次登录
      */
     private boolean firstTimeLogin;
+    /**
+     * 是否记住密码
+     */
+    private boolean rememberMe;
 
     /**
      * 权限

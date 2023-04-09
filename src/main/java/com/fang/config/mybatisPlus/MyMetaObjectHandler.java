@@ -1,6 +1,7 @@
 package com.fang.config.mybatisPlus;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.fang.security.SecurityUtils;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
@@ -17,13 +18,14 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         this.setFieldValByName("createdDate",new Date(),metaObject);
-        // TODO: 2023/3/25 配好springSecurity后将会对此进行替换
-        this.setFieldValByName("createdBy","System",metaObject);
+        this.setFieldValByName("createdBy", SecurityUtils.getCurrentUserLogin()
+                .orElse("system"),metaObject);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         this.setFieldValByName("lastModifiedDate",new Date(),metaObject);
-        this.setFieldValByName("lastModifiedBy","System",metaObject);
+        this.setFieldValByName("lastModifiedBy",SecurityUtils.getCurrentUserLogin()
+                .orElse("system"),metaObject);
     }
 }

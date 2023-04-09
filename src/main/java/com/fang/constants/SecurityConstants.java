@@ -10,6 +10,20 @@ public class SecurityConstants {
      */
     public static final String TOKEN_PREFIX="Bearer ";
 
+    public static final String AUTHORITIES_KEY = "auth";
+    /**
+     * 被{@link HeaderConstant#APP_ID appId}取代
+     */
+    @Deprecated
+    public static final String ORIGIN_CLIENT_CODE = "Origin-Client-Code";
+    /**
+     * appid中的wx类型
+     */
+    public static final String APPID_WX = "wx";
+
+
+
+
     /**
      * 登录用户 redis key
      */
