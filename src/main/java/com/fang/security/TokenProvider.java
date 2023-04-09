@@ -18,10 +18,17 @@ public interface TokenProvider {
     String createToken(Authentication authentication,String prefix, boolean rememberMe);
 
     /**
-     * 通过token获取
+     * 通过token解析权限
      * @param token
-     * @param clientCode
      * @return
      */
-    Authentication getAuthentication(String token,String clientCode);
+    Authentication getAuthentication(String token);
+
+    /**
+     * 校验token有效性
+     *
+     * @param authToken
+     * @return
+     */
+    boolean validateToken(String authToken);
 }
