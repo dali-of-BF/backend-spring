@@ -184,5 +184,6 @@ public final class Constant {
     public static final String DEFAULT_TIMEZONE = "Asia/shanghai";
 
     public static final String GMT8 = "GMT+8";
+    public static final String REDIS_BLOCK = "::";
 
 }
