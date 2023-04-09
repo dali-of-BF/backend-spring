@@ -6,6 +6,7 @@ import com.fang.security.TokenProvider;
 import com.fang.security.constans.SecurityConstants;
 import com.google.common.collect.Lists;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -45,19 +46,19 @@ public class JwtTokenProvider implements TokenProvider {
         return Jwts
                 .builder()
                 //头
-                .setHeaderParam(JwsHeader.ALGORITHM,"HS256")
+                .setHeaderParam(JwsHeader.ALGORITHM,SignatureAlgorithm.HS512.getValue())
                 .setHeaderParam(Header.TYPE,"JWT")
+                //载荷：默认信息
+                .setSubject(principal.getNickname())
                 //载荷 自定义信息
                 .claim("current",principal.getCurrent())
                 .claim("nickname",principal.getNickname())
                 .claim("username",principal.getUsername())
                 .claim("phone",principal.getPhone())
                 .claim(SecurityConstants.AUTHORITIES_KEY,authorities)
-                //载荷：默认信息
-                .setSubject(principal.getNickname())
                 //签发时间
                 .setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS512,properties.getSecurity().getTokenSignKey())
+                .signWith(Keys.hmacShaKeyFor(properties.getSecurity().getBase64Secret().getBytes()), SignatureAlgorithm.HS512)
                 .setExpiration(validity)
                 .compact();
     }
