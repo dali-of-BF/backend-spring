@@ -1,6 +1,6 @@
 spring:
   application:
-    name: BaseSpringBoot
+    name: backendSpring
   profiles:
     active: dev
 server:

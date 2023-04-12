@@ -5,6 +5,7 @@ import com.fang.common.result.Result;
 import com.fang.utils.JsonMapper;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import java.io.IOException;
  * @author FPH
  * 自定义拒绝访问处理程序
  */
+@Component
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     /**
      * @param httpServletRequest
