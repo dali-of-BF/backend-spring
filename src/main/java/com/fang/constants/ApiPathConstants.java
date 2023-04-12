@@ -7,6 +7,7 @@ package com.fang.constants;
  */
 public class ApiPathConstants {
     public static final String SYS="/sys";
+    public static final String SYSTEM="/system";
     public static final String SYS_ACCOUNT=SYS+"/account";
     public static final String REDIS="/redis";
     public static final String TEST="/test";
