@@ -12,6 +12,7 @@ import java.util.Collection;
 
 /**
  * 自定义访问决策管理器
+ * 在此做出最终的访问控制决定
  * @author FPH
  */
 @Component
