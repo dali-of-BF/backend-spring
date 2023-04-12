@@ -1,11 +1,12 @@
 version: '3'
 services:
   base-spring:
-    container_name: base-spring
-    image: base-spring:1.0
+    container_name: backend-spring
+    image: backend-spring:1.0
     ports:
       - "8081:8081"
     volumes:
       - /etc/localtime:/etc/localtime
-    #environment:
+    environment:
+      - spring.profiles.active=dev
     restart: always

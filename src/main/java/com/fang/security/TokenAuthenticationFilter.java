@@ -82,6 +82,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                     }catch (AuthenticationException e){
                         SecurityContextHolder.clearContext();
                         this.authenticationEntryPoint.commence(request, response, e);
+                        return;
                     }
                 }else {
                     if (jwtTokenProvider.validateToken(token)) {
