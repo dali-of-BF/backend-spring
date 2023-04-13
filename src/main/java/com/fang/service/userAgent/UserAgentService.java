@@ -19,8 +19,8 @@ public class UserAgentService {
      * @param request
      * @return
      */
-    public String getAgent(HttpServletRequest request){
-        return  request.getHeader("User-Agent");
+    public UserAgent getAgent(HttpServletRequest request){
+        return  UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
     }
 
     /**
@@ -29,9 +29,8 @@ public class UserAgentService {
      * @return
      */
     public Browser getBrowserDetail(HttpServletRequest request){
-        String agent = getAgent(request);
-        UserAgent userAgent = UserAgent.parseUserAgentString(agent);
-        return userAgent.getBrowser();
+        UserAgent agent = getAgent(request);
+        return agent.getBrowser();
     }
 
     /**
@@ -40,8 +39,7 @@ public class UserAgentService {
      * @return
      */
     public Browser getOperationSystem(HttpServletRequest request){
-        String agent = getAgent(request);
-        UserAgent userAgent = UserAgent.parseUserAgentString(agent);
-        return userAgent.getBrowser();
+        UserAgent agent = getAgent(request);
+        return agent.getBrowser();
     }
 }
