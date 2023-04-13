@@ -1,5 +1,9 @@
 package com.fang.enums.time;
 
+/**
+ * @author FPH
+ */
+
 public enum TimeFormatEnum {
     SIMPLE("yyyy-MM-dd"),
     DATE_TIME("yyyy-MM-dd HH:mm:ss"),

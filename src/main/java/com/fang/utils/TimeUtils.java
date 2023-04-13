@@ -1,6 +1,7 @@
 package com.fang.utils;
 
 import com.fang.enums.time.TimeFormatEnum;
+import lombok.extern.slf4j.Slf4j;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,10 +13,23 @@ import java.util.Date;
 /**
  * @author FPH
  */
+@Slf4j
 public class TimeUtils {
+    /**
+     * yyyy-MM-dd
+     */
     public static SimpleDateFormat DATE_FORMAT;
+    /**
+     * yyyy-MM-dd HH:mm:ss
+     */
     public static SimpleDateFormat DATE_TIME_FORMAT;
+    /**
+     * HH:mm:ss
+     */
     public static SimpleDateFormat TIME_FORMAT;
+    /**
+     * yyyy-MM-dd HH:mm
+     */
     public static SimpleDateFormat MINUTE_FORMAT;
 
     private TimeUtils() {
@@ -227,10 +241,63 @@ public class TimeUtils {
         return cal.getTime();
     }
 
+    /**
+     * 两者时间相差多少时间戳
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public static long dateBetweenToTimeStamp(String startDate, String endDate) {
+        Date dateStart = toDate(startDate,DATE_TIME_FORMAT);
+        Date dateEnd = toDate(endDate,DATE_TIME_FORMAT);
+        return dateEnd.getTime() - dateStart.getTime();
+    }
+
+    /**
+     * 计算时间差
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    public static String timeDistance(Date startTime,Date endTime){
+        String dateStart = toText(startTime,TimeUtils.DATE_FORMAT);
+        String dateEnd = toText(endTime);
+        return timeDistance(dateStart,dateEnd);
+    }
+
+    /**
+     * 计算时间差
+     *
+     * @param endTime 最后时间
+     * @param startTime 开始时间
+     * @return 时间差（天/小时/分钟）
+     */
+    public static String timeDistance(String startTime,String endTime)
+    {
+        long nd = 1000 * 24 * 60 * 60;
+        long nh = 1000 * 60 * 60;
+        long nm = 1000 * 60;
+        long ns = 1000;
+        // 获得两个时间的毫秒时间差异
+        long diff = dateBetweenToTimeStamp(startTime,endTime);
+        // 计算差多少天
+        long day = diff / nd;
+        // 计算差多少小时
+        long hour = diff % nd / nh;
+        // 计算差多少分钟
+        long min = diff % nd % nh / nm;
+        // 计算差多少秒//输出结果
+        long sec = diff % nd % nh % nm / ns;
+        return day + "天" + hour + "小时" + min + "分钟" + sec + "秒";
+    }
+
+
+    public static String dateBetweenToDate(String startDate, String endDate) {
+        return TimeUtils.toText(new Date(dateBetweenToTimeStamp(startDate,endDate)),TimeUtils.MINUTE_FORMAT);
+    }
+
     public static int dateBetween(String startDate, String endDate) {
-        Date dateStart = toDate(startDate);
-        Date dateEnd = toDate(endDate);
-        return (int)((dateEnd.getTime() - dateStart.getTime()) / 1000L / 60L / 60L / 24L);
+        return (int)(dateBetweenToTimeStamp(startDate,endDate) / 1000L / 60L / 60L / 24L);
     }
 
     public static int dateBetween(Date startDate, Date endDate) {
@@ -253,6 +320,14 @@ public class TimeUtils {
         Date dateStart = toDate(startDate);
         Date dateEnd = toDate(endDate);
         return (int)((dateStart.getTime() - dateEnd.getTime()) / 1000L);
+    }
+
+    public static String now(){
+        return now(DATE_TIME_FORMAT);
+    }
+
+    public static String now(SimpleDateFormat simpleDateFormat){
+        return toText(new Date(),simpleDateFormat);
     }
 
     static {
