@@ -74,6 +74,10 @@ public class DomainUserDetails implements UserDetails, Serializable {
      * 是否记住密码
      */
     private boolean rememberMe;
+    /**
+     * 所属系统
+     */
+    private String systemCode;
 
     /**
      * 权限

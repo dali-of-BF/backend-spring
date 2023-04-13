@@ -1,7 +1,7 @@
 package com.fang.config.mybatisPlus;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.fang.security.SecurityUtils;
+import com.fang.utils.SecurityUtils;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
