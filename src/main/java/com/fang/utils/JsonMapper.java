@@ -52,7 +52,7 @@ public class JsonMapper {
         return null != src ? OBJECT_MAPPER.readValue(src, valueType) : null;
     }
 
-    public static <T> T readValue(String src, Class<T> valueType) throws IOException {
+    public static <T> T readValue(String src, Class<T> valueType) throws JsonProcessingException {
         return StringUtils.isNotBlank(src) ? OBJECT_MAPPER.readValue(src, valueType) : null;
     }
 
