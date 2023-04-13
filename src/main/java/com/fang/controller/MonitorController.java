@@ -2,7 +2,7 @@ package com.fang.controller;
 
 import com.fang.common.result.Result;
 import com.fang.constants.ApiPathConstants;
-import com.fang.domain.entity.system.Server;
+import com.fang.domain.entity.monitor.Server;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

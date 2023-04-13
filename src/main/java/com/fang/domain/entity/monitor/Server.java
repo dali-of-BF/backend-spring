@@ -1,8 +1,9 @@
-package com.fang.domain.entity.system;
+package com.fang.domain.entity.monitor;
 
 import com.fang.utils.ArithUtils;
 import com.fang.utils.TimeUtils;
 import com.fang.utils.http.IpUtils;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 import oshi.SystemInfo;
@@ -30,10 +31,19 @@ public class Server {
 
     private static final int OSHI_WAIT_SECOND = 1000;
 
+    @ApiModelProperty("cpu")
     private Cpu cpu = new Cpu();
+
+    @ApiModelProperty("JVM相关信息")
     private Jvm jvm = new Jvm();
+
+    @ApiModelProperty("內存相关信息")
     private Mem mem = new Mem();
+
+    @ApiModelProperty("系统相关信息")
     private Sys sys = new Sys();
+
+    @ApiModelProperty("系统磁盘文件相关信息")
     private List<SysFile> sysFiles = new LinkedList<>();
 
     public void copyTo() throws Exception {
@@ -160,34 +170,23 @@ public class Server {
      */
     @Data
     public static class Cpu {
-        /**
-         * 核心数
-         */
+
+        @ApiModelProperty("核心数")
         private int cpuNum;
 
-        /**
-         * CPU总的使用率
-         */
+        @ApiModelProperty("CPU总的使用率")
         private double total;
 
-        /**
-         * CPU系统使用率
-         */
+        @ApiModelProperty("CPU系统使用率")
         private double sys;
 
-        /**
-         * CPU用户使用率
-         */
+        @ApiModelProperty("CPU用户使用率")
         private double used;
 
-        /**
-         * CPU当前等待率
-         */
+        @ApiModelProperty("CPU当前等待率")
         private double wait;
 
-        /**
-         * CPU当前空闲率
-         */
+        @ApiModelProperty("CPU当前空闲率")
         private double free;
 
         public double getTotal() {
@@ -216,29 +215,23 @@ public class Server {
      */
     @Data
     public static class Jvm {
-        /**
-         * 当前JVM占用的内存总数(M)
-         */
+
+        @ApiModelProperty("当前JVM占用的内存总数(M)")
         private double total;
 
         /**
-         * JVM最大可用内存总数(M)
+         *
          */
+        @ApiModelProperty("JVM最大可用内存总数(M)")
         private double max;
 
-        /**
-         * JVM空闲内存(M)
-         */
+        @ApiModelProperty("JVM空闲内存(M)")
         private double free;
 
-        /**
-         * JDK版本
-         */
+        @ApiModelProperty("JDK版本")
         private String version;
 
-        /**
-         * JDK路径
-         */
+        @ApiModelProperty("JDK路径")
         private String home;
 
         public double getTotal() {
@@ -290,19 +283,14 @@ public class Server {
      */
     @Data
     public static class Mem {
-        /**
-         * 内存总量
-         */
+
+        @ApiModelProperty("内存总量")
         private double total;
 
-        /**
-         * 已用内存
-         */
+        @ApiModelProperty("已用内存")
         private double used;
 
-        /**
-         * 剩余内存
-         */
+        @ApiModelProperty("剩余内存")
         private double free;
 
         public double getTotal() {
@@ -327,29 +315,20 @@ public class Server {
      */
     @Data
     public static class Sys {
-        /**
-         * 服务器名称
-         */
+
+        @ApiModelProperty("服务器名称")
         private String computerName;
 
-        /**
-         * 服务器Ip
-         */
+        @ApiModelProperty("服务器Ip")
         private String computerIp;
 
-        /**
-         * 项目路径
-         */
+        @ApiModelProperty("项目路径")
         private String userDir;
 
-        /**
-         * 操作系统
-         */
+        @ApiModelProperty("操作系统")
         private String osName;
 
-        /**
-         * 系统架构
-         */
+        @ApiModelProperty("系统架构")
         private String osArch;
     }
 
@@ -358,39 +337,26 @@ public class Server {
      */
     @Data
     public static class SysFile {
-        /**
-         * 盘符路径
-         */
+
+        @ApiModelProperty("盘符路径")
         private String dirName;
 
-        /**
-         * 盘符类型
-         */
+        @ApiModelProperty("盘符类型")
         private String sysTypeName;
 
-        /**
-         * 文件类型
-         */
+        @ApiModelProperty("文件类型")
         private String typeName;
 
-        /**
-         * 总大小
-         */
+        @ApiModelProperty("总大小")
         private String total;
 
-        /**
-         * 剩余大小
-         */
+        @ApiModelProperty("剩余大小")
         private String free;
 
-        /**
-         * 已经使用量
-         */
+        @ApiModelProperty("已经使用量")
         private String used;
 
-        /**
-         * 资源的使用率
-         */
+        @ApiModelProperty("资源的使用率")
         private double usage;
     }
 }
