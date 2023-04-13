@@ -225,7 +225,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.3.7.RELEASE</version>
                 <configuration>
-                    <mainClass>com.fang.BaseSpringBootApplication</mainClass>
+                    <mainClass>com.fang.BackEndSpringApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

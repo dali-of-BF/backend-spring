@@ -14,10 +14,10 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @SpringBootApplication
 @MapperScan("com.fang.mapper")
 @EnableConfigurationProperties({ApplicationProperties.class})
-public class BaseSpringBootApplication {
+public class BackEndSpringApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BaseSpringBootApplication.class, args);
+        SpringApplication.run(BackEndSpringApplication.class, args);
     }
 
 }
