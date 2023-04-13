@@ -42,6 +42,10 @@ public class SecurityUtils {
         return Optional.ofNullable(extractPrincipal(context.getAuthentication()));
     }
 
+    /**
+     * 获取系统code，例如wx等
+     * @return
+     */
     public static String getSystemCode(){
         String systemCode = null;
         Optional<DomainUserDetails> currentUserDetails = getCurrentUserDetails();
@@ -49,6 +53,19 @@ public class SecurityUtils {
             systemCode = currentUserDetails.get().getSystemCode();
         }
         return systemCode;
+    }
+
+    /**
+     * 是否超管
+     * @return
+     */
+    public static boolean isSuper(){
+        boolean isSuper = false;
+        Optional<DomainUserDetails> currentUserDetails = getCurrentUserDetails();
+        if (Objects.nonNull(currentUserDetails) && currentUserDetails.isPresent()) {
+            isSuper = currentUserDetails.get().isSuperAdmin();
+        }
+        return isSuper;
     }
 
     public static Optional<DomainUserDetails> getCurrentUserDetails() {
