@@ -2,7 +2,7 @@ package com.fang.security;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.fang.domain.entity.sys.SysAccount;
-import com.fang.enums.sys.SysAccountDeletedEnum;
+import com.fang.enums.sys.DeletedEnum;
 import com.fang.exception.BusinessException;
 import com.fang.mapper.sys.SysAccountMapper;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         SysAccount sysAccount = Optional.ofNullable(sysAccountMapper.selectOne(new LambdaQueryWrapper<SysAccount>()
                 .eq(SysAccount::getUsername, s)
-                .eq(SysAccount::getDeleted, SysAccountDeletedEnum.UNDELETED.getValue())))
+                .eq(SysAccount::getDeleted, DeletedEnum.UNDELETED.getValue())))
                 .orElseThrow(()->new BusinessException("用户不存在"));
 
         return null;

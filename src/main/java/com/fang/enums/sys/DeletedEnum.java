@@ -8,7 +8,7 @@ import lombok.Getter;
  */
 
 @Getter
-public enum SysAccountDeletedEnum implements IEnum<String> {
+public enum DeletedEnum implements IEnum<String> {
 
     UNDELETED("0", "未删除"),
     DELETED("1", "已删除");
@@ -16,7 +16,7 @@ public enum SysAccountDeletedEnum implements IEnum<String> {
     private final String value;
     private final String desc;
 
-    SysAccountDeletedEnum(String value, String desc) {
+    DeletedEnum(String value, String desc) {
         this.value = value;
         this.desc = desc;
     }
