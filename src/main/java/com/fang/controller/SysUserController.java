@@ -28,7 +28,7 @@ public class SysUserController {
     @GetMapping("page")
     @ApiOperation("分页")
     public Result<IPage<SysAccount>> getPage(@Valid BasePageDTO dto){
-        return Result.success(sysAccountService.getPage(dto.getPage(), dto.getRow()));
+        return Result.success(sysAccountService.getPage(dto.getPage(), dto.getSize()));
     }
 
     @PostMapping("save")
