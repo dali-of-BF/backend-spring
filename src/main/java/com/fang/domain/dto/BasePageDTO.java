@@ -3,7 +3,6 @@ package com.fang.domain.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -16,7 +15,6 @@ import java.io.Serializable;
  */
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class BasePageDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -28,6 +26,10 @@ public class BasePageDTO implements Serializable {
     @NotNull(message = "显示条数不能为空")
     @Min(value = 1L, message = "显示条数必须大于或等于1")
     @ApiModelProperty(value = "显示条数", required = true, dataType = "long")
-    private Long row;
+    private Long size;
 
+    public BasePageDTO(){
+        this.page=1L;
+        this.size=-1L;
+    }
 }
