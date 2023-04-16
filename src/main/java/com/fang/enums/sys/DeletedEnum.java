@@ -10,13 +10,13 @@ import lombok.Getter;
 @Getter
 public enum DeletedEnum implements IEnum<String> {
 
-    UNDELETED("0", "未删除"),
-    DELETED("1", "已删除");
+    UNDELETED(0, "未删除"),
+    DELETED(1, "已删除");
 
-    private final String value;
+    private final Integer value;
     private final String desc;
 
-    DeletedEnum(String value, String desc) {
+    DeletedEnum(Integer value, String desc) {
         this.value = value;
         this.desc = desc;
     }
