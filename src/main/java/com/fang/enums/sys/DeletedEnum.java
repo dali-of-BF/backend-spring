@@ -8,7 +8,7 @@ import lombok.Getter;
  */
 
 @Getter
-public enum DeletedEnum implements IEnum<String> {
+public enum DeletedEnum implements IEnum<Integer> {
 
     UNDELETED(0, "未删除"),
     DELETED(1, "已删除");
