@@ -12,4 +12,5 @@ public class ApiPathConstants {
     public static final String REDIS="/redis";
     public static final String TEST="/test";
     public static final String USER_AGENT="/user-agent";
+    public static final String RESOURCE="/resource";
 }
