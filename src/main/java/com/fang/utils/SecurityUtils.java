@@ -46,13 +46,12 @@ public class SecurityUtils {
      * 获取系统code，例如wx等
      * @return
      */
-    public static String getSystemCode(){
-        String systemCode = null;
+    public static String getAppId(){
         Optional<DomainUserDetails> currentUserDetails = getCurrentUserDetails();
         if (Objects.nonNull(currentUserDetails) && currentUserDetails.isPresent()) {
-            systemCode = currentUserDetails.get().getSystemCode();
+            return currentUserDetails.get().getAppId();
         }
-        return systemCode;
+        return null;
     }
 
     /**

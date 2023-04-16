@@ -77,7 +77,7 @@ public class DomainUserDetails implements UserDetails, Serializable {
     /**
      * 所属系统
      */
-    private String systemCode;
+    private String appId;
 
     /**
      * 权限
