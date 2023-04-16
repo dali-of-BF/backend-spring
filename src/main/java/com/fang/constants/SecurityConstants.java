@@ -21,7 +21,7 @@ public class SecurityConstants {
      */
     public static final String APPID_WX = "wx";
 
-    public static final String ANONYMOUS_USER = "anonymoususer";
+    public static final String ANONYMOUS_USER = "anonymousUser";
 
 
 
