@@ -66,7 +66,7 @@ public class SwaggerConfig {
                 .description("fph基础框架构建")
                 .version("v2."+version)
                 .license("Apache License Version 2.0")
-                .licenseUrl("https://github.com/dali-of-BF/base-spring-boot.git")
+                .licenseUrl("https://github.com/dali-of-BF/backend-spring.git")
                 .contact(null)
                 .build();
     }

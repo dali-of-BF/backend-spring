@@ -11,7 +11,6 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
@@ -22,7 +21,6 @@ import java.util.List;
 /**
  * @author FPH
  */
-@Component
 @RequiredArgsConstructor
 public class CustomSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
