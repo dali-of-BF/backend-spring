@@ -1,8 +1,10 @@
-package com.fang.controller;
+package com.fang.controller.test;
 
 import com.fang.common.result.Result;
 import com.fang.config.ApplicationProperties;
 import com.fang.constants.ApiPathConstants;
+import com.fang.constants.SwaggerGroupConstants;
+import com.fang.utils.ClassUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +24,9 @@ public class TestController {
 
     private final ApplicationProperties applicationProperties;
 
-    @GetMapping("testProperties")
-    @ApiOperation("测试yml获取")
-    public Result<Object> testProperties(){
-        return Result.success(applicationProperties.getSecurity().getExpirationTime_rememberMe());
+    @GetMapping("test")
+    @ApiOperation("获取一个属性的所有方法的其中的值")
+    public Result<Object> testProperties() throws IllegalAccessException {
+        return Result.success(ClassUtils.getAllFieldKey(SwaggerGroupConstants.class));
     }
 }

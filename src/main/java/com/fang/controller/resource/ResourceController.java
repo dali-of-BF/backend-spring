@@ -1,4 +1,4 @@
-package com.fang.controller;
+package com.fang.controller.resource;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

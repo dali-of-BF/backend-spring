@@ -1,4 +1,4 @@
-package com.fang.controller;
+package com.fang.controller.monitor;
 
 import com.fang.common.result.Result;
 import com.fang.constants.ApiPathConstants;

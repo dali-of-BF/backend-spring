@@ -1,4 +1,4 @@
-package com.fang.controller;
+package com.fang.controller.account;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fang.common.result.Result;

@@ -3,7 +3,7 @@ package com.fang.service.sys;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fang.controller.ResourceController;
+import com.fang.controller.resource.ResourceController;
 import com.fang.domain.entity.sys.SysResource;
 import com.fang.mapper.sys.SysResourceMapper;
 import com.fang.utils.SecurityUtils;
