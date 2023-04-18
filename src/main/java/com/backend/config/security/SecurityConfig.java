@@ -1,8 +1,6 @@
 package com.backend.config.security;
 
-import com.backend.security.CustomAccessDecisionManager;
-import com.backend.security.CustomSecurityMetadataSource;
-import com.backend.security.UserDetailServiceImpl;
+import com.backend.security.*;
 import com.backend.security.jwt.JwtTokenProvider;
 import com.backend.security.redis.RedisTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomAccessDecisionManager accessDecisionManager;
     private final CustomSecurityMetadataSource securityMetadataSource;
     private final UserDetailServiceImpl userDetailService;
+    private final LoginSuccessHandler loginSuccessHandler;
+    private final LoginFailHandler loginFailHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -51,6 +51,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         provider.setPasswordEncoder(this.passwordEncoder());
         return provider;
     }
+
+    /**
+     * 处理基于用户名和密码的身份验证
+     * @return
+     * @throws Exception
+     */
+    @Bean
+    public UsernamePasswordAuthenticationFilterImpl usernamePasswordAuthenticationFilter() throws Exception {
+        UsernamePasswordAuthenticationFilterImpl filter = new UsernamePasswordAuthenticationFilterImpl();
+        filter.setAuthenticationManager(authenticationManagerBean());
+        filter.setAuthenticationSuccessHandler(loginSuccessHandler);
+        filter.setAuthenticationFailureHandler(loginFailHandler);
+        filter.setFilterProcessesUrl("/auth/login");
+        filter.setPostOnly(Boolean.TRUE);
+        return filter;
+    }
+
 
 
     @Override
