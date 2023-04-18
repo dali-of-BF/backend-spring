@@ -29,7 +29,6 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
         configAttributes.forEach(configAttribute -> {
             //将访问所需资源与用户拥有资源进行比对
-            // TODO: 2023/4/10 参考其他框架的形式，不想用sys_resource形式
             String attribute = configAttribute.getAttribute();
             for (GrantedAuthority authority : authentication.getAuthorities()) {
                 if (attribute.trim().equals(authority.getAuthority())) {
