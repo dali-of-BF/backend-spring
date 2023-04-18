@@ -1,5 +1,6 @@
 package com.fang.security;
 
+import com.fang.constants.Constant;
 import com.fang.constants.HeaderConstant;
 import com.fang.exception.BusinessException;
 import com.fang.utils.JsonMapper;
@@ -44,7 +45,7 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
             try {
                 Map<String,String> authenticationBean = JsonMapper.readValue(request.getInputStream(), Map.class);
                 String usernameAndOrigin = String.format("%s%s%s", authenticationBean.get(SPRING_SECURITY_FORM_USERNAME_KEY),
-                        "-", appId);
+                        Constant.DASH, appId);
                 UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(usernameAndOrigin, authenticationBean.get(SPRING_SECURITY_FORM_PASSWORD_KEY));
                 this.setDetails(request,authRequest);
                 return this.getAuthenticationManager().authenticate(authRequest);

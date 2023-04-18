@@ -39,6 +39,9 @@ CREATE TABLE `sys_account`  (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+ALTER TABLE `base_spring`.`sys_account`
+    ADD COLUMN `app_id` varchar(20) NOT NULL COMMENT '所属系统' AFTER `id_card`;
+
 -- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------

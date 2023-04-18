@@ -47,4 +47,9 @@ public class SysAccount extends BaseEntity implements Serializable {
      * 身份证号码
      */
     private String idCard;
+
+    /**
+     * 所属系统
+     */
+    private String appId;
 }
