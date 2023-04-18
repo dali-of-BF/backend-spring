@@ -3,12 +3,14 @@ package com.backend.security;
 import com.backend.common.HttpStatus;
 import com.backend.common.result.Result;
 import com.backend.security.domain.LoginVO;
+import com.backend.security.redis.RedisTokenProvider;
 import com.backend.utils.JsonMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +23,10 @@ import java.io.IOException;
  */
 @RequiredArgsConstructor
 @Slf4j
+@Component
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
-    private TokenProvider tokenProvider;
+    private final RedisTokenProvider redisTokenProvider;
     /**
      * 登录成功后将一系列参数信息返回给前端
      * @param httpServletRequest
@@ -36,7 +39,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         Result<LoginVO> result = new Result<>();
         DomainUserDetails userDetails = (DomainUserDetails) authentication.getPrincipal();
-        String token = tokenProvider.createToken(authentication, null, false);
+        String token = redisTokenProvider.createToken(authentication, null, false);
         LoginVO loginVO = LoginVO.builder()
                 .accessToken(token)
                 .nickname(userDetails.getNickname())

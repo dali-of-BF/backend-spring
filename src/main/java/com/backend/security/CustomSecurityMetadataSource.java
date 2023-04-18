@@ -11,6 +11,7 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
@@ -22,12 +23,13 @@ import java.util.List;
  * @author FPH
  */
 @RequiredArgsConstructor
+@Component
 public class CustomSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
     private final SysResourceMapper sysResourceMapper;
 
     @Value("${server.servlet.context-path}")
-    private final String contextPath;
+    private String contextPath;
     /**
      * 判定当前请求对应的资源权限
      * 如果在权限表中，则返回给decide方法，用来判定用户是否有此权限
