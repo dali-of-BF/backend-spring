@@ -1,9 +1,10 @@
-package com.fang.controller;
+package com.fang.controller.monitor;
 
 import com.fang.common.result.Result;
 import com.fang.constants.ApiPathConstants;
 import com.fang.service.userAgent.UserAgentService;
 import eu.bitwalker.useragentutils.Browser;
+import eu.bitwalker.useragentutils.UserAgent;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class UserAgentController {
 
     @GetMapping("/get-agent")
     @ApiOperation("获取用户Agent")
-    public Result<String> getAgent(HttpServletRequest request){
+    public Result<UserAgent> getAgent(HttpServletRequest request){
         return Result.success(userAgentService.getAgent(request),"");
     }
 

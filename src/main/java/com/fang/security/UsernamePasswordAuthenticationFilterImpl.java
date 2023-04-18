@@ -1,9 +1,11 @@
 package com.fang.security;
 
+import com.fang.constants.Constant;
 import com.fang.constants.HeaderConstant;
 import com.fang.exception.BusinessException;
 import com.fang.utils.JsonMapper;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
- * 项目启动时调用，设置登录请求地址
+ * 发起登录请求后的过滤与处理
  * @author FPH
  */
 public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAuthenticationFilter {
@@ -34,12 +36,16 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
         if (StringUtils.isNotBlank(appId)){
             throw new BusinessException("appid can not be null");
         }
+        //判断是否post请求
+        if (!request.getMethod().equals(HttpMethod.POST.name())) {
+            throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
+        }
         //判断ContentType类型
         if(MediaType.APPLICATION_JSON_VALUE.equals(request.getContentType())){
             try {
                 Map<String,String> authenticationBean = JsonMapper.readValue(request.getInputStream(), Map.class);
                 String usernameAndOrigin = String.format("%s%s%s", authenticationBean.get(SPRING_SECURITY_FORM_USERNAME_KEY),
-                        "-", appId);
+                        Constant.DASH, appId);
                 UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(usernameAndOrigin, authenticationBean.get(SPRING_SECURITY_FORM_PASSWORD_KEY));
                 this.setDetails(request,authRequest);
                 return this.getAuthenticationManager().authenticate(authRequest);

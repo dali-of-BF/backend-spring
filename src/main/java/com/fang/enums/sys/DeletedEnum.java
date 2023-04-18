@@ -8,15 +8,15 @@ import lombok.Getter;
  */
 
 @Getter
-public enum SysAccountDeletedEnum implements IEnum<String> {
+public enum DeletedEnum implements IEnum<Integer> {
 
-    UNDELETED("0", "未删除"),
-    DELETED("1", "已删除");
+    UNDELETED(0, "未删除"),
+    DELETED(1, "已删除");
 
-    private final String value;
+    private final Integer value;
     private final String desc;
 
-    SysAccountDeletedEnum(String value, String desc) {
+    DeletedEnum(Integer value, String desc) {
         this.value = value;
         this.desc = desc;
     }

@@ -1,6 +1,9 @@
 package com.fang.domain.entity.base;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -53,6 +56,6 @@ public class BaseEntity implements Serializable {
      * 删除标志位
      */
     @TableField(value = "deleted")
-    @TableLogic
+//    @TableLogic
     private Integer deleted;
 }

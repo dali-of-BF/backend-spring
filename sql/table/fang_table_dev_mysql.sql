@@ -39,6 +39,9 @@ CREATE TABLE `sys_account`  (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+ALTER TABLE `base_spring`.`sys_account`
+    ADD COLUMN `app_id` varchar(20) NOT NULL COMMENT '所属系统' AFTER `id_card`;
+
 -- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
@@ -73,4 +76,20 @@ CREATE TABLE `sys_menu`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+DROP TABLE IF EXISTS `sys_resource`;
+CREATE TABLE `base_spring`.`sys_resource`  (
+                                           `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                           `resource_url` varchar(100) NOT NULL COMMENT 'url',
+                                           `tag` varchar(50) NULL COMMENT '标签',
+                                           `remark` varchar(255) NULL COMMENT '备注',
+                                           `resource_method` varchar(10) NOT NULL COMMENT '请求方法',
+                                           `app_id` varchar(255) NULL COMMENT '应用id',
+                                           `created_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+                                           `last_modified_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+                                           `created_date` timestamp(6) NULL DEFAULT NULL,
+                                           `last_modified_date` timestamp(6) NULL DEFAULT NULL,
+                                           `deleted` tinyint(1) NOT NULL DEFAULT 0,
+                                           PRIMARY KEY (`id`) USING BTREE
+)ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
