@@ -1,9 +1,14 @@
 package com.backend.config.security;
 
+import com.backend.security.CustomAccessDecisionManager;
+import com.backend.security.CustomSecurityMetadataSource;
+import com.backend.security.UserDetailServiceImpl;
 import com.backend.security.jwt.JwtTokenProvider;
+import com.backend.security.redis.RedisTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,24 +28,30 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final RedisTokenProvider redisTokenProvider;
     private final CorsFilter corsFilter;
+    private final CustomAccessDecisionManager accessDecisionManager;
+    private final CustomSecurityMetadataSource securityMetadataSource;
+    private final UserDetailServiceImpl userDetailService;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
-//    /**
-//     * @param auth
-//     * @throws Exception
-//     */
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("backend")
-//                .password(passwordEncoder().encode("123456"))
-//                .authorities("/*");
-//    }
+
+    // AuthenticationProvider实现
+    // 使用UserDetailsService和PasswordEncoder来验证用户名和密码
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        //不隐藏用户找不到异常
+        provider.setHideUserNotFoundExceptions(Boolean.FALSE);
+        provider.setUserDetailsService(userDetailService);
+        provider.setPasswordEncoder(this.passwordEncoder());
+        return provider;
+    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
