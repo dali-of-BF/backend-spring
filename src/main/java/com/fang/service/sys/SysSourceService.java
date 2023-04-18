@@ -3,9 +3,10 @@ package com.fang.service.sys;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fang.controller.resource.ResourceController;
+import com.fang.constants.SwaggerGroupConstants;
 import com.fang.domain.entity.sys.SysResource;
 import com.fang.mapper.sys.SysResourceMapper;
+import com.fang.utils.ClassUtils;
 import com.fang.utils.SecurityUtils;
 import com.google.common.collect.Lists;
 import io.swagger.models.HttpMethod;
@@ -41,10 +42,13 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
     private final ServiceModelToSwagger2Mapper serviceModelToSwagger2Mapper;
 
 
-    public List<SysResource> doRefreshResource(){
+    public List<SysResource> doRefreshResource() throws IllegalAccessException {
         StopWatch stopWatch = new StopWatch();
+        List<String> allFieldValue = ClassUtils.getAllFieldValue(SwaggerGroupConstants.class);
+        //排除测试API
+        allFieldValue.remove(SwaggerGroupConstants.TEST_API);
         stopWatch.start("扫描接口资源");
-        List<SysResource> resources = getResourceByGroupName(ResourceController.DEFAULT_GROUP);
+        List<SysResource> resources = getResourceByGroupNameList(allFieldValue);
         stopWatch.stop();
         log.info("===> 扫描资源结束，耗时：{} 毫秒，总条数：{}", stopWatch.getLastTaskTimeMillis(),resources.size());
         return addOrRemove(resources);
@@ -77,6 +81,17 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
             this.remove(new LambdaQueryWrapper<SysResource>().in(SysResource::getResourceUrl, removeUrlList));
         }
         return sysResources;
+    }
+
+    /**
+     * 通过分组集合获取资源信息
+     * @param groupNameList
+     * @return
+     */
+    public List<SysResource> getResourceByGroupNameList(List<String> groupNameList) {
+        List<SysResource> resultList = Lists.newArrayList();
+        groupNameList.forEach(i-> resultList.addAll(this.getResourceByGroupName(i)));
+        return resultList;
     }
 
     /**
