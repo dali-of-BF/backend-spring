@@ -5,7 +5,7 @@ spring:
     active: dev
 server:
   servlet:
-    context-path: /fang
+    context-path: /backend
 
 mybatis-plus:
   global-config:
@@ -14,7 +14,7 @@ mybatis-plus:
       logic-delete-value: 1
       #      逻辑删除，未删除标志
       logic-not-delete-value: 0
-  type-aliases-package: com.fang.entity
+  type-aliases-package: com.backend.entity
   configuration:
     #    mybatis-plus日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
