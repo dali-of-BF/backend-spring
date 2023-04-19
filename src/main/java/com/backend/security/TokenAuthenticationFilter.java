@@ -1,7 +1,6 @@
 package com.backend.security;
 
 import com.backend.config.ApplicationProperties;
-import com.backend.constants.Constant;
 import com.backend.constants.HeaderConstant;
 import com.backend.constants.SecurityConstants;
 import com.backend.exception.BusinessException;
@@ -9,7 +8,6 @@ import com.backend.security.tokenProvider.JwtTokenProvider;
 import com.backend.security.tokenProvider.RedisTokenProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -62,7 +60,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String clientCode = request.getHeader(HeaderConstant.APP_ID);
         if(StringUtils.isNotBlank(clientCode)){
-            String token = resolveToken(request);
+            String token = redisTokenProvider.resolveToken(request);
             if(StringUtils.isNotBlank(token)){
                 boolean isRedis=true;
                 if (clientCode.startsWith(SecurityConstants.APPID_WX)) {
@@ -95,17 +93,5 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             throw new BusinessException(HeaderConstant.APP_ID+"not find");
         }
         filterChain.doFilter(request, response);
-    }
-
-    private String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (StringUtils.isNotBlank(bearerToken) && bearerToken.startsWith(applicationProperties.getSecurity().getTokenPrefix()+ Constant.SPACE)) {
-            return bearerToken.substring(applicationProperties.getSecurity().getTokenPrefix().length()+1);
-        }
-//        String jwt = request.getParameter(AUTHORIZATION_TOKEN);
-//        if (StringUtils.hasText(jwt)) {
-//            return jwt;
-//        }
-        return null;
     }
 }
