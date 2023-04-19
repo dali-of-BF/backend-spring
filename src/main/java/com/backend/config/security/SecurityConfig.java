@@ -1,12 +1,13 @@
 package com.backend.config.security;
 
 import com.backend.security.*;
-import com.backend.security.jwt.JwtTokenProvider;
-import com.backend.security.redis.RedisTokenProvider;
+import com.backend.security.tokenProvider.JwtTokenProvider;
+import com.backend.security.tokenProvider.RedisTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailServiceImpl userDetailService;
     private final LoginSuccessHandler loginSuccessHandler;
     private final LoginFailHandler loginFailHandler;
+    private final LogoutSuccessHandle logoutSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -68,12 +70,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
-
+    /**
+     * @param auth
+     * @throws Exception
+     */
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authenticationProvider());
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().anyRequest().permitAll().
-                and().logout().permitAll()
+                and().logout().logoutUrl("/auth/logout")
+                .logoutSuccessHandler(logoutSuccessHandler)
+                .and().exceptionHandling()
                 .and().csrf().disable();//关闭CSRF保护即可。
     }
 
