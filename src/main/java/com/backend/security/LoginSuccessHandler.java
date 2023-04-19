@@ -3,7 +3,7 @@ package com.backend.security;
 import com.backend.common.HttpStatus;
 import com.backend.common.result.Result;
 import com.backend.security.domain.LoginVO;
-import com.backend.security.redis.RedisTokenProvider;
+import com.backend.security.tokenProvider.RedisTokenProvider;
 import com.backend.utils.JsonMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package com.backend.security;
 
-import com.backend.security.jwt.JwtTokenProvider;
-import com.backend.security.redis.RedisTokenProvider;
+import com.backend.security.tokenProvider.JwtTokenProvider;
+import com.backend.security.tokenProvider.RedisTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

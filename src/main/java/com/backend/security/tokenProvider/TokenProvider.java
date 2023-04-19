@@ -1,4 +1,4 @@
-package com.backend.security;
+package com.backend.security.tokenProvider;
 
 import org.springframework.security.core.Authentication;
 

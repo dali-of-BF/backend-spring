@@ -1,9 +1,8 @@
-package com.backend.security.redis;
+package com.backend.security.tokenProvider;
 
 import com.backend.config.ApplicationProperties;
 import com.backend.constants.SecurityRedisConstants;
 import com.backend.security.DomainUserDetails;
-import com.backend.security.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

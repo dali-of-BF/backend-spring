@@ -1,9 +1,8 @@
-package com.backend.security.jwt;
+package com.backend.security.tokenProvider;
 
 import com.backend.config.ApplicationProperties;
 import com.backend.constants.SecurityConstants;
 import com.backend.security.DomainUserDetails;
-import com.backend.security.TokenProvider;
 import com.google.common.collect.Lists;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
