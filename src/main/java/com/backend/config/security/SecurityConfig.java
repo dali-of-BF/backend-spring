@@ -34,7 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomAccessDecisionManager accessDecisionManager;
     private final CustomSecurityMetadataSource securityMetadataSource;
     private final UserDetailServiceImpl userDetailService;
-    private final LoginSuccessHandler loginSuccessHandler;
     private final LoginFailHandler loginFailHandler;
     private final LogoutSuccessHandle logoutSuccessHandler;
 
@@ -65,7 +64,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public UsernamePasswordAuthenticationFilterImpl usernamePasswordAuthenticationFilter() throws Exception {
         UsernamePasswordAuthenticationFilterImpl filter = new UsernamePasswordAuthenticationFilterImpl();
         filter.setAuthenticationManager(authenticationManagerBean());
-        filter.setAuthenticationSuccessHandler(loginSuccessHandler);
         filter.setAuthenticationFailureHandler(loginFailHandler);
         filter.setFilterProcessesUrl("/auth/login");
         filter.setPostOnly(Boolean.TRUE);
@@ -89,13 +87,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().and()
                 //闭CSRF保护即可。
                 .csrf().disable()
-                //.authenticationEntryPoint()
+                //.exceptionHandling()
+                //.authenticationEntryPoint().and()
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(usernamePasswordAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class)
                 .headers()
                 .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN).and()
                 //将策略设置为禁止使用以下功能：地理位置、MIDI、同步 XHR、麦克风、相机、磁力计、陀螺仪和付款。它允许全屏模式，但只允许在同一源中使用。
-                .featurePolicy("geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'self'; payment 'none'")
+                .featurePolicy("geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'self'; payment 'none'").and()
+                .frameOptions()
+                .deny()
                 .and();//关
     }
 
