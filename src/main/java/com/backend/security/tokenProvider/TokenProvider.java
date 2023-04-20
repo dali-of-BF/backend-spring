@@ -1,6 +1,6 @@
 package com.backend.security.tokenProvider;
 
-import com.backend.security.DomainUserDetails;
+import com.backend.security.domain.DomainUserDetails;
 import org.springframework.security.core.Authentication;
 
 /**

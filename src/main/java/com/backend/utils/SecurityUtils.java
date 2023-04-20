@@ -1,7 +1,7 @@
 package com.backend.utils;
 
 import com.backend.constants.SecurityConstants;
-import com.backend.security.DomainUserDetails;
+import com.backend.security.domain.DomainUserDetails;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

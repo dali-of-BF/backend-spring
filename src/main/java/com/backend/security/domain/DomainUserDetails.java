@@ -1,4 +1,4 @@
-package com.backend.security;
+package com.backend.security.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

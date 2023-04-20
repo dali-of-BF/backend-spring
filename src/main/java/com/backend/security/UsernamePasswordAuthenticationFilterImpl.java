@@ -5,6 +5,7 @@ import com.backend.common.result.Result;
 import com.backend.config.ApplicationProperties;
 import com.backend.constants.HeaderConstant;
 import com.backend.exception.BusinessException;
+import com.backend.security.domain.DomainUserDetails;
 import com.backend.security.domain.LoginVO;
 import com.backend.security.tokenProvider.RedisTokenProvider;
 import com.backend.utils.JsonMapper;
