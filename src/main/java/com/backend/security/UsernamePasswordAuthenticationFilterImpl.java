@@ -3,7 +3,6 @@ package com.backend.security;
 import com.backend.common.HttpStatus;
 import com.backend.common.result.Result;
 import com.backend.config.ApplicationProperties;
-import com.backend.constants.Constant;
 import com.backend.constants.HeaderConstant;
 import com.backend.exception.BusinessException;
 import com.backend.security.domain.LoginVO;
@@ -57,9 +56,8 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
         if(MediaType.APPLICATION_JSON_VALUE.equals(request.getContentType())){
             try {
                 Map<String,String> authenticationBean = JsonMapper.readValue(request.getInputStream(), Map.class);
-                String usernameAndOrigin = String.format("%s%s%s", authenticationBean.get(SPRING_SECURITY_FORM_USERNAME_KEY),
-                        Constant.DASH, appId);
-                UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(usernameAndOrigin, authenticationBean.get(SPRING_SECURITY_FORM_PASSWORD_KEY));
+                UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(authenticationBean.get(SPRING_SECURITY_FORM_USERNAME_KEY),
+                        authenticationBean.get(SPRING_SECURITY_FORM_PASSWORD_KEY));
                 this.setDetails(request,authRequest);
                 return this.getAuthenticationManager().authenticate(authRequest);
             }catch (Exception e){
