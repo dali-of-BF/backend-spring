@@ -70,6 +70,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             Authentication authentication = redisTokenProvider.getAuthentication(token);
             if(Objects.nonNull(authentication)){
                 DomainUserDetails principal = (DomainUserDetails) authentication.getPrincipal();
+                //更新一下token的过期时间
                 redisTokenProvider.refreshExpiration(token,principal.getCurrent(),principal.isRememberMe());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
