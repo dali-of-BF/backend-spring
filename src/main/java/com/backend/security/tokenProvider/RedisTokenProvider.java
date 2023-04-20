@@ -29,7 +29,7 @@ import static com.backend.constants.SecurityRedisConstants.AUTHORITIES_KEY;
 @RequiredArgsConstructor
 public class RedisTokenProvider implements TokenProvider {
 
-    private final RedisTemplate redisTemplate;
+    private final RedisTemplate<String,Object> redisTemplate;
 
     private final ApplicationProperties properties;
 

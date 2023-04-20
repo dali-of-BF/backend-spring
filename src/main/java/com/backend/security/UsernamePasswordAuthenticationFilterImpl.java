@@ -12,11 +12,10 @@ import com.backend.utils.JsonMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.annotation.Resource;
@@ -107,4 +106,31 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
         }
     }
 
+    /**
+     * 登录失败处理类
+     * @param request
+     * @param response
+     * @param failed
+     * @throws IOException
+     * @throws ServletException
+     */
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        Result<Object> result = new Result<>();
+        String msg = "账号或密码错误，请重新输入";
+        if (failed instanceof DisabledException) {
+            msg = "您输入的账号已停用！";
+        } else if (failed instanceof UsernameNotFoundException) {
+            msg = "您输入的账号不存在，请重新输入！";
+        } else if (failed instanceof InternalAuthenticationServiceException) {
+            msg = failed.getMessage();
+        }
+        result.setCode(HttpStatus.UNAUTHORIZED);
+        result.getError().setCode(HttpStatus.UNAUTHORIZED);
+        result.getError().setMessage(msg);
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.getWriter().append(JsonMapper.writeValueAsString(result));
+    }
 }

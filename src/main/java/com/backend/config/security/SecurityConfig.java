@@ -34,7 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomAccessDecisionManager accessDecisionManager;
     private final CustomSecurityMetadataSource securityMetadataSource;
     private final UserDetailServiceImpl userDetailService;
-    private final LoginFailHandler loginFailHandler;
     private final LogoutSuccessHandle logoutSuccessHandler;
 
     @Bean
@@ -64,7 +63,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public UsernamePasswordAuthenticationFilterImpl usernamePasswordAuthenticationFilter() throws Exception {
         UsernamePasswordAuthenticationFilterImpl filter = new UsernamePasswordAuthenticationFilterImpl();
         filter.setAuthenticationManager(authenticationManagerBean());
-        filter.setAuthenticationFailureHandler(loginFailHandler);
         filter.setFilterProcessesUrl("/auth/login");
         filter.setPostOnly(Boolean.TRUE);
         return filter;
