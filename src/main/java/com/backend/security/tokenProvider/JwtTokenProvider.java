@@ -3,6 +3,7 @@ package com.backend.security.tokenProvider;
 import com.backend.config.ApplicationProperties;
 import com.backend.constants.SecurityConstants;
 import com.backend.security.DomainUserDetails;
+import com.backend.utils.SecurityUtils;
 import com.google.common.collect.Lists;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -33,11 +34,10 @@ public class JwtTokenProvider implements TokenProvider {
 
 
     @Override
-    public String createToken(Authentication authentication,String prefix) {
-        String authorities = authentication.getAuthorities().stream()
+    public String createToken(DomainUserDetails principal) {
+        String authorities = SecurityUtils.getAuthentication().getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-        DomainUserDetails principal = (DomainUserDetails)authentication.getPrincipal();
         long now = (new Date()).getTime();
         Date validity=new Date(principal.isRememberMe()?now+properties.getSecurity().getExpirationTime_rememberMe()
                 :now+properties.getSecurity().getExpirationTime_no_rememberMe());

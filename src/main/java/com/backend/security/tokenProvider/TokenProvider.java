@@ -1,5 +1,6 @@
 package com.backend.security.tokenProvider;
 
+import com.backend.security.DomainUserDetails;
 import org.springframework.security.core.Authentication;
 
 /**
@@ -10,11 +11,10 @@ import org.springframework.security.core.Authentication;
 public interface TokenProvider {
     /**
      * 创建token
-     * @param authentication
-     * @param prefix 前缀
+     * @param userDetails
      * @return
      */
-    String createToken(Authentication authentication,String prefix);
+    String createToken(DomainUserDetails userDetails);
 
     /**
      * 通过token解析权限

@@ -33,20 +33,9 @@ public class RedisTokenProvider implements TokenProvider {
 
     private final ApplicationProperties properties;
 
-
-    /**
-     * @param authentication
-     * @param prefix         前缀
-     * @return
-     */
     @Override
-    public String createToken(Authentication authentication, String prefix) {
-        DomainUserDetails principal = (DomainUserDetails) authentication.getPrincipal();
+    public String createToken(DomainUserDetails principal) {
         String token = UUID.randomUUID().toString();
-        if(StringUtils.isNotBlank(prefix)){
-            //需要将token前面拼接前缀
-            token = prefix.concat(token);
-        }
         String key = AUTHORITIES_KEY.concat(token);
         redisTemplate.opsForValue().set(key,
                 principal,

@@ -82,7 +82,7 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         Result<LoginVO> result = new Result<>();
         DomainUserDetails userDetails = (DomainUserDetails) authResult.getPrincipal();
-        String token = redisTokenProvider.createToken(authResult, null);
+        String token = redisTokenProvider.createToken(userDetails);
         LoginVO loginVO = LoginVO.builder()
                 .accessToken(token)
                 .nickname(userDetails.getNickname())
