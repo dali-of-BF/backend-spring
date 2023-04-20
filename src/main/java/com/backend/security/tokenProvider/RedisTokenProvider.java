@@ -3,8 +3,8 @@ package com.backend.security.tokenProvider;
 import com.backend.config.ApplicationProperties;
 import com.backend.constants.Constant;
 import com.backend.constants.HeaderConstant;
-import com.backend.constants.SecurityRedisConstants;
-import com.backend.security.DomainUserDetails;
+import com.backend.constants.RedisConstants;
+import com.backend.security.domain.DomainUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -44,11 +44,6 @@ public class RedisTokenProvider implements TokenProvider {
                 TimeUnit.MILLISECONDS);
         return token;
     }
-
-    /**
-     * @param token
-     * @return
-     */
     @Override
     public Authentication getAuthentication(String token) {
         DomainUserDetails userDetails = (DomainUserDetails) redisTemplate
@@ -90,7 +85,7 @@ public class RedisTokenProvider implements TokenProvider {
         if (StringUtils.isEmpty(token)) {
             return false;
         }
-        String key = SecurityRedisConstants.AUTHORITIES_KEY.concat(token);
+        String key = RedisConstants.AUTHORITIES_KEY.concat(token);
         return redisTemplate.delete(key);
     }
 
@@ -104,10 +99,6 @@ public class RedisTokenProvider implements TokenProvider {
         if (StringUtils.isNotBlank(bearerToken) && bearerToken.startsWith(properties.getSecurity().getTokenPrefix()+ Constant.SPACE)) {
             return bearerToken.substring(properties.getSecurity().getTokenPrefix().length()+1);
         }
-//        String jwt = request.getParameter(AUTHORIZATION_TOKEN);
-//        if (StringUtils.hasText(jwt)) {
-//            return jwt;
-//        }
         return "";
     }
 }

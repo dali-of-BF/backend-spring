@@ -1,5 +1,6 @@
 package com.backend.service.sys;
 
+import com.backend.constants.RedisConstants;
 import com.backend.constants.SwaggerGroupConstants;
 import com.backend.domain.entity.sys.SysResource;
 import com.backend.mapper.sys.SysResourceMapper;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StopWatch;
@@ -40,6 +42,7 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
 
     private final DocumentationCache documentationCache;
     private final ServiceModelToSwagger2Mapper serviceModelToSwagger2Mapper;
+    private final RedisTemplate<String,Object> redisTemplate;
 
 
     public List<SysResource> doRefreshResource() throws IllegalAccessException {
@@ -51,7 +54,11 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
         List<SysResource> resources = getResourceByGroupNameList(allFieldValue);
         stopWatch.stop();
         log.info("===> 扫描资源结束，耗时：{} 毫秒，总条数：{}", stopWatch.getLastTaskTimeMillis(),resources.size());
-        return addOrRemove(resources);
+        List<SysResource> sysResources = addOrRemove(resources);
+        //插入到redis中
+        redisTemplate.delete(RedisConstants.SOURCE_KEY);
+        redisTemplate.opsForValue().set(RedisConstants.SOURCE_KEY,sysResources);
+        return sysResources;
     }
 
     /**
