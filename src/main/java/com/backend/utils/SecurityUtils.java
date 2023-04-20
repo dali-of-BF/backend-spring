@@ -38,8 +38,7 @@ public class SecurityUtils {
      * @return
      */
     public static Optional<String> getCurrentUserLogin(){
-        SecurityContext context = SecurityContextHolder.getContext();
-        return Optional.ofNullable(extractPrincipal(context.getAuthentication()));
+        return Optional.ofNullable(extractPrincipal(getAuthentication()));
     }
 
     /**
@@ -68,8 +67,7 @@ public class SecurityUtils {
     }
 
     public static Optional<DomainUserDetails> getCurrentUserDetails() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        Authentication authentication = securityContext.getAuthentication();
+        Authentication authentication = getAuthentication();
         DomainUserDetails userDetails = null;
         if (ObjectUtils.isNotEmpty(authentication)) {
             if (authentication.getDetails() instanceof UserDetails) {
@@ -87,5 +85,13 @@ public class SecurityUtils {
         return Optional.ofNullable(userDetails);
     }
 
+    /**
+     * 获取Authentication
+     * @return
+     */
+    public static Authentication getAuthentication(){
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        return securityContext.getAuthentication();
+    }
 
 }
