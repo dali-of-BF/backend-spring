@@ -2,8 +2,8 @@ package com.backend.security;
 
 import com.backend.config.ApplicationProperties;
 import com.backend.constants.HeaderConstant;
-import com.backend.constants.SecurityConstants;
 import com.backend.exception.BusinessException;
+import com.backend.security.domain.DomainUserDetails;
 import com.backend.security.tokenProvider.JwtTokenProvider;
 import com.backend.security.tokenProvider.RedisTokenProvider;
 import lombok.extern.slf4j.Slf4j;
@@ -59,38 +59,24 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String clientCode = request.getHeader(HeaderConstant.APP_ID);
-        if(StringUtils.isNotBlank(clientCode)){
-            String token = redisTokenProvider.resolveToken(request);
-            if(StringUtils.isNotBlank(token)){
-                boolean isRedis=true;
-                if (clientCode.startsWith(SecurityConstants.APPID_WX)) {
-                    isRedis = false;
-                }
-                // TODO: 2023/4/9 判断是否使用redis的方法就是
-                //  是否属于pc端，如果是pc端，则使用redis鉴权，否则使用jwt实现鉴权，例如微信端
-                //  但后续肯定要改为oauth2的方式进行授权与鉴权，还在不断探索中
-                if (Boolean.TRUE.equals(isRedis)){
-                    try {
-                        Authentication authentication = redisTokenProvider.getAuthentication(token);
-                        if(Objects.nonNull(authentication)){
-                            DomainUserDetails principal = (DomainUserDetails) authentication.getPrincipal();
-                            redisTokenProvider.refreshExpiration(token,principal.getCurrent(),principal.isRememberMe());
-                            SecurityContextHolder.getContext().setAuthentication(authentication);
-                        }
-                    }catch (AuthenticationException e){
-                        SecurityContextHolder.clearContext();
-                        this.authenticationEntryPoint.commence(request, response, e);
-                        return;
-                    }
-                }else {
-                    if (jwtTokenProvider.validateToken(token)) {
-                        Authentication authentication = jwtTokenProvider.getAuthentication(token);
-                        SecurityContextHolder.getContext().setAuthentication(authentication);
-                    }
-                }
-            }
-        }else {
+        if(StringUtils.isBlank(clientCode)){
             throw new BusinessException(HeaderConstant.APP_ID+" not find");
+        }
+        String token = redisTokenProvider.resolveToken(request);
+        if(StringUtils.isBlank(token)){
+            throw new BusinessException("无法解析token，请联系管理员");
+        }
+        try {
+            Authentication authentication = redisTokenProvider.getAuthentication(token);
+            if(Objects.nonNull(authentication)){
+                DomainUserDetails principal = (DomainUserDetails) authentication.getPrincipal();
+                redisTokenProvider.refreshExpiration(token,principal.getCurrent(),principal.isRememberMe());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+        }catch (AuthenticationException e){
+            SecurityContextHolder.clearContext();
+            this.authenticationEntryPoint.commence(request, response, e);
+            return;
         }
         filterChain.doFilter(request, response);
     }
