@@ -56,7 +56,6 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
         log.info("===> 扫描资源结束，耗时：{} 毫秒，总条数：{}", stopWatch.getLastTaskTimeMillis(),resources.size());
         List<SysResource> sysResources = addOrRemove(resources);
         //插入到redis中
-        redisTemplate.delete(RedisConstants.SOURCE_KEY);
         redisTemplate.opsForValue().set(RedisConstants.SOURCE_KEY,sysResources);
         return sysResources;
     }

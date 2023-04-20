@@ -51,7 +51,7 @@ public class ResourceController {
         return Result.success(redisTemplate.opsForValue().get(RedisConstants.SOURCE_KEY)) ;
     }
     @PostMapping("/do-refresh-resource")
-    @ApiOperation("扫描接口并且更新sys_resource表")
+    @ApiOperation("扫描接口并且更新资源表与redis")
     public Result<List<SysResource>> doRefreshResource() throws IllegalAccessException {
         return Result.success(sysSourceService.doRefreshResource()) ;
     }
