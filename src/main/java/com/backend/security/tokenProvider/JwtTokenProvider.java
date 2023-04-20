@@ -33,14 +33,14 @@ public class JwtTokenProvider implements TokenProvider {
 
 
     @Override
-    public String createToken(Authentication authentication,String prefix, boolean rememberMe) {
+    public String createToken(Authentication authentication,String prefix) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-        long now = (new Date()).getTime();
-        Date validity=new Date(rememberMe?now+properties.getSecurity().getExpirationTime_rememberMe()
-                :now+properties.getSecurity().getExpirationTime_no_rememberMe());
         DomainUserDetails principal = (DomainUserDetails)authentication.getPrincipal();
+        long now = (new Date()).getTime();
+        Date validity=new Date(principal.isRememberMe()?now+properties.getSecurity().getExpirationTime_rememberMe()
+                :now+properties.getSecurity().getExpirationTime_no_rememberMe());
 
         return Jwts
                 .builder()

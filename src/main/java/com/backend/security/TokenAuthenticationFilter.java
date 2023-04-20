@@ -90,7 +90,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         }else {
-            throw new BusinessException(HeaderConstant.APP_ID+"not find");
+            throw new BusinessException(HeaderConstant.APP_ID+" not find");
         }
         filterChain.doFilter(request, response);
     }

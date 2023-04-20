@@ -12,10 +12,9 @@ public interface TokenProvider {
      * 创建token
      * @param authentication
      * @param prefix 前缀
-     * @param rememberMe
      * @return
      */
-    String createToken(Authentication authentication,String prefix, boolean rememberMe);
+    String createToken(Authentication authentication,String prefix);
 
     /**
      * 通过token解析权限

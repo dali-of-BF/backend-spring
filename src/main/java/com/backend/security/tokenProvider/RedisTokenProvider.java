@@ -37,11 +37,10 @@ public class RedisTokenProvider implements TokenProvider {
     /**
      * @param authentication
      * @param prefix         前缀
-     * @param rememberMe
      * @return
      */
     @Override
-    public String createToken(Authentication authentication, String prefix, boolean rememberMe) {
+    public String createToken(Authentication authentication, String prefix) {
         DomainUserDetails principal = (DomainUserDetails) authentication.getPrincipal();
         String token = UUID.randomUUID().toString();
         if(StringUtils.isNotBlank(prefix)){
@@ -51,7 +50,7 @@ public class RedisTokenProvider implements TokenProvider {
         String key = AUTHORITIES_KEY.concat(token);
         redisTemplate.opsForValue().set(key,
                 principal,
-                rememberMe?properties.getSecurity().getExpirationTime_rememberMe()
+                principal.isRememberMe()?properties.getSecurity().getExpirationTime_rememberMe()
                 :properties.getSecurity().getExpirationTime_no_rememberMe(),
                 TimeUnit.MILLISECONDS);
         return token;
