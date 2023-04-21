@@ -33,7 +33,7 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    @ApiOperation("登录")
+    @ApiOperation("退出登录")
     public Result<LoginVO> logout() {
         log.info("成功退出登录");
         return null;
