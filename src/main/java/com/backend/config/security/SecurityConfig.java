@@ -1,7 +1,6 @@
 package com.backend.config.security;
 
 import com.backend.security.*;
-import com.backend.security.tokenProvider.JwtTokenProvider;
 import com.backend.security.tokenProvider.RedisTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +27,6 @@ import org.springframework.web.filter.CorsFilter;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final JwtTokenProvider jwtTokenProvider;
     private final RedisTokenProvider redisTokenProvider;
     private final CorsFilter corsFilter;
     private final CustomAccessDecisionManager accessDecisionManager;
@@ -55,20 +53,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 处理基于用户名和密码的身份验证
-     * @return
-     * @throws Exception
-     */
-    @Bean
-    public UsernamePasswordAuthenticationFilterImpl usernamePasswordAuthenticationFilter() throws Exception {
-        UsernamePasswordAuthenticationFilterImpl filter = new UsernamePasswordAuthenticationFilterImpl();
-        filter.setAuthenticationManager(authenticationManagerBean());
-        filter.setFilterProcessesUrl("/auth/login");
-        filter.setPostOnly(Boolean.TRUE);
-        return filter;
-    }
-
-    /**
      * @param auth
      * @throws Exception
      */
@@ -88,7 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.exceptionHandling()
                 //.authenticationEntryPoint().and()
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(usernamePasswordAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new UsernamePasswordAuthenticationFilterImpl(),UsernamePasswordAuthenticationFilter.class)
                 .headers()
                 .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN).and()
                 //将策略设置为禁止使用以下功能：地理位置、MIDI、同步 XHR、麦克风、相机、磁力计、陀螺仪和付款。它允许全屏模式，但只允许在同一源中使用。

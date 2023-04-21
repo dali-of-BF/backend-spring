@@ -2,7 +2,6 @@ package com.backend.security;
 
 import com.backend.common.HttpStatus;
 import com.backend.common.result.Result;
-import com.backend.config.ApplicationProperties;
 import com.backend.constants.HeaderConstant;
 import com.backend.exception.BusinessException;
 import com.backend.security.domain.DomainUserDetails;
@@ -31,11 +30,14 @@ import java.util.Map;
  * @author FPH
  */
 public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAuthenticationFilter {
-    @Resource
-    private RedisTokenProvider redisTokenProvider;
 
     @Resource
-    private ApplicationProperties properties;
+    private  RedisTokenProvider redisTokenProvider;
+
+    public UsernamePasswordAuthenticationFilterImpl() {
+        this.setFilterProcessesUrl("/auth/login");
+        this.setPostOnly(Boolean.TRUE);
+    }
 
     /**
      * 调用登录接口是调用该方法
@@ -114,7 +116,7 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
      * @throws ServletException
      */
     @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
         Result<Object> result = new Result<>();
         String msg = "账号或密码错误，请重新输入";
         if (failed instanceof DisabledException) {
