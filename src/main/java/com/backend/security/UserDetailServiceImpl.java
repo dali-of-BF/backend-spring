@@ -1,18 +1,27 @@
 package com.backend.security;
 
-import com.backend.constants.Constant;
+import com.backend.constants.HeaderConstant;
 import com.backend.domain.entity.sys.SysAccount;
+import com.backend.domain.entity.sys.SysResource;
 import com.backend.enums.sys.DeletedEnum;
+import com.backend.enums.sys.IsSuperEnum;
 import com.backend.enums.sys.StatusEnum;
 import com.backend.mapper.sys.SysAccountMapper;
+import com.backend.mapper.sys.SysResourceMapper;
+import com.backend.security.domain.DomainUserDetails;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,16 +33,16 @@ import java.util.Optional;
 public class UserDetailServiceImpl implements UserDetailsService {
 
     private final SysAccountMapper sysAccountMapper;
+    private final HttpServletRequest request;
+    private final SysResourceMapper sysResourceMapper;
     /**
-     * @param s {@link UsernamePasswordAuthenticationFilterImpl 登录处理类}将s如何改造
+     * @param username {@link UsernamePasswordAuthenticationFilterImpl 登录处理类}将s如何改造
      * @return
      * @throws UsernameNotFoundException
      */
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        String[] usernameAndAppId = s.split(Constant.DASH);
-        String username = usernameAndAppId[0];
-        String appId = usernameAndAppId[1];
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        String appId = request.getHeader(HeaderConstant.APP_ID);
         SysAccount sysAccount = Optional.ofNullable(sysAccountMapper.selectOne(new LambdaQueryWrapper<SysAccount>()
                 .eq(SysAccount::getUsername, username)
                 .eq(SysAccount::getAppId,appId)
@@ -43,6 +52,29 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new DisabledException("您输入的账号已停用");
         }
         //校验通过后
-        return null;
+        return createUserDetails(sysAccount,appId);
+    }
+
+    public DomainUserDetails createUserDetails(SysAccount account, String appId) {
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        String accountId = account.getId();
+        List<SysResource> resources = sysResourceMapper.listByAccountId(account.getId(), appId);
+        resources.forEach(sysResource -> grantedAuthorities
+                .addAll(AuthorityUtils.commaSeparatedStringToAuthorityList(String.valueOf(sysResource.getId()))));
+        Boolean isSuperAdmin = IsSuperEnum.ENABLE.getValue().equals(account.getIsSuper())?Boolean.TRUE:Boolean.FALSE;
+
+        return DomainUserDetails.builder()
+                .username(account.getPhone())
+                .password(account.getPassword())
+                .current(accountId)
+                .phone(account.getPhone())
+                .avatar(account.getAvatar())
+                .gender(account.getGender())
+                .nickname(account.getUsername())
+                .authorities(grantedAuthorities)
+                .isEnabled(StatusEnum.ENABLE.getValue().equals(account.getStatus()))
+                .superAdmin(isSuperAdmin)
+                .appId(appId)
+                .build();
     }
 }

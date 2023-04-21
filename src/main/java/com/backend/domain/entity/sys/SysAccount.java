@@ -39,7 +39,7 @@ public class SysAccount extends BaseEntity implements Serializable {
     private String gender;
 
     /**
-     * 状态
+     * 状态 1正常 0异常
      */
     private Integer status;
 
