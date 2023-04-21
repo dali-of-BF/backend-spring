@@ -3,7 +3,6 @@ package com.backend.security;
 import com.backend.common.HttpStatus;
 import com.backend.common.result.Result;
 import com.backend.constants.HeaderConstant;
-import com.backend.exception.BusinessException;
 import com.backend.security.domain.DomainUserDetails;
 import com.backend.security.domain.LoginVO;
 import com.backend.security.tokenProvider.RedisTokenProvider;
@@ -50,8 +49,8 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String appId = request.getHeader(HeaderConstant.APP_ID);
-        if (StringUtils.isNotBlank(appId)){
-            throw new BusinessException("appid can not be null");
+        if (StringUtils.isBlank(appId)){
+            throw new AuthenticationServiceException(HeaderConstant.APP_ID+" can not be null");
         }
         //判断是否post请求
         if (!request.getMethod().equals(HttpMethod.POST.name())) {
