@@ -52,4 +52,9 @@ public class SysAccount extends BaseEntity implements Serializable {
      * 所属系统
      */
     private String appId;
+
+    /**
+     * 是否超管 1是0不是
+     */
+    private String isSuper;
 }

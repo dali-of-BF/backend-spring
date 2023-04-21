@@ -42,6 +42,9 @@ SET FOREIGN_KEY_CHECKS = 1;
 ALTER TABLE `base_spring`.`sys_account`
     ADD COLUMN `app_id` varchar(20) NOT NULL COMMENT '所属系统' AFTER `id_card`;
 
+ALTER TABLE `base_spring`.`sys_account`
+    ADD COLUMN `isSuper` tinyint(1) NULL COMMENT '1表示是超管 0表示不是' AFTER `app_id`;
+
 -- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
