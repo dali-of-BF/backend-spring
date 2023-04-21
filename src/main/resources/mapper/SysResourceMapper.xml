@@ -4,4 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.backend.mapper.sys.SysResourceMapper">
 
+    <select id="listByAccountId" resultType="com.backend.domain.entity.sys.SysResource">
+        # 目前暂时都是超管
+        select *
+        from sys_account sa
+        where app_id=#{appId}
+    </select>
 </mapper>
