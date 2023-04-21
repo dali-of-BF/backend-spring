@@ -16,6 +16,7 @@ import java.util.Collection;
  */
 @Getter
 @AllArgsConstructor
+@Builder
 public class DomainUserDetails implements UserDetails, Serializable {
     private static final long serialVersionUID = 2928965590106589921L;
     /**
