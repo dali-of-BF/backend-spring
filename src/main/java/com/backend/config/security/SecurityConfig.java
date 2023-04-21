@@ -5,7 +5,9 @@ import com.backend.security.tokenProvider.RedisTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -32,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomAccessDecisionManager accessDecisionManager;
     private final CustomSecurityMetadataSource securityMetadataSource;
     private final UserDetailServiceImpl userDetailService;
-    private final LogoutSuccessHandle logoutSuccessHandler;
+    private final UnAuthenticationEntryPoint unAuthenticationEntryPoint;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -52,6 +54,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
     /**
      * @param auth
      * @throws Exception
@@ -63,23 +71,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().permitAll().and()
+        http.authorizeRequests().anyRequest().authenticated().and()
                 .logout().logoutUrl("/auth/logout")
-                .logoutSuccessHandler(logoutSuccessHandler).and()
-                .exceptionHandling().and()
-                //闭CSRF保护即可。
+                .logoutSuccessHandler(new LogoutSuccessHandle(redisTokenProvider)).and()
+                //关闭CSRF保护
                 .csrf().disable()
-                //.exceptionHandling()
-                //.authenticationEntryPoint().and()
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new UsernamePasswordAuthenticationFilterImpl(),UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new UsernamePasswordAuthenticationFilterImpl(this.authenticationManager(),redisTokenProvider),UsernamePasswordAuthenticationFilter.class)
+                .addFilter(new TokenAuthenticationFilter(this.authenticationManager(),redisTokenProvider,unAuthenticationEntryPoint))
                 .headers()
                 .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN).and()
                 //将策略设置为禁止使用以下功能：地理位置、MIDI、同步 XHR、麦克风、相机、磁力计、陀螺仪和付款。它允许全屏模式，但只允许在同一源中使用。
-                .featurePolicy("geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'self'; payment 'none'").and()
-                .frameOptions()
-                .deny()
-                .and();//关
+                .featurePolicy("geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'self'; payment 'none'");
     }
 
     @Override

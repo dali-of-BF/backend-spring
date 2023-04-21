@@ -2,12 +2,14 @@ package com.backend.security.tokenProvider;
 
 import com.backend.security.domain.DomainUserDetails;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
 /**
  * 令牌提供接口
  * @author FPH
  * @since 2022年9月24日21:03:08
  */
+@Component
 public interface TokenProvider {
     /**
      * 创建token

@@ -4,11 +4,9 @@ import com.backend.common.HttpStatus;
 import com.backend.common.result.Result;
 import com.backend.security.tokenProvider.RedisTokenProvider;
 import com.backend.utils.JsonMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,11 +18,13 @@ import java.io.IOException;
  * @since 2023年4月19日11:10:28
  * 成功退出登录处理类
  */
-@RequiredArgsConstructor
-@Component
 public class LogoutSuccessHandle implements LogoutSuccessHandler {
 
     private final RedisTokenProvider redisTokenProvider;
+
+    public LogoutSuccessHandle(RedisTokenProvider redisTokenProvider) {
+        this.redisTokenProvider = redisTokenProvider;
+    }
 
     /**
      * @param request

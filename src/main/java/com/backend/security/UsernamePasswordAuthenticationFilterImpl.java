@@ -17,7 +17,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,10 +30,13 @@ import java.util.Map;
  */
 public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAuthenticationFilter {
 
-    @Resource
-    private  RedisTokenProvider redisTokenProvider;
 
-    public UsernamePasswordAuthenticationFilterImpl() {
+    private final AuthenticationManager authenticationManager;
+    private final RedisTokenProvider redisTokenProvider;
+
+    public UsernamePasswordAuthenticationFilterImpl(AuthenticationManager authenticationManager, RedisTokenProvider redisTokenProvider) {
+        this.redisTokenProvider=redisTokenProvider;
+        this.authenticationManager=authenticationManager;
         this.setFilterProcessesUrl("/auth/login");
         this.setPostOnly(Boolean.TRUE);
     }
@@ -62,7 +64,7 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
                 UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(authenticationBean.get(SPRING_SECURITY_FORM_USERNAME_KEY),
                         authenticationBean.get(SPRING_SECURITY_FORM_PASSWORD_KEY));
                 this.setDetails(request,authRequest);
-                return this.getAuthenticationManager().authenticate(authRequest);
+                return authenticationManager.authenticate(authRequest);
             }catch (Exception e){
                 throw new AuthenticationServiceException("UsernamePasswordAuthenticationFilterImpl ERROR");
             }
