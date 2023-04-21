@@ -57,6 +57,7 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
         List<SysResource> sysResources = addOrRemove(resources);
         //插入到redis中
         redisTemplate.opsForValue().set(RedisConstants.SOURCE_KEY,sysResources);
+        log.info("sysResource已更新:\n{}",sysResources);
         return sysResources;
     }
 

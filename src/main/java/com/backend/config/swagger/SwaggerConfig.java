@@ -37,103 +37,28 @@ public class SwaggerConfig {
     private String host=null;
 
     @Bean
-    public Docket DocketAccount() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .groupName(SwaggerGroupConstants.ACCOUNT_API)
-                .select()
-                /**
-                 * 扫描包
-                 */
-                .apis(RequestHandlerSelectors.basePackage("com.backend.controller.account"))
-                /**
-                 * 扫描在API注解的contorller
-                 */
-                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
-                /**
-                 * 扫描带ApiOperation注解的方法
-                 */
-                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
-                .paths(PathSelectors.any())
-                /**
-                 * 自定义host
-                 */
-                .build().host(host);
+    public Docket docketLogin() {
+        return buildDocket("com.backend.controller.login",SwaggerGroupConstants.LOGIN_API);
     }
 
     @Bean
-    public Docket DocketMonitor() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .groupName(SwaggerGroupConstants.MONITOR_API)
-                .select()
-                /**
-                 * 扫描包
-                 */
-                .apis(RequestHandlerSelectors.basePackage("com.backend.controller.monitor"))
-                /**
-                 * 扫描在API注解的contorller
-                 */
-                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
-                /**
-                 * 扫描带ApiOperation注解的方法
-                 */
-                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
-                .paths(PathSelectors.any())
-                /**
-                 * 自定义host
-                 */
-                .build().host(host);
+    public Docket docketAccount() {
+        return buildDocket("com.backend.controller.account",SwaggerGroupConstants.ACCOUNT_API);
     }
 
     @Bean
-    public Docket DocketResource() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .groupName(SwaggerGroupConstants.RESOURCE_API)
-                .select()
-                /**
-                 * 扫描包
-                 */
-                .apis(RequestHandlerSelectors.basePackage("com.backend.controller.resource"))
-                /**
-                 * 扫描在API注解的contorller
-                 */
-                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
-                /**
-                 * 扫描带ApiOperation注解的方法
-                 */
-                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
-                .paths(PathSelectors.any())
-                /**
-                 * 自定义host
-                 */
-                .build().host(host);
+    public Docket docketMonitor() {
+        return buildDocket("com.backend.controller.monitor",SwaggerGroupConstants.MONITOR_API);
     }
 
     @Bean
-    public Docket DocketTest() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .groupName(SwaggerGroupConstants.TEST_API)
-                .select()
-                /**
-                 * 扫描包
-                 */
-                .apis(RequestHandlerSelectors.basePackage("com.backend.controller.test"))
-                /**
-                 * 扫描在API注解的contorller
-                 */
-                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
-                /**
-                 * 扫描带ApiOperation注解的方法
-                 */
-                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
-                .paths(PathSelectors.any())
-                /**
-                 * 自定义host
-                 */
-                .build().host(host);
+    public Docket docketResource() {
+        return buildDocket("com.backend.controller.resource",SwaggerGroupConstants.RESOURCE_API);
+    }
+
+    @Bean
+    public Docket docketTest() {
+        return buildDocket("com.backend.controller.test",SwaggerGroupConstants.TEST_API);
     }
     private ApiInfo apiInfo() {
         String version = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
@@ -145,5 +70,29 @@ public class SwaggerConfig {
                 .licenseUrl("https://github.com/dali-of-BF/backend-spring.git")
                 .contact(null)
                 .build();
+    }
+
+    private Docket buildDocket(String basePackage,String groupName){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .groupName(groupName)
+                .select()
+                /**
+                 * 扫描包
+                 */
+                .apis(RequestHandlerSelectors.basePackage(basePackage))
+                /**
+                 * 扫描在API注解的contorller
+                 */
+                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
+                /**
+                 * 扫描带ApiOperation注解的方法
+                 */
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                .paths(PathSelectors.any())
+                /**
+                 * 自定义host
+                 */
+                .build().host(host);
     }
 }

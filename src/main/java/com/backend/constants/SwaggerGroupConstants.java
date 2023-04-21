@@ -24,4 +24,5 @@ public class SwaggerGroupConstants {
      * 资源处理API
      */
     public static final String RESOURCE_API = "resourceApi";
+    public static final String LOGIN_API = "loginApi";
 }
