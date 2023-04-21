@@ -57,4 +57,8 @@ public class SysAccount extends BaseEntity implements Serializable {
      * 是否超管 1是0不是
      */
     private String isSuper;
+    /**
+     * 头像
+     */
+    private String avatar;
 }

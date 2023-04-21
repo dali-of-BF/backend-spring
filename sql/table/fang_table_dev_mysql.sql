@@ -43,7 +43,11 @@ ALTER TABLE `base_spring`.`sys_account`
     ADD COLUMN `app_id` varchar(20) NOT NULL COMMENT '所属系统' AFTER `id_card`;
 
 ALTER TABLE `base_spring`.`sys_account`
-    ADD COLUMN `isSuper` tinyint(1) NULL COMMENT '1表示是超管 0表示不是' AFTER `app_id`;
+    ADD COLUMN `is_super` tinyint(1) NULL COMMENT '1表示是超管 0表示不是' AFTER `app_id`;
+
+ALTER TABLE `base_spring`.`sys_account`
+    MODIFY COLUMN `is_super` tinyint(1) NOT NULL DEFAULT 0 COMMENT '1表示是超管 0表示不是' AFTER `app_id`,
+    ADD COLUMN `avatar` varchar(500) NULL COMMENT '头像' AFTER `is_super`;
 
 -- ----------------------------
 -- Table structure for sys_role
