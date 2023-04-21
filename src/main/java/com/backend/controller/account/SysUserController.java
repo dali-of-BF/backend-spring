@@ -3,7 +3,6 @@ package com.backend.controller.account;
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
 import com.backend.domain.dto.BasePageDTO;
-import com.backend.domain.dto.SysAccountDTO;
 import com.backend.domain.entity.sys.SysAccount;
 import com.backend.service.sys.SysAccountService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -29,13 +28,6 @@ public class SysUserController {
     @ApiOperation("分页")
     public Result<IPage<SysAccount>> getPage(@Valid BasePageDTO dto){
         return Result.success(sysAccountService.getPage(dto.getPage(), dto.getSize()));
-    }
-
-    @PostMapping("save")
-    @ApiOperation("保存")
-    public Result<String> save(@RequestBody @Valid SysAccountDTO dto){
-        sysAccountService.saveEntity(dto);
-        return Result.success("保存成功");
     }
 
     @DeleteMapping("deleteById/{id}")

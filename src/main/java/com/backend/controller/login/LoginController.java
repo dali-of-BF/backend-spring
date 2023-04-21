@@ -2,8 +2,11 @@ package com.backend.controller.login;
 
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
+import com.backend.domain.dto.SysAccountDTO;
+import com.backend.domain.entity.sys.SysAccount;
 import com.backend.security.domain.LoginDTO;
 import com.backend.security.domain.LoginVO;
+import com.backend.service.sys.SysAccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +28,7 @@ import javax.validation.Valid;
 @Api(tags = "登录")
 @Slf4j
 public class LoginController {
+    private final SysAccountService sysAccountService;
     @PostMapping("/login")
     @ApiOperation("登录")
     public Result<LoginVO> login(@Valid @RequestBody LoginDTO login){
@@ -37,5 +41,10 @@ public class LoginController {
     public Result<LoginVO> logout() {
         log.info("成功退出登录");
         return null;
+    }
+    @PostMapping("register")
+    @ApiOperation("注册")
+    public Result<SysAccount> register(@Valid @RequestBody SysAccountDTO dto) {
+        return Result.success(sysAccountService.register(dto));
     }
 }
