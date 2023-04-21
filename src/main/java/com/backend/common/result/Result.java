@@ -1,7 +1,6 @@
 package com.backend.common.result;
 
 import com.backend.common.HttpStatus;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +19,6 @@ import java.io.Serializable;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "统一响应体")
 public class Result<T> implements Serializable {
 
     private static final long serialVersionUID = 4757669095623180497L;
