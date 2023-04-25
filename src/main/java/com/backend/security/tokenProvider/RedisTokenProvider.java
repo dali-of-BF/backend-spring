@@ -2,13 +2,13 @@ package com.backend.security.tokenProvider;
 
 import com.backend.config.ApplicationProperties;
 import com.backend.constants.Constant;
-import com.backend.constants.HeaderConstant;
 import com.backend.constants.RedisConstants;
 import com.backend.security.domain.DomainUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -95,7 +95,7 @@ public class RedisTokenProvider implements TokenProvider {
      * @return
      */
     public String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader(HeaderConstant.APP_ID);
+        String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (StringUtils.isNotBlank(bearerToken) && bearerToken.startsWith(properties.getSecurity().getTokenPrefix()+ Constant.SPACE)) {
             return bearerToken.substring(properties.getSecurity().getTokenPrefix().length()+1);
         }
