@@ -2,6 +2,7 @@ package com.backend.security;
 
 import com.backend.common.HttpStatus;
 import com.backend.common.result.Result;
+import com.backend.config.ApplicationProperties;
 import com.backend.constants.HeaderConstant;
 import com.backend.security.domain.DomainUserDetails;
 import com.backend.security.domain.LoginDTO;
@@ -32,10 +33,13 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
 
     private final AuthenticationManager authenticationManager;
     private final RedisTokenProvider redisTokenProvider;
+    private final ApplicationProperties properties;
 
-    public UsernamePasswordAuthenticationFilterImpl(AuthenticationManager authenticationManager, RedisTokenProvider redisTokenProvider) {
+    public UsernamePasswordAuthenticationFilterImpl(AuthenticationManager authenticationManager, RedisTokenProvider redisTokenProvider,
+                                                    ApplicationProperties properties) {
         this.redisTokenProvider=redisTokenProvider;
         this.authenticationManager=authenticationManager;
+        this.properties=properties;
         this.setFilterProcessesUrl("/auth/login");
         this.setPostOnly(Boolean.TRUE);
     }
@@ -97,6 +101,7 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
                 .avatar(userDetails.getAvatar())
                 .phone(userDetails.getPhone())
                 .superAdmin(userDetails.isSuperAdmin())
+                .tokenPrefix(properties.getSecurity().getTokenPrefix())
                 .build();
         result.setCode(HttpStatus.SUCCESS);
         result.setData(loginVO);

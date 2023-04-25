@@ -25,4 +25,7 @@ public class LoginVO {
 
     @ApiModelProperty(value = "记住我")
     private Boolean rememberMe;
+
+    @ApiModelProperty(value = "记住我")
+    private String tokenPrefix;
 }

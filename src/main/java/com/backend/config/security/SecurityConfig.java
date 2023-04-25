@@ -1,5 +1,6 @@
 package com.backend.config.security;
 
+import com.backend.config.ApplicationProperties;
 import com.backend.security.*;
 import com.backend.security.tokenProvider.RedisTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomSecurityMetadataSource securityMetadataSource;
     private final UserDetailServiceImpl userDetailService;
     private final UnAuthenticationEntryPoint unAuthenticationEntryPoint;
+    private final ApplicationProperties properties;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -77,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             //关闭CSRF保护
             .csrf().disable()
             .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(new UsernamePasswordAuthenticationFilterImpl(this.authenticationManager(),redisTokenProvider),UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(new UsernamePasswordAuthenticationFilterImpl(this.authenticationManager(),redisTokenProvider,properties),UsernamePasswordAuthenticationFilter.class)
             .addFilter(new TokenAuthenticationFilter(this.authenticationManager(),redisTokenProvider,unAuthenticationEntryPoint))
             .authorizeRequests()
             .anyRequest().authenticated()
