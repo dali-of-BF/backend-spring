@@ -4,6 +4,7 @@ import com.backend.config.ApplicationProperties;
 import com.backend.constants.Constant;
 import com.backend.constants.RedisConstants;
 import com.backend.security.domain.DomainUserDetails;
+import com.backend.utils.JsonMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -46,8 +47,8 @@ public class RedisTokenProvider implements TokenProvider {
     }
     @Override
     public Authentication getAuthentication(String token) {
-        DomainUserDetails userDetails = (DomainUserDetails) redisTemplate
-                .opsForValue().get(AUTHORITIES_KEY.concat(token));
+        DomainUserDetails userDetails = JsonMapper.covertValue(redisTemplate
+                .opsForValue().get(AUTHORITIES_KEY.concat(token)),DomainUserDetails.class);
         if (Objects.nonNull(userDetails)) {
             return new UsernamePasswordAuthenticationToken(userDetails, token, userDetails.getAuthorities());
         }

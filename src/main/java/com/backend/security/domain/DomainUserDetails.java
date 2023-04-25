@@ -1,10 +1,9 @@
 package com.backend.security.domain;
 
+import com.backend.config.security.GrantedAuthorityDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,6 +16,7 @@ import java.util.Collection;
 @Getter
 @AllArgsConstructor
 @Builder
+@NoArgsConstructor
 public class DomainUserDetails implements UserDetails, Serializable {
     private static final long serialVersionUID = 2928965590106589921L;
     /**
@@ -84,6 +84,7 @@ public class DomainUserDetails implements UserDetails, Serializable {
     /**
      * 权限
      */
+    @JsonDeserialize(using = GrantedAuthorityDeserializer.class)
     @Setter
     private Collection<? extends GrantedAuthority> authorities;
 
