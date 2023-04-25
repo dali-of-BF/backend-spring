@@ -11,6 +11,7 @@ import com.backend.mapper.sys.SysResourceMapper;
 import com.backend.security.domain.DomainUserDetails;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -43,6 +44,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String appId = request.getHeader(HeaderConstant.APP_ID);
+        String[] split = username.split("-");
+        username = split[0];
+        String rememberMe = split[1];
         SysAccount sysAccount = Optional.ofNullable(sysAccountMapper.selectOne(new LambdaQueryWrapper<SysAccount>()
                 .eq(SysAccount::getUsername, username)
                 .eq(SysAccount::getAppId,appId)
@@ -52,10 +56,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new DisabledException("您输入的账号已停用");
         }
         //校验通过后
-        return createUserDetails(sysAccount,appId);
+        return createUserDetails(sysAccount,appId,rememberMe);
     }
 
-    public DomainUserDetails createUserDetails(SysAccount account, String appId) {
+    public DomainUserDetails createUserDetails(SysAccount account, String appId,String rememberMe) {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         String accountId = account.getId();
         List<SysResource> resources = sysResourceMapper.listByAccountId(account.getId(), appId);
@@ -74,6 +78,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 .authorities(grantedAuthorities)
                 .isEnabled(StatusEnum.ENABLE.getValue().equals(account.getStatus()))
                 .superAdmin(isSuperAdmin)
+                .rememberMe(StringUtils.isNotBlank(rememberMe)?Boolean.valueOf(rememberMe):Boolean.FALSE)
                 .appId(appId)
                 .build();
     }

@@ -4,6 +4,7 @@ import com.backend.common.HttpStatus;
 import com.backend.common.result.Result;
 import com.backend.constants.HeaderConstant;
 import com.backend.security.domain.DomainUserDetails;
+import com.backend.security.domain.LoginDTO;
 import com.backend.security.domain.LoginVO;
 import com.backend.security.tokenProvider.RedisTokenProvider;
 import com.backend.utils.JsonMapper;
@@ -21,7 +22,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * 发起登录请求后的过滤与处理
@@ -59,10 +59,12 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
         //判断ContentType类型
         if(MediaType.APPLICATION_JSON_VALUE.equals(request.getContentType())){
             try {
-                Map<String,String> authenticationBean = JsonMapper.readValue(request.getInputStream(), Map.class);
-                UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(authenticationBean.get(SPRING_SECURITY_FORM_USERNAME_KEY),
-                        authenticationBean.get(SPRING_SECURITY_FORM_PASSWORD_KEY));
-                this.setDetails(request,authRequest);
+                LoginDTO loginDTO = JsonMapper.readValue(request.getInputStream(), LoginDTO.class);
+                String usernameAndRememberMe = String.format("%s%s%s", loginDTO.getUsername(),
+                        "-", loginDTO.getRememberMe());
+                UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(usernameAndRememberMe,
+                        loginDTO.getPassword());
+                setDetails(request,authRequest);
                 return authenticationManager.authenticate(authRequest);
             }catch (Exception e){
                 throw new AuthenticationServiceException("UsernamePasswordAuthenticationFilterImpl ERROR");
@@ -91,7 +93,7 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
                 .accessToken(token)
                 .nickname(userDetails.getNickname())
                 .gender(userDetails.getGender())
-                .firstTimeLogin(userDetails.isFirstTimeLogin())
+                .rememberMe(userDetails.isRememberMe())
                 .avatar(userDetails.getAvatar())
                 .phone(userDetails.getPhone())
                 .superAdmin(userDetails.isSuperAdmin())

@@ -20,8 +20,9 @@ public class LoginVO {
     private String avatar;
     @ApiModelProperty(value = "性别：1-男;0-女")
     private String gender;
-    @ApiModelProperty(value = "是否首次登录")
-    private Boolean firstTimeLogin;
     @ApiModelProperty(value = "是否超管")
     private Boolean superAdmin;
+
+    @ApiModelProperty(value = "记住我")
+    private Boolean rememberMe;
 }
