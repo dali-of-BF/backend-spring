@@ -53,10 +53,6 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
             return;
         }
         String token = redisTokenProvider.resolveToken(request);
-        if(StringUtils.isBlank(token)){
-            ResponseUtils.error(response,"无法解析token，请联系管理员");
-            return;
-        }
         try {
             Authentication authentication = redisTokenProvider.getAuthentication(token);
             if(Objects.nonNull(authentication)){

@@ -2,6 +2,7 @@ package com.backend.domain.entity.sys;
 
 import com.backend.domain.entity.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ public class SysAccount extends BaseEntity implements Serializable {
     /**
      * 密码
      */
+    @JsonIgnore
     private String password;
 
     /**
