@@ -47,11 +47,6 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String clientCode = request.getHeader(HeaderConstant.APP_ID);
-        if(StringUtils.isBlank(clientCode)){
-            ResponseUtils.error(response,HeaderConstant.APP_ID+" not find");
-            return;
-        }
         String token = redisTokenProvider.resolveToken(request);
         try {
             Authentication authentication = redisTokenProvider.getAuthentication(token);
