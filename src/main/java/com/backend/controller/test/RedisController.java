@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022年10月28日10:03:44
  */
 @RestController
-@RequestMapping(ApiPathConstants.REDIS)
+@RequestMapping(ApiPathConstants.TEST_REDIS)
 @RequiredArgsConstructor
 @Api(tags = "redis测试类")
 public class RedisController {
