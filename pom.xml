@@ -12,7 +12,10 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>2.5.8</spring-boot.version>
+        <spring-boot.version>2.7.11</spring-boot.version>
+
+        <druid.version>1.2.8</druid.version>
+        <mysql.version>8.0.33</mysql.version>
     </properties>
 
     <dependencies>
@@ -21,7 +24,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.2.8</version>
+            <version>${druid.version}</version>
         </dependency>
 
         <!-- redis-->
@@ -61,24 +64,20 @@
             </exclusions>
         </dependency>
 
-        <!-- swagger2-->
+        <!-- Swagger2 -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>3.0.0</version>
         </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <!--swagger doc.html所需jar包-->
+
+        <!-- Knife4j -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>2.0.4</version>
+            <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
+            <version>4.1.0</version>
         </dependency>
-        <!-- 处理swagger 报错：illegal defaultValue null for param type integer异常，  -->
+        <!-- 处理swagger 报错：illegal defaultValue null for param type integer异常  -->
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
@@ -94,6 +93,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
         </dependency>
 
         <!--postgresql驱动包-->
@@ -158,6 +158,7 @@
             <version>4.4</version>
         </dependency>
 
+        <!--lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -168,12 +169,14 @@
             <artifactId>jasypt-spring-boot-starter</artifactId>
             <version>3.0.4</version>
         </dependency>
+
         <!-- 浏览器解析工具       -->
         <dependency>
             <groupId>eu.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
             <version>1.21</version>
         </dependency>
+
         <!-- http请求包-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -185,6 +188,12 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>5.8.12</version>
+        </dependency>
+<!--        谷歌包-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>30.1-jre</version>
         </dependency>
 
         <!--       获取系统信息 -->
