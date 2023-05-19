@@ -25,4 +25,5 @@ public class SwaggerGroupConstants {
      */
     public static final String RESOURCE_API = "resourceApi";
     public static final String LOGIN_API = "loginApi";
+    public static final String DEFAULT = "default";
 }

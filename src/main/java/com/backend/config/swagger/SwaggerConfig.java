@@ -37,29 +37,34 @@ public class SwaggerConfig {
     private String host=null;
 
     @Bean
-    public Docket docketLogin() {
-        return buildDocket("com.backend.controller.login",SwaggerGroupConstants.LOGIN_API);
+    public Docket docketDefault() {
+        return buildDocket("com.backend.controller",SwaggerGroupConstants.DEFAULT);
     }
 
-    @Bean
-    public Docket docketAccount() {
-        return buildDocket("com.backend.controller.account",SwaggerGroupConstants.ACCOUNT_API);
-    }
+//    @Bean
+//    public Docket docketLogin() {
+//        return buildDocket("com.backend.controller.login",SwaggerGroupConstants.LOGIN_API);
+//    }
+//
+//    @Bean
+//    public Docket docketAccount() {
+//        return buildDocket("com.backend.controller.account",SwaggerGroupConstants.ACCOUNT_API);
+//    }
+//
+//    @Bean
+//    public Docket docketMonitor() {
+//        return buildDocket("com.backend.controller.monitor",SwaggerGroupConstants.MONITOR_API);
+//    }
+//
+//    @Bean
+//    public Docket docketResource() {
+//        return buildDocket("com.backend.controller.resource",SwaggerGroupConstants.RESOURCE_API);
+//    }
 
-    @Bean
-    public Docket docketMonitor() {
-        return buildDocket("com.backend.controller.monitor",SwaggerGroupConstants.MONITOR_API);
-    }
-
-    @Bean
-    public Docket docketResource() {
-        return buildDocket("com.backend.controller.resource",SwaggerGroupConstants.RESOURCE_API);
-    }
-
-    @Bean
-    public Docket docketTest() {
-        return buildDocket("com.backend.controller.test",SwaggerGroupConstants.TEST_API);
-    }
+//    @Bean
+//    public Docket docketTest() {
+//        return buildDocket("com.backend.controller.test",SwaggerGroupConstants.TEST_API);
+//    }
     private ApiInfo apiInfo() {
         String version = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
         return new ApiInfoBuilder()
@@ -77,21 +82,21 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .groupName(groupName)
                 .select()
-                /**
-                 * 扫描包
+                /*
+                  扫描包
                  */
                 .apis(RequestHandlerSelectors.basePackage(basePackage))
-                /**
-                 * 扫描在API注解的contorller
+                /*
+                  扫描在API注解的contorller
                  */
                 .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
-                /**
-                 * 扫描带ApiOperation注解的方法
+                /*
+                  扫描带ApiOperation注解的方法
                  */
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
-                /**
-                 * 自定义host
+                /*
+                  自定义host
                  */
                 .build().host(host);
     }
