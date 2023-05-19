@@ -7,11 +7,13 @@ import com.backend.domain.entity.sys.SysAccount;
 import com.backend.service.sys.SysAccountService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author FPH
@@ -21,7 +23,7 @@ import javax.validation.Valid;
 @RequestMapping(ApiPathConstants.SYS_ACCOUNT)
 @RequiredArgsConstructor
 @Api(tags = "系统用户管理")
-public class SysUserController {
+public class SysAccountController {
     private final SysAccountService sysAccountService;
 
     @GetMapping("page")
@@ -35,5 +37,13 @@ public class SysUserController {
     public Result<String> deleteById(@PathVariable("id") String id){
         sysAccountService.removeById(id);
         return Result.success("删除成功");
+    }
+
+    @PostMapping("resetPassword/{id}")
+    @ApiOperation("重置用户密码")
+    @ApiImplicitParam(name = "id",value = "用户id",required = false)
+    public Result<String> resetPassword(@PathVariable("id") @NotNull(message = "用户id不可为空") String id){
+        sysAccountService.resetPassword(id);
+        return Result.success("重置成功");
     }
 }
