@@ -42,6 +42,7 @@ public class LoginController {
         log.info("成功退出登录");
         return null;
     }
+
     @PostMapping("register")
     @ApiOperation("注册")
     public Result<SysAccount> register(@Valid @RequestBody SysAccountDTO dto) {
