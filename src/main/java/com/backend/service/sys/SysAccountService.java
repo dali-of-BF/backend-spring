@@ -1,8 +1,10 @@
 package com.backend.service.sys;
 
+import com.backend.config.ApplicationProperties;
 import com.backend.constants.HeaderConstant;
 import com.backend.domain.dto.SysAccountDTO;
 import com.backend.domain.entity.sys.SysAccount;
+import com.backend.exception.BusinessException;
 import com.backend.mapper.sys.SysAccountMapper;
 import com.backend.utils.JsonMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 /**
  * @author FPH
@@ -23,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class SysAccountService extends ServiceImpl<SysAccountMapper, SysAccount> {
     private final HttpServletRequest request;
+    private final ApplicationProperties properties;
 
     /**
      * 分页
@@ -43,8 +47,8 @@ public class SysAccountService extends ServiceImpl<SysAccountMapper, SysAccount>
     public SysAccount register(SysAccountDTO dto){
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         SysAccount sysAccount = JsonMapper.covertValue(dto, SysAccount.class);
-        sysAccount.setAppId(request.getHeader(HeaderConstant.APP_ID));
-        sysAccount.setPassword(bCryptPasswordEncoder.encode(sysAccount.getPassword()));
+        sysAccount.setAppId(Optional.ofNullable(request.getHeader(HeaderConstant.APP_ID)).orElseThrow(()->new BusinessException("appId不存在")));
+        sysAccount.setPassword(bCryptPasswordEncoder.encode(properties.getSecurity().getDefaultPassword()));
         save(sysAccount);
         return sysAccount;
     }

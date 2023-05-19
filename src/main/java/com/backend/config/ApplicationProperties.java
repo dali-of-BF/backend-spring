@@ -37,5 +37,10 @@ public class ApplicationProperties {
          * token前缀
          */
         private String tokenPrefix;
+
+        /**
+         * 用户注册默认密码
+         */
+        private String defaultPassword;
     }
 }

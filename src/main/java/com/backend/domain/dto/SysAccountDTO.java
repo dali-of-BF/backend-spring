@@ -27,11 +27,6 @@ public class SysAccountDTO {
     @Length(max = 11,message = "手机号长度不可超出11位")
     private String phone;
 
-    @ApiModelProperty("密码")
-    @NotBlank(message = "密码不可为空")
-    @Length(max = 100,message = "密码长度不可超出100位")
-    private String password;
-
     @ApiModelProperty("性别")
     @NotBlank(message = "性别不可为空")
     private String gender;

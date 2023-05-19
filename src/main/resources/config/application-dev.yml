@@ -70,3 +70,4 @@ application:
     #两小时过期
     expirationTime_no_rememberMe: 7200000
     tokenPrefix: Bearer
+    defaultPassword: 123456

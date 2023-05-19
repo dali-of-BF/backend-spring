@@ -45,6 +45,6 @@ public class LoginController {
     @PostMapping("register")
     @ApiOperation("注册")
     public Result<SysAccount> register(@Valid @RequestBody SysAccountDTO dto) {
-        return Result.success(sysAccountService.register(dto));
+        return Result.success(sysAccountService.register(dto),"注册成功");
     }
 }
