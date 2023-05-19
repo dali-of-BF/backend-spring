@@ -10,6 +10,7 @@ public class ApiPathConstants {
     public static final String MONITOR="/monitor";
     public static final String AUTH="/auth";
     public static final String SYS_ACCOUNT=SYS+"/account";
+    public static final String SYS_MENU=SYS+"/menu";
     public static final String TEST="/test";
 
     public static final String TEST_REDIS =TEST+"/redis";
