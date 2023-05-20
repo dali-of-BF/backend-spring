@@ -2,7 +2,7 @@ package com.backend.controller.login;
 
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
-import com.backend.domain.dto.SysAccountDTO;
+import com.backend.domain.dto.sys.SysAccountDTO;
 import com.backend.domain.entity.sys.SysAccount;
 import com.backend.security.domain.LoginDTO;
 import com.backend.security.domain.LoginVO;

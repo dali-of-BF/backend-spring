@@ -1,8 +1,9 @@
 package com.backend.service.sys;
 
 import com.backend.config.ApplicationProperties;
+import com.backend.config.security.SecurityConfig;
 import com.backend.constants.HeaderConstant;
-import com.backend.domain.dto.SysAccountDTO;
+import com.backend.domain.dto.sys.SysAccountDTO;
 import com.backend.domain.entity.sys.SysAccount;
 import com.backend.exception.BusinessException;
 import com.backend.mapper.sys.SysAccountMapper;
@@ -31,6 +32,7 @@ public class SysAccountService extends ServiceImpl<SysAccountMapper, SysAccount>
     private final HttpServletRequest request;
     private final ApplicationProperties properties;
     private final SysAccountMapper sysAccountMapper;
+    private final SecurityConfig securityConfig;
 
     /**
      * 分页
@@ -71,5 +73,26 @@ public class SysAccountService extends ServiceImpl<SysAccountMapper, SysAccount>
         SysAccount account = Optional.ofNullable(this.getById(id)).orElseThrow(() -> new BusinessException("用户不存在"));
         account.setPassword(properties.getSecurity().getDefaultPassword());
         this.updateById(account);
+    }
+
+    /**
+     * 修改用户密码
+     *
+     * @param id
+     * @param password
+     * @param oldPassword
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void changePassword(String id, String password, String oldPassword) {
+        SysAccount account = Optional.ofNullable(this.getById(id)).orElseThrow(() -> new BusinessException("用户不存在"));
+        if (!securityConfig.passwordEncoder().matches(oldPassword,account.getPassword())){
+            throw new BusinessException("旧密码错误");
+        }
+        if (securityConfig.passwordEncoder().matches(password,account.getPassword())){
+            throw new BusinessException("新密码不能同原密码相同");
+        }
+        account.setPassword(securityConfig.passwordEncoder().encode(password));
+        this.updateById(account);
+        // TODO: 2023/5/19 移除token
     }
 }

@@ -3,17 +3,17 @@ package com.backend.controller.account;
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
 import com.backend.domain.dto.BasePageDTO;
+import com.backend.domain.dto.sys.SysAccountPwdChangeDTO;
 import com.backend.domain.entity.sys.SysAccount;
 import com.backend.service.sys.SysAccountService;
+import com.backend.utils.SecurityUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 /**
  * @author FPH
@@ -39,11 +39,17 @@ public class SysAccountController {
         return Result.success("删除成功");
     }
 
-    @PostMapping("resetPassword/{id}")
+    @PostMapping("resetPassword")
     @ApiOperation("重置用户密码")
-    @ApiImplicitParam(name = "id",value = "用户id",required = false)
-    public Result<String> resetPassword(@PathVariable("id") @NotNull(message = "用户id不可为空") String id){
+    public Result<String> resetPassword(String id){
         sysAccountService.resetPassword(id);
         return Result.success("重置成功");
+    }
+
+    @PostMapping("changePassword")
+    @ApiOperation("修改用户密码")
+    public Result<String> changePassword(@Valid @RequestBody SysAccountPwdChangeDTO dto){
+        sysAccountService.changePassword(SecurityUtils.getAccountId(),dto.getNewPassword(), dto.getOldPassword());
+        return Result.success("修改成功");
     }
 }

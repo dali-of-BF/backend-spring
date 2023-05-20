@@ -1,4 +1,4 @@
-package com.backend.domain.dto;
+package com.backend.domain.dto.sys;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

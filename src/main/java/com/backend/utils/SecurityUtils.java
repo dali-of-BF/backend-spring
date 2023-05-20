@@ -54,6 +54,18 @@ public class SecurityUtils {
     }
 
     /**
+     * 获取账号id
+     * @return
+     */
+    public static String getAccountId(){
+        Optional<DomainUserDetails> currentUserDetails = getCurrentUserDetails();
+        if (Objects.nonNull(currentUserDetails) && currentUserDetails.isPresent()) {
+            return currentUserDetails.get().getCurrent();
+        }
+        return null;
+    }
+
+    /**
      * 是否超管
      * @return
      */
