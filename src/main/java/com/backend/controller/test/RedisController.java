@@ -2,10 +2,10 @@ package com.backend.controller.test;
 
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
+import com.backend.utils.RedisUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,18 +22,18 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "redis测试类")
 public class RedisController {
 
-    private final RedisTemplate<String,String> redisTemplate;
+    private final RedisUtils redisUtils;
 
     @PostMapping("/save")
     @ApiOperation("保存redis")
     public Result<String> saveRedis(String key, String message){
-        redisTemplate.opsForValue().set(key,message);
-        return Result.success(redisTemplate.opsForValue().get(key),"");
+        redisUtils.setCacheObject(key,message);
+        return Result.success("保存成功");
     }
 
     @GetMapping("/query")
     @ApiOperation("查询redis")
     public Result<String> query(String key){
-        return Result.success(redisTemplate.opsForValue().get(key),"");
+        return Result.success(redisUtils.getCacheObject(key),"");
     }
 }
