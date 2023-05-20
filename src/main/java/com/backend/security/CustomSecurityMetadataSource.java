@@ -54,7 +54,7 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
         PathMatcher pathMatcher = new AntPathMatcher();
         final String prefix = StringUtils.isNoneBlank(contextPath)
                 && !"/".equals(contextPath) ? contextPath : "";
-        if (isSuper && StringUtils.isNotEmpty(appId)) {
+        if (isSuper && StringUtils.isNotBlank(appId)) {
             List<SysResource> superResources = sysResourceMapper.selectList(new LambdaQueryWrapper<SysResource>()
                     .eq(SysResource::getAppId,appId)
                     .eq(SysResource::getDeleted,Boolean.FALSE));

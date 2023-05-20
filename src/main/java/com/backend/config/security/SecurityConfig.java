@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final RedisTokenProvider redisTokenProvider;
     private final CorsFilter corsFilter;
     private final CustomAccessDecisionManager accessDecisionManager;
-    private final CustomSecurityMetadataSource securityMetadataSource;
+    private final CustomSecurityMetadataSource customSecurityMetadataSource;
     private final UserDetailServiceImpl userDetailService;
     private final UnAuthenticationEntryPoint unAuthenticationEntryPoint;
     private final ApplicationProperties properties;
@@ -78,11 +78,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutSuccessHandler(new LogoutSuccessHandle(redisTokenProvider)).and()
             //关闭CSRF保护
             .csrf().disable()
+
             .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(new UsernamePasswordAuthenticationFilterImpl(this.authenticationManager(),redisTokenProvider,properties),UsernamePasswordAuthenticationFilter.class)
             .addFilter(new TokenAuthenticationFilter(this.authenticationManager(),redisTokenProvider,unAuthenticationEntryPoint))
             .authorizeRequests()
             .anyRequest().authenticated()
+             .withObjectPostProcessor(new FilterSecurityInterceptorPostProcessor(accessDecisionManager, customSecurityMetadataSource))
             .and()
             .headers()
             .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN).and()

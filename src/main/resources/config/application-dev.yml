@@ -71,3 +71,5 @@ application:
     expirationTime_no_rememberMe: 7200000
     tokenPrefix: Bearer
     defaultPassword: 123456
+  resource:
+    enableResourceInit: unInit

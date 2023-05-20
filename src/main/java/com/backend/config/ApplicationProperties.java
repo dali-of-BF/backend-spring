@@ -1,19 +1,19 @@
 package com.backend.config;
 
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author FPH
  */
+@Getter
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
 public class ApplicationProperties {
 
     private final Security security = new Security();
+    private final Resource resource = new Resource();
 
-    public Security getSecurity() {
-        return security;
-    }
 
     @Data
     public static class Security{
@@ -42,5 +42,13 @@ public class ApplicationProperties {
          * 用户注册默认密码
          */
         private String defaultPassword;
+    }
+
+    @Data
+    public static class Resource{
+        /**
+         * 项目启动时是否初始化资源表 init开启 unInit不开启
+         */
+        private String enableResourceInit;
     }
 }

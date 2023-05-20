@@ -1,5 +1,7 @@
 package com.backend.controller.pc.resource;
 
+import com.backend.config.ApplicationProperties;
+import com.backend.enums.properties.ResourceEnum;
 import com.backend.service.sys.SysSourceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -12,12 +14,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ResourceRunner implements CommandLineRunner {
     private final SysSourceService sysSourceService;
+    private final ApplicationProperties properties;
     /**
      * @param args
      * @throws Exception
      */
     @Override
     public void run(String... args) throws Exception {
-        sysSourceService.doRefreshResource();
+        if(ResourceEnum.INIT.getValue().equals(properties.getResource().getEnableResourceInit())){
+            sysSourceService.doRefreshResource();
+        }
     }
 }
