@@ -33,7 +33,7 @@ public class RedisController {
 
     @GetMapping("/query")
     @ApiOperation("查询redis")
-    public Result<String> query(String key){
+    public Result<Object> query(String key){
         return Result.success(redisUtils.getCacheObject(key),"");
     }
 }
