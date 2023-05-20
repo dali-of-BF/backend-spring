@@ -20,8 +20,8 @@ public class RedisConfig {
      */
     @Bean
     @SuppressWarnings(value = { "unchecked", "rawtypes" })
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
+    public <T,V> RedisTemplate<T, V> redisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<T, V> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
 
         FastJsonRedisSerializer serializer = new FastJsonRedisSerializer(Object.class);
