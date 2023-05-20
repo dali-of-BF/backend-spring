@@ -1,4 +1,4 @@
-package com.backend.controller.resource;
+package com.backend.controller.pc.resource;
 
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;

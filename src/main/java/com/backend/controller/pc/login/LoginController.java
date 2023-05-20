@@ -1,4 +1,4 @@
-package com.backend.controller.login;
+package com.backend.controller.pc.login;
 
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;

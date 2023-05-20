@@ -1,4 +1,4 @@
-package com.backend.controller.monitor;
+package com.backend.controller.pc.monitor;
 
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
