@@ -5,10 +5,10 @@ import com.backend.constants.Constant;
 import com.backend.constants.RedisConstants;
 import com.backend.security.domain.DomainUserDetails;
 import com.backend.utils.JsonMapper;
+import com.backend.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,7 +30,7 @@ import static com.backend.constants.SecurityRedisConstants.AUTHORITIES_KEY;
 @RequiredArgsConstructor
 public class RedisTokenProvider implements TokenProvider {
 
-    private final RedisTemplate<String,Object> redisTemplate;
+    private final RedisUtils redisUtils;
 
     private final ApplicationProperties properties;
 
@@ -38,17 +38,16 @@ public class RedisTokenProvider implements TokenProvider {
     public String createToken(DomainUserDetails principal) {
         String token = UUID.randomUUID().toString();
         String key = AUTHORITIES_KEY.concat(token);
-        redisTemplate.opsForValue().set(key,
+        redisUtils.setCacheObject(key,
                 principal,
                 principal.isRememberMe()?properties.getSecurity().getExpirationTime_rememberMe()
-                :properties.getSecurity().getExpirationTime_no_rememberMe(),
+                        :properties.getSecurity().getExpirationTime_no_rememberMe(),
                 TimeUnit.MILLISECONDS);
         return token;
     }
     @Override
     public Authentication getAuthentication(String token) {
-        DomainUserDetails userDetails = JsonMapper.covertValue(redisTemplate
-                .opsForValue().get(AUTHORITIES_KEY.concat(token)),DomainUserDetails.class);
+        DomainUserDetails userDetails = JsonMapper.covertValue(redisUtils.getCacheObject(AUTHORITIES_KEY.concat(token)),DomainUserDetails.class);
         if (Objects.nonNull(userDetails)) {
             return new UsernamePasswordAuthenticationToken(userDetails, token, userDetails.getAuthorities());
         }
@@ -61,8 +60,7 @@ public class RedisTokenProvider implements TokenProvider {
      */
     @Override
     public boolean validateToken(String authToken) {
-        DomainUserDetails userDetails = (DomainUserDetails) redisTemplate.opsForValue()
-                .get(AUTHORITIES_KEY.concat(authToken));
+        DomainUserDetails userDetails = redisUtils.getCacheObject(AUTHORITIES_KEY.concat(authToken));
         return Objects.nonNull(userDetails);
     }
 
@@ -71,7 +69,7 @@ public class RedisTokenProvider implements TokenProvider {
     public Boolean refreshExpiration(String token, String loginUserId,boolean rememberMe) {
         String key = AUTHORITIES_KEY.concat(token);
         //重置其时间
-        redisTemplate.expire(key,rememberMe ?
+        redisUtils.expire(key,rememberMe ?
                 properties.getSecurity().getExpirationTime_rememberMe()
                 :properties.getSecurity().getExpirationTime_no_rememberMe(), TimeUnit.MILLISECONDS);
         return true;
@@ -87,7 +85,7 @@ public class RedisTokenProvider implements TokenProvider {
             return false;
         }
         String key = RedisConstants.AUTHORITIES_KEY.concat(token);
-        return redisTemplate.delete(key);
+        return redisUtils.deleteObject(key);
     }
 
     /**
