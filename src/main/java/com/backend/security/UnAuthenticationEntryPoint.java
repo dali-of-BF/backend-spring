@@ -25,6 +25,6 @@ public class UnAuthenticationEntryPoint implements AuthenticationEntryPoint {
      */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        ResponseUtils.error(response,"未授权");
+        ResponseUtils.forbidden(response,"未授权");
     }
 }

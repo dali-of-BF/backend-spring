@@ -1,16 +1,12 @@
 package com.backend.security;
 
-import com.backend.common.result.ResponseUtils;
-import com.backend.constants.HeaderConstant;
 import com.backend.security.domain.DomainUserDetails;
 import com.backend.security.tokenProvider.RedisTokenProvider;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -24,7 +20,7 @@ import java.util.Objects;
  * 如果找到与有效用户对应的标头，则过滤传入请求并安装 Spring Security 主体。
  */
 @Slf4j
-public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
+public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final  RedisTokenProvider redisTokenProvider;
 
@@ -32,8 +28,7 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
 
 
 
-    public TokenAuthenticationFilter(AuthenticationManager authenticationManager,RedisTokenProvider redisTokenProvider,UnAuthenticationEntryPoint authenticationEntryPoint) {
-        super(authenticationManager);
+    public TokenAuthenticationFilter(RedisTokenProvider redisTokenProvider,UnAuthenticationEntryPoint authenticationEntryPoint) {
         this.redisTokenProvider=redisTokenProvider;
         this.authenticationEntryPoint=authenticationEntryPoint;
     }
@@ -55,6 +50,10 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
                 //更新一下token的过期时间
                 redisTokenProvider.refreshExpiration(token,principal.getCurrent(),principal.isRememberMe());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+            }else {
+                SecurityContextHolder.clearContext();
+                authenticationEntryPoint.commence(request, response, null);
+                return;
             }
         }catch (AuthenticationException e){
             SecurityContextHolder.clearContext();

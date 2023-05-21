@@ -81,15 +81,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
             .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(new UsernamePasswordAuthenticationFilterImpl(this.authenticationManager(),redisTokenProvider,properties),UsernamePasswordAuthenticationFilter.class)
-            .addFilter(new TokenAuthenticationFilter(this.authenticationManager(),redisTokenProvider,unAuthenticationEntryPoint))
             .authorizeRequests()
             .anyRequest().authenticated()
              .withObjectPostProcessor(new FilterSecurityInterceptorPostProcessor(accessDecisionManager, customSecurityMetadataSource))
             .and()
             .headers()
-            .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN).and()
-            //将策略设置为禁止使用以下功能：地理位置、MIDI、同步 XHR、麦克风、相机、磁力计、陀螺仪和付款。它允许全屏模式，但只允许在同一源中使用。
-            .featurePolicy("geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'self'; payment 'none'");
+            .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN);
+
+        //把token校验过滤器添加到过滤器链中
+        http.addFilterBefore(new TokenAuthenticationFilter(redisTokenProvider,unAuthenticationEntryPoint), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
