@@ -19,6 +19,11 @@ public class ResponseUtils {
         Result<Object> result = new Result<>();
         result.setCode(code);
         result.setData(data);
+        //如果是非200的错误异常，则error也写入状态码与错误信息
+        if(!code.equals(HttpStatus.SUCCESS)){
+            result.getError().setCode(code);
+            result.getError().setMessage(String.valueOf(data));
+        }
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpStatus.SUCCESS);
