@@ -2,7 +2,7 @@ package com.backend.controller.pc.sys;
 
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
-import com.backend.domain.dto.BasePageDTO;
+import com.backend.domain.entity.base.BasePageDTO;
 import com.backend.domain.entity.sys.SysMenu;
 import com.backend.service.sys.SysMenuService;
 import io.swagger.annotations.Api;

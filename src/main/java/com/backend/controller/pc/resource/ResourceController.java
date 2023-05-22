@@ -4,7 +4,7 @@ import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
 import com.backend.constants.RedisConstants;
 import com.backend.constants.SwaggerGroupConstants;
-import com.backend.domain.dto.BasePageDTO;
+import com.backend.domain.entity.base.BasePageDTO;
 import com.backend.domain.entity.sys.SysResource;
 import com.backend.service.sys.SysSourceService;
 import com.backend.utils.ClassUtils;

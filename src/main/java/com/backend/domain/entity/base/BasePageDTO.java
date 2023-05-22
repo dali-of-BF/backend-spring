@@ -1,4 +1,4 @@
-package com.backend.domain.dto;
+package com.backend.domain.entity.base;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
