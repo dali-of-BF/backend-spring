@@ -25,4 +25,9 @@ public class LoginDTO {
 
     @ApiModelProperty("记住我")
     private Boolean rememberMe;
+
+    public LoginDTO() {
+        //rememberMe默认为false
+        this.rememberMe = Boolean.FALSE;
+    }
 }
