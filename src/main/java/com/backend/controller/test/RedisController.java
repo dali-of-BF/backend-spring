@@ -36,4 +36,10 @@ public class RedisController {
     public Result<Object> query(String key){
         return Result.success(redisUtils.getCacheObject(key),"");
     }
+
+    @GetMapping("/remove")
+    @ApiOperation("删除redis")
+    public Result<Object> remove(String key){
+        return Result.success(redisUtils.deleteObject(key),"删除成功");
+    }
 }
