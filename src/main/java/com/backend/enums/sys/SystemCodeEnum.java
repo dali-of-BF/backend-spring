@@ -8,14 +8,15 @@ import lombok.Getter;
  */
 
 @Getter
-public enum StatusEnum implements IEnum<Integer> {
-    ENABLE(1, "启用"),
-    DISABLE(0, "禁用");
+public enum SystemCodeEnum implements IEnum<String> {
 
-    private final Integer value;
+    PC("pc", "pc端"),
+    WX("wx", "wx端");
+
+    private final String value;
     private final String desc;
 
-    StatusEnum(Integer value, String desc) {
+    SystemCodeEnum(String value, String desc) {
         this.value = value;
         this.desc = desc;
     }
