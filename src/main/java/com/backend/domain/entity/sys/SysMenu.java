@@ -1,6 +1,7 @@
 package com.backend.domain.entity.sys;
 
 import com.backend.domain.entity.base.BaseEntity;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("sys_menu")
 public class SysMenu extends BaseEntity implements Serializable {
 
 
