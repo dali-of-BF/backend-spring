@@ -1,4 +1,4 @@
-package com.backend.controller.pc.account;
+package com.backend.controller.pc.sys;
 
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
