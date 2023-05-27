@@ -121,7 +121,6 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
      * @param response
      * @param failed
      * @throws IOException
-     * @throws ServletException
      */
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {

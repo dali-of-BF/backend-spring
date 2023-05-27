@@ -71,7 +71,8 @@ public class SysAccountService extends ServiceImpl<SysAccountMapper, SysAccount>
     @Transactional(rollbackFor = Exception.class)
     public void resetPassword(String id) {
         SysAccount account = Optional.ofNullable(this.getById(id)).orElseThrow(() -> new BusinessException("用户不存在"));
-        account.setPassword(properties.getSecurity().getDefaultPassword());
+        account.setPassword(securityConfig.passwordEncoder()
+                .encode(properties.getSecurity().getDefaultPassword()));
         this.updateById(account);
     }
 
