@@ -3,6 +3,7 @@ package com.backend.service.sys;
 import com.backend.constants.RedisConstants;
 import com.backend.constants.SwaggerGroupConstants;
 import com.backend.domain.entity.sys.SysResource;
+import com.backend.enums.sys.DeletedEnum;
 import com.backend.mapper.sys.SysResourceMapper;
 import com.backend.utils.ClassUtils;
 import com.backend.utils.RedisUtils;
@@ -160,7 +161,8 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
     public List<SysResource> getResource(){
         SysResource sysResource = redisUtils.getCacheObject(RedisConstants.SOURCE_KEY);
         if (Objects.isNull(sysResource)){
-            List<SysResource> list = this.list();
+            List<SysResource> list = this.list(new LambdaQueryWrapper<SysResource>()
+                    .eq(SysResource::getDeleted, DeletedEnum.UNDELETED.getValue()));
             //插入redis
             redisUtils.setCacheList(RedisConstants.SOURCE_KEY,list);
             return list;
