@@ -9,7 +9,8 @@ public enum TimeFormatEnum {
     DATE_TIME("yyyy-MM-dd HH:mm:ss"),
     DATE_MINUTE("yyyy-MM-dd HH:mm"),
     MINUTE_TIME("HH:mm"),
-    HOUR_MINUTE_TIME("HH:mm:ss");
+    HOUR_MINUTE_TIME("HH:mm:ss"),
+    TIME_SSS("HH:mm:ss.SSS");
 
     private final String format;
 

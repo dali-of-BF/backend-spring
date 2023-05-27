@@ -20,6 +20,10 @@ public class TimeUtils {
      */
     public static SimpleDateFormat DATE_FORMAT;
     /**
+     * HH-mm-ss:sss
+     */
+    public static SimpleDateFormat TIME_SSS;
+    /**
      * yyyy-MM-dd HH:mm:ss
      */
     public static SimpleDateFormat DATE_TIME_FORMAT;
@@ -124,6 +128,10 @@ public class TimeUtils {
 
     public static Date toDate(LocalDate localDate) {
         return toDate(localDate.atStartOfDay());
+    }
+    public static Date toDate(Long l,SimpleDateFormat simpleDateFormat) {
+        String format = simpleDateFormat.format(new Date(l));
+        return toDate(format,simpleDateFormat);
     }
 
     public static Date toDate(Calendar calendar, String format) {
@@ -335,5 +343,6 @@ public class TimeUtils {
         DATE_TIME_FORMAT = new SimpleDateFormat(TimeFormatEnum.DATE_TIME.getFormat());
         MINUTE_FORMAT = new SimpleDateFormat(TimeFormatEnum.DATE_MINUTE.getFormat());
         TIME_FORMAT = new SimpleDateFormat(TimeFormatEnum.HOUR_MINUTE_TIME.getFormat());
+        TIME_SSS = new SimpleDateFormat(TimeFormatEnum.TIME_SSS.getFormat());
     }
 }
