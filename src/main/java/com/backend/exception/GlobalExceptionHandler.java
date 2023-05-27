@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public Result<Object> handlerBindException(HttpServletRequest request, BusinessException e) {
-        log.error("API 地址：[{}]，业务处理异常！错误原因：[{}]", request.getRequestURL(), e.getMessage(), e);
+        log.error("API 地址：[{}]", request.getRequestURL());
         return Result.error(e.getStackCode(), e.getStackMsg(),HttpStatus.ERROR,e.getStackMsg());
     }
 
