@@ -2,12 +2,12 @@ package com.backend.controller.pc.resource;
 
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
-import com.backend.constants.RedisConstants;
 import com.backend.constants.SwaggerGroupConstants;
 import com.backend.domain.entity.base.BasePageDTO;
 import com.backend.domain.entity.sys.SysResource;
 import com.backend.service.sys.SysSourceService;
 import com.backend.utils.ClassUtils;
+import com.backend.utils.RedisUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -15,7 +15,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +35,7 @@ import java.util.List;
 public class ResourceController {
 
     private final SysSourceService sysSourceService;
-    private final RedisTemplate<String,Object> redisTemplate;
+    private final RedisUtils redisUtils;
 
     @GetMapping("/get-resources")
     @ApiOperation("通过swagger获取系统接口集合")
@@ -46,9 +45,9 @@ public class ResourceController {
     }
 
     @GetMapping("/get-resources-by-redis")
-    @ApiOperation("通过redis获取系统资源表信息")
-    public Result<Object> getResourceByRedis() {
-        return Result.success(redisTemplate.opsForValue().get(RedisConstants.SOURCE_KEY)) ;
+    @ApiOperation("获取资源表信息，先从redis开始")
+    public Result<List<SysResource>> getResourceByRedis() {
+        return Result.success(sysSourceService.getResource()) ;
     }
     @PostMapping("/do-refresh-resource")
     @ApiOperation("扫描接口并且更新资源表与redis")

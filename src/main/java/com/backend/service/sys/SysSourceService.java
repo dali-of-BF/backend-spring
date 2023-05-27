@@ -5,6 +5,7 @@ import com.backend.constants.SwaggerGroupConstants;
 import com.backend.domain.entity.sys.SysResource;
 import com.backend.mapper.sys.SysResourceMapper;
 import com.backend.utils.ClassUtils;
+import com.backend.utils.RedisUtils;
 import com.backend.utils.SecurityUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
@@ -18,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StopWatch;
@@ -26,6 +26,7 @@ import springfox.documentation.service.Documentation;
 import springfox.documentation.spring.web.DocumentationCache;
 import springfox.documentation.swagger2.mappers.ServiceModelToSwagger2Mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -42,7 +43,7 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
 
     private final DocumentationCache documentationCache;
     private final ServiceModelToSwagger2Mapper serviceModelToSwagger2Mapper;
-    private final RedisTemplate<String,Object> redisTemplate;
+    private final RedisUtils redisUtils;
 
 
     public List<SysResource> doRefreshResource() throws IllegalAccessException {
@@ -56,7 +57,7 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
         log.info("===> 扫描资源结束，耗时：{} 毫秒，总条数：{}", stopWatch.getLastTaskTimeMillis(),resources.size());
         List<SysResource> sysResources = addOrRemove(resources);
         //插入到redis中
-        redisTemplate.opsForValue().set(RedisConstants.SOURCE_KEY,sysResources);
+        redisUtils.setCacheList(RedisConstants.SOURCE_KEY,sysResources);
         log.info("sysResource已更新:\n{}",sysResources);
         return sysResources;
     }
@@ -150,5 +151,20 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
             }
         }
         return StringUtils.isNotBlank(method) ? (method.substring(0, method.length() - 1)) : method.toString();
+    }
+
+    /**
+     * 获取resource表集合（先查缓存再查数据库）
+     * @return
+     */
+    public List<SysResource> getResource(){
+        SysResource sysResource = redisUtils.getCacheObject(RedisConstants.SOURCE_KEY);
+        if (Objects.isNull(sysResource)){
+            List<SysResource> list = this.list();
+            //插入redis
+            redisUtils.setCacheList(RedisConstants.SOURCE_KEY,list);
+            return list;
+        }
+        return new ArrayList<>();
     }
 }
