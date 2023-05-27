@@ -16,6 +16,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.core.NamedThreadLocal;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,7 @@ import java.util.TimerTask;
 @Component
 @RequiredArgsConstructor
 @Slf4j
+@Order(1) //最高优先级
 public class LogAspect {
     /** 计算操作消耗时间 */
     private static final ThreadLocal<Long> TIME_THREADLOCAL = new NamedThreadLocal<>("Cost Time");

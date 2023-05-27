@@ -9,7 +9,7 @@ import java.lang.annotation.*;
  * @author FPH
  *
  */
-@Target({ ElementType.PARAMETER, ElementType.METHOD })
+@Target({ ElementType.PARAMETER, ElementType.METHOD ,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Log {

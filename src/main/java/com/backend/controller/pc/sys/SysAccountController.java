@@ -29,6 +29,7 @@ public class SysAccountController {
 
     @GetMapping("page")
     @ApiOperation("分页")
+    @Log
     public Result<IPage<SysAccount>> getPage(@Valid BasePageDTO dto){
         return Result.success(sysAccountService.getPage(dto.getPage(), dto.getSize()));
     }
@@ -49,7 +50,6 @@ public class SysAccountController {
 
     @PostMapping("changePassword")
     @ApiOperation("修改用户密码")
-    @Log
     public Result<String> changePassword(@Valid @RequestBody SysAccountPwdChangeDTO dto){
         sysAccountService.changePassword(SecurityUtils.getAccountId(),dto.getNewPassword(), dto.getOldPassword());
         return Result.success("修改成功");

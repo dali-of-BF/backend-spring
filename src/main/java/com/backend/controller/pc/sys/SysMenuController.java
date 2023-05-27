@@ -1,5 +1,6 @@
 package com.backend.controller.pc.sys;
 
+import com.backend.annotation.Log;
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
 import com.backend.domain.entity.base.BasePageDTO;
@@ -23,6 +24,7 @@ import java.util.List;
 @RequestMapping(ApiPathConstants.SYS_MENU)
 @RequiredArgsConstructor
 @Api(tags = "系统菜单管理")
+@Log
 public class SysMenuController {
 
     private final SysMenuService sysMenuService;
