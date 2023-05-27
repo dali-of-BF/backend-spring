@@ -2,6 +2,7 @@ package com.backend.domain.entity.sys;
 
 import com.backend.domain.entity.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,6 +39,7 @@ public class SysLog extends BaseEntity {
     /**
      * 运行持续时间
      */
+    @JsonFormat(timezone = "Asia/Shanghai",pattern = "HH:mm:ss.SSS")
     private Date costTime;
     /**
      * 操作人
@@ -47,4 +49,8 @@ public class SysLog extends BaseEntity {
      * 错误日志
      */
     private String error;
+    /**
+     * 操作方法
+     */
+    private String method;
 }
