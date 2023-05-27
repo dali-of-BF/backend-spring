@@ -27,7 +27,6 @@ import springfox.documentation.service.Documentation;
 import springfox.documentation.spring.web.DocumentationCache;
 import springfox.documentation.swagger2.mappers.ServiceModelToSwagger2Mapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -159,7 +158,7 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
      * @return
      */
     public List<SysResource> getResource(){
-        SysResource sysResource = redisUtils.getCacheObject(RedisConstants.SOURCE_KEY);
+        List<SysResource> sysResource = redisUtils.getCacheList(RedisConstants.SOURCE_KEY);
         if (Objects.isNull(sysResource)){
             List<SysResource> list = this.list(new LambdaQueryWrapper<SysResource>()
                     .eq(SysResource::getDeleted, DeletedEnum.UNDELETED.getValue()));
@@ -167,6 +166,6 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
             redisUtils.setCacheList(RedisConstants.SOURCE_KEY,list);
             return list;
         }
-        return new ArrayList<>();
+        return sysResource;
     }
 }
