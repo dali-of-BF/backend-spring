@@ -1,7 +1,7 @@
 package com.backend.security;
 
 import com.backend.domain.entity.sys.SysResource;
-import com.backend.mapper.sys.SysResourceMapper;
+import com.backend.service.sys.SysSourceService;
 import com.backend.utils.SecurityUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ import java.util.List;
 @Component
 public class CustomSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
-    private final SysResourceMapper sysResourceMapper;
+    private final SysSourceService sysSourceService;
 
     @Value("${server.servlet.context-path}")
     private String contextPath;
@@ -43,8 +43,7 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
         Collection<ConfigAttribute> configAttributes = new ArrayList<>();
         String appId = SecurityUtils.getAppId();
         boolean isSuper = SecurityUtils.isSuper();
-        List<SysResource> resources = sysResourceMapper.selectList(new LambdaQueryWrapper<SysResource>()
-                .eq(SysResource::getDeleted,Boolean.FALSE));
+        List<SysResource> resources =sysSourceService.getResource();
 
         //Object中包含用户请求request
         String method = ((FilterInvocation) object).getHttpRequest().getMethod();
@@ -55,7 +54,7 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
         final String prefix = StringUtils.isNoneBlank(contextPath)
                 && !"/".equals(contextPath) ? contextPath : "";
         if (isSuper && StringUtils.isNotBlank(appId)) {
-            List<SysResource> superResources = sysResourceMapper.selectList(new LambdaQueryWrapper<SysResource>()
+            List<SysResource> superResources = sysSourceService.list(new LambdaQueryWrapper<SysResource>()
                     .eq(SysResource::getAppId,appId)
                     .eq(SysResource::getDeleted,Boolean.FALSE));
             for (SysResource resource : superResources) {
