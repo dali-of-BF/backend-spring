@@ -11,7 +11,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
-      url: jdbc:mysql://47.107.47.184:3306/base_spring?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&yearIsDateType=false&stringtype=unspecified
+      url: jdbc:mysql://47.107.47.184:3306/base_spring?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&yearIsDateType=false&stringtype=unspecified&jiansuo=true
       username: baseSpring
       # 44A8B4F7C0723A4C2A12858C7DD0FEE0
       password: 123qwe
