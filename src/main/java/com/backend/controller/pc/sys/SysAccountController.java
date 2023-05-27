@@ -1,5 +1,6 @@
 package com.backend.controller.pc.sys;
 
+import com.backend.annotation.Log;
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
 import com.backend.domain.dto.sys.SysAccountPwdChangeDTO;
@@ -48,6 +49,7 @@ public class SysAccountController {
 
     @PostMapping("changePassword")
     @ApiOperation("修改用户密码")
+    @Log
     public Result<String> changePassword(@Valid @RequestBody SysAccountPwdChangeDTO dto){
         sysAccountService.changePassword(SecurityUtils.getAccountId(),dto.getNewPassword(), dto.getOldPassword());
         return Result.success("修改成功");
