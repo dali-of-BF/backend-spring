@@ -1,6 +1,8 @@
 package com.backend.annotation;
 
 
+import org.springframework.http.HttpMethod;
+
 import java.lang.annotation.*;
 
 /**
@@ -13,5 +15,9 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Log {
-
+    /**
+     * 排除请求，默认get请求不记录至日志
+     * @return
+     */
+    HttpMethod[] excludeMethodType() default {HttpMethod.GET};
 }

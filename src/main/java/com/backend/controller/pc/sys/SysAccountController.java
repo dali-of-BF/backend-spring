@@ -24,12 +24,12 @@ import javax.validation.Valid;
 @RequestMapping(ApiPathConstants.SYS_ACCOUNT)
 @RequiredArgsConstructor
 @Api(tags = "系统用户管理")
+@Log
 public class SysAccountController {
     private final SysAccountService sysAccountService;
 
     @GetMapping("page")
     @ApiOperation("分页")
-    @Log
     public Result<IPage<SysAccount>> getPage(@Valid BasePageDTO dto){
         return Result.success(sysAccountService.getPage(dto.getPage(), dto.getSize()));
     }

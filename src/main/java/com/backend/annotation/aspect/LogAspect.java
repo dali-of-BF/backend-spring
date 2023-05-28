@@ -17,14 +17,15 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * @author FPH
+ * 日志aop
  */
 @Aspect
 @Component
@@ -36,7 +37,7 @@ public class LogAspect {
     private static final ThreadLocal<Long> TIME_THREADLOCAL = new NamedThreadLocal<>("Cost Time");
     private final HttpServletRequest request;
     private final SysLogMapper sysLogMapper;
-    @Before(value = "@annotation(controllerLog)")
+    @Before(value = "@within(controllerLog) || @annotation(controllerLog)")
     public void boBefore(JoinPoint joinPoint, Log controllerLog) {
         TIME_THREADLOCAL.set(System.currentTimeMillis());
     }
@@ -48,7 +49,15 @@ public class LogAspect {
      */
     @AfterReturning(pointcut = "@annotation(controllerLog)", returning = "jsonResult")
     public void doAfterReturning(JoinPoint joinPoint, Log controllerLog, Object jsonResult) {
-        handleLog(joinPoint, controllerLog, null, jsonResult);
+        handleLog(joinPoint, controllerLog, null);
+    }
+
+    @AfterReturning(pointcut = "@within(controllerLog)", returning = "jsonResult")
+    public void doAfterReturningInClass(JoinPoint joinPoint, Log controllerLog, Object jsonResult) {
+        // 获取类级别上的注解信息
+        Class<?> targetClass = joinPoint.getTarget().getClass();
+        Log classLog = targetClass.getAnnotation(Log.class);
+        handleLog(joinPoint, classLog, null);
     }
 
     /**
@@ -59,10 +68,24 @@ public class LogAspect {
      */
     @AfterThrowing(value = "@annotation(controllerLog)", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Log controllerLog, Exception e) {
-        handleLog(joinPoint, controllerLog, e, null);
+        handleLog(joinPoint, controllerLog, e);
     }
-    protected void handleLog(final JoinPoint joinPoint, Log controllerLog, final Exception e, Object jsonResult) {
+
+    @AfterThrowing(value = "@within(controllerLog)", throwing = "e")
+    public void doAfterThrowingInClass(JoinPoint joinPoint, Log controllerLog, Exception e) {
+        // 获取类级别上的注解信息
+        Class<?> targetClass = joinPoint.getTarget().getClass();
+        Log classLog = targetClass.getAnnotation(Log.class);
+        handleLog(joinPoint, classLog, e);
+    }
+
+    protected void handleLog(final JoinPoint joinPoint, Log controllerLog, final Exception e) {
         try {
+            //当遇到排除请求则不记录
+            Set<HttpMethod> fieldSet = new HashSet<>(Arrays.asList(controllerLog.excludeMethodType()));
+            if (Boolean.TRUE.equals(fieldSet.contains(HttpMethod.resolve(request.getMethod())))) {
+                return;
+            }
             // 获取当前的用户名
             String username = SecurityUtils.getUsername();
 

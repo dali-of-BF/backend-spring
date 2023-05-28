@@ -3,18 +3,13 @@ package com.backend.controller.pc.sys;
 import com.backend.annotation.Log;
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
-import com.backend.domain.entity.base.BasePageDTO;
 import com.backend.domain.entity.sys.SysMenu;
 import com.backend.service.sys.SysMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -36,7 +31,14 @@ public class SysMenuController {
     }
     @PostMapping("save")
     @ApiOperation("保存菜单")
-    public Result<List<SysMenu>> save(@Valid BasePageDTO dto){
+    public Result<List<SysMenu>> save(){
         return Result.success(sysMenuService.list());
     }
+
+    @DeleteMapping("delete")
+    @ApiOperation("删除菜单")
+    public Result<List<SysMenu>> delete(){
+        return Result.success(sysMenuService.list());
+    }
+
 }
