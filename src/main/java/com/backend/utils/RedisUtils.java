@@ -5,6 +5,7 @@ import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -214,5 +215,9 @@ public class RedisUtils {
      */
     public Collection<String> keys(final String pattern) {
         return redisTemplate.keys(pattern);
+    }
+
+    public <T> T execute(RedisScript<T> redisScript,List<Object> keys,Object... args){
+        return (T)redisTemplate.execute(redisScript,keys,args);
     }
 }
