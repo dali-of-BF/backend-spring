@@ -132,6 +132,8 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
             msg = "您输入的账号不存在，请重新输入！";
         } else if (failed instanceof InternalAuthenticationServiceException) {
             msg = failed.getMessage();
+        }else if (failed instanceof AuthenticationServiceException){
+            msg = failed.getMessage();
         }
         result.setCode(HttpStatus.UNAUTHORIZED);
         result.getError().setCode(HttpStatus.UNAUTHORIZED);

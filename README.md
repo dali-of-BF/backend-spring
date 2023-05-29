@@ -63,5 +63,5 @@ springboot整合一些工具的demo
 6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
 
 #### 主要提交日志
-vwqetgsrthwr6tuysrgjnsrtyhsejn
-整合一系列框架，数据库密码加密，测试redis、postgresql是否正常连通、解决swagger2报错
+#### 代办
+解析token需要再判断appId所属何处
