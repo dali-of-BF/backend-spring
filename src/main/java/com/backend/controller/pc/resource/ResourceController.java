@@ -1,5 +1,6 @@
 package com.backend.controller.pc.resource;
 
+import com.backend.annotation.Log;
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
 import com.backend.constants.SwaggerGroupConstants;
@@ -32,6 +33,7 @@ import java.util.List;
 @RequestMapping(ApiPathConstants.RESOURCE)
 @RequiredArgsConstructor
 @Api(tags = "资源表扫描")
+@Log
 public class ResourceController {
 
     private final SysSourceService sysSourceService;

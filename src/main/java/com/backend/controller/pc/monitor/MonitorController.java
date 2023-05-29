@@ -1,5 +1,6 @@
 package com.backend.controller.pc.monitor;
 
+import com.backend.annotation.Log;
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
 import com.backend.domain.entity.monitor.Server;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(ApiPathConstants.MONITOR)
 @RequiredArgsConstructor
 @Api(tags = "查看本机system")
+@Log
 public class MonitorController {
 
     @GetMapping("/server")

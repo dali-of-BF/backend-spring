@@ -1,5 +1,6 @@
 package com.backend.controller.pc.monitor;
 
+import com.backend.annotation.Log;
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
 import com.backend.service.userAgent.UserAgentService;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(ApiPathConstants.USER_AGENT)
 @RequiredArgsConstructor
 @Api(tags = "浏览器解析")
+@Log
 public class UserAgentController {
 
     private final UserAgentService userAgentService;

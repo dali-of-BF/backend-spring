@@ -1,5 +1,6 @@
 package com.backend.controller.pc.login;
 
+import com.backend.annotation.Log;
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
 import com.backend.domain.dto.sys.SysAccountDTO;
@@ -27,6 +28,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @Api(tags = "登录")
 @Slf4j
+@Log
 public class LoginController {
     private final SysAccountService sysAccountService;
     @PostMapping("/login")
