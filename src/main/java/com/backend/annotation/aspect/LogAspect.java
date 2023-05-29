@@ -8,6 +8,7 @@ import com.backend.utils.AsyncManager;
 import com.backend.utils.SecurityUtils;
 import com.backend.utils.SpringUtils;
 import com.backend.utils.TimeUtils;
+import com.backend.utils.http.IpUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -79,7 +80,7 @@ public class LogAspect {
             SysLog operLog = new SysLog();
             operLog.setStatus(StatusEnum.ENABLE.getValue());
             // TODO: 2023/5/27 请求的地址
-            String ip = "UNKNOWN";
+            String ip = IpUtils.getHostIp();
             operLog.setIp(ip);
             operLog.setUrl(StringUtils.substring(request.getRequestURI(), 0, 255));
             if (StringUtils.isNotBlank(username)) {
