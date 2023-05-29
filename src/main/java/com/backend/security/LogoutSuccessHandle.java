@@ -32,9 +32,12 @@ public class LogoutSuccessHandle implements LogoutSuccessHandler {
      * @param authentication
      * @throws IOException
      * @throws ServletException
+     * onLogoutSuccess 方法实际上是在实现 LogoutSuccessHandler 接口的回调方法，而不是一个被切入的方法。
+     * 切面是用于拦截和处理方法调用的，而不是接口回调方法。因此，无法直接在接口回调方法上应用切面。
      */
+    //@Log
     @Override
-    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication){
         redisTokenProvider.removeToken(redisTokenProvider.resolveToken(request));
         Result<Object> result = new Result<>();
         result.setCode(HttpStatus.SUCCESS);

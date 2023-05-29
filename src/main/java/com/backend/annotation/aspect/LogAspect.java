@@ -37,8 +37,8 @@ public class LogAspect {
     private static final ThreadLocal<Long> TIME_THREADLOCAL = new NamedThreadLocal<>("Cost Time");
     private final HttpServletRequest request;
     private final SysLogMapper sysLogMapper;
-    @Before(value = "@within(controllerLog) || @annotation(controllerLog)")
-    public void boBefore(JoinPoint joinPoint, Log controllerLog) {
+    @Before(value = "@within(log) || @annotation(log)")
+    public void boBefore(JoinPoint joinPoint, Log log) {
         TIME_THREADLOCAL.set(System.currentTimeMillis());
     }
 
@@ -47,13 +47,13 @@ public class LogAspect {
      *
      * @param joinPoint 切点
      */
-    @AfterReturning(pointcut = "@annotation(controllerLog)", returning = "jsonResult")
-    public void doAfterReturning(JoinPoint joinPoint, Log controllerLog, Object jsonResult) {
-        handleLog(joinPoint, controllerLog, null);
+    @AfterReturning(pointcut = "@annotation(log)", returning = "jsonResult")
+    public void doAfterReturning(JoinPoint joinPoint, Log log, Object jsonResult) {
+        handleLog(joinPoint, log, null);
     }
 
-    @AfterReturning(pointcut = "@within(controllerLog)", returning = "jsonResult")
-    public void doAfterReturningInClass(JoinPoint joinPoint, Log controllerLog, Object jsonResult) {
+    @AfterReturning(pointcut = "@within(log)", returning = "jsonResult")
+    public void doAfterReturningInClass(JoinPoint joinPoint, Log log, Object jsonResult) {
         // 获取类级别上的注解信息
         Class<?> targetClass = joinPoint.getTarget().getClass();
         Log classLog = targetClass.getAnnotation(Log.class);
@@ -66,13 +66,13 @@ public class LogAspect {
      * @param joinPoint 切点
      * @param e 异常
      */
-    @AfterThrowing(value = "@annotation(controllerLog)", throwing = "e")
-    public void doAfterThrowing(JoinPoint joinPoint, Log controllerLog, Exception e) {
-        handleLog(joinPoint, controllerLog, e);
+    @AfterThrowing(value = "@annotation(log)", throwing = "e")
+    public void doAfterThrowing(JoinPoint joinPoint, Log log, Exception e) {
+        handleLog(joinPoint, log, e);
     }
 
-    @AfterThrowing(value = "@within(controllerLog)", throwing = "e")
-    public void doAfterThrowingInClass(JoinPoint joinPoint, Log controllerLog, Exception e) {
+    @AfterThrowing(value = "@within(log)", throwing = "e")
+    public void doAfterThrowingInClass(JoinPoint joinPoint, Log log, Exception e) {
         // 获取类级别上的注解信息
         Class<?> targetClass = joinPoint.getTarget().getClass();
         Log classLog = targetClass.getAnnotation(Log.class);

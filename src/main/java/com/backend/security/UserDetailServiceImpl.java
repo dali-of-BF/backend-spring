@@ -1,5 +1,6 @@
 package com.backend.security;
 
+import com.backend.annotation.Log;
 import com.backend.constants.HeaderConstant;
 import com.backend.domain.entity.sys.SysAccount;
 import com.backend.domain.entity.sys.SysResource;
@@ -42,6 +43,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
      * @throws UsernameNotFoundException
      */
     @Override
+    @Log
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String appId = request.getHeader(HeaderConstant.APP_ID);
         String[] split = username.split("-");
