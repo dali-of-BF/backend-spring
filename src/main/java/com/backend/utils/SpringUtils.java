@@ -1,9 +1,16 @@
 package com.backend.utils;
 
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
+
+import java.lang.annotation.Annotation;
+import java.util.Objects;
 
 /**
  * @author FPH
@@ -41,6 +48,21 @@ public class SpringUtils implements BeanFactoryPostProcessor {
      */
     public static <T> T getBean(Class<T> clz) throws BeansException {
         return beanFactory.getBean(clz);
+    }
+
+    /**
+     * 通过切点获取注解信息
+     * @param joinPoint
+     * @return
+     * @param <T>
+     */
+    public <T extends Annotation> T getAnnotation(JoinPoint joinPoint, @Nullable Class<T> annotationType){
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        T annotation = AnnotationUtils.findAnnotation(signature.getMethod(), annotationType);
+        if ((Objects.nonNull(annotation))){
+            return annotation;
+        }
+        return AnnotationUtils.findAnnotation(signature.getDeclaringType(), annotationType);
     }
 
 

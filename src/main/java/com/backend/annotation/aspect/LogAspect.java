@@ -6,6 +6,7 @@ import com.backend.enums.sys.StatusEnum;
 import com.backend.mapper.sys.SysLogMapper;
 import com.backend.utils.AsyncManager;
 import com.backend.utils.SecurityUtils;
+import com.backend.utils.SpringUtils;
 import com.backend.utils.TimeUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +38,9 @@ public class LogAspect {
     private static final ThreadLocal<Long> TIME_THREADLOCAL = new NamedThreadLocal<>("Cost Time");
     private final HttpServletRequest request;
     private final SysLogMapper sysLogMapper;
-    @Before(value = "@within(log) || @annotation(log)")
-    public void boBefore(JoinPoint joinPoint, Log log) {
+    private final SpringUtils springUtils;
+    @Before(value = "@within(com.backend.annotation.Log) || @annotation(com.backend.annotation.Log)")
+    public void boBefore(JoinPoint joinPoint) {
         TIME_THREADLOCAL.set(System.currentTimeMillis());
     }
 
@@ -47,17 +49,9 @@ public class LogAspect {
      *
      * @param joinPoint 切点
      */
-    @AfterReturning(pointcut = "@annotation(log)", returning = "jsonResult")
-    public void doAfterReturning(JoinPoint joinPoint, Log log, Object jsonResult) {
-        handleLog(joinPoint, log, null);
-    }
-
-    @AfterReturning(pointcut = "@within(log)", returning = "jsonResult")
-    public void doAfterReturningInClass(JoinPoint joinPoint, Log log, Object jsonResult) {
-        // 获取类级别上的注解信息
-        Class<?> targetClass = joinPoint.getTarget().getClass();
-        Log classLog = targetClass.getAnnotation(Log.class);
-        handleLog(joinPoint, classLog, null);
+    @AfterReturning(pointcut = "@annotation(com.backend.annotation.Log) || @within(com.backend.annotation.Log)", returning = "jsonResult")
+    public void doAfterReturning(JoinPoint joinPoint, Object jsonResult) {
+        handleLog(joinPoint, springUtils.getAnnotation(joinPoint, Log.class), null);
     }
 
     /**
@@ -66,17 +60,9 @@ public class LogAspect {
      * @param joinPoint 切点
      * @param e 异常
      */
-    @AfterThrowing(value = "@annotation(log)", throwing = "e")
+    @AfterThrowing(value = "@annotation(log)||@within(log)", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Log log, Exception e) {
-        handleLog(joinPoint, log, e);
-    }
-
-    @AfterThrowing(value = "@within(log)", throwing = "e")
-    public void doAfterThrowingInClass(JoinPoint joinPoint, Log log, Exception e) {
-        // 获取类级别上的注解信息
-        Class<?> targetClass = joinPoint.getTarget().getClass();
-        Log classLog = targetClass.getAnnotation(Log.class);
-        handleLog(joinPoint, classLog, e);
+        handleLog(joinPoint, springUtils.getAnnotation(joinPoint, Log.class), e);
     }
 
     protected void handleLog(final JoinPoint joinPoint, Log controllerLog, final Exception e) {
