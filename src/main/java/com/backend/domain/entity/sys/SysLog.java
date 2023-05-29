@@ -35,6 +35,7 @@ public class SysLog extends BaseEntity {
     /**
      * 操作时间
      */
+    @JsonFormat(timezone = "Asia/Shanghai",pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date operTime;
     /**
      * 运行持续时间
