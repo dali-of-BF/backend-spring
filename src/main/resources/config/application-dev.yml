@@ -62,6 +62,16 @@ logging:
   level:
     root: info
 
+#obs
+huawei:
+  obs:
+    ak: VQDWIR6B5ICO8SGZNMYN
+    sk: ueZqrJZbLLBS8NJzFqJqcCLbrhJev606HSK8xmPV
+    upload:
+      endPoint: obs.cn-south-1.myhuaweicloud.com
+    bucketName: sport-exam
+    parentDir:  xxx
+
 application:
   security:
     base64Secret: MDVlZmQxYTdlNzc4YzQ1NzdjYWIxZTdmYTAyMmM4NGQxODFlY2JmODczZjY4YzQ2YzE3Y2IyZjFjNWMxODQxYTQ0NGJhMWQzZDBhZmZhODYyNzRjNDA5OGM2YmY5YWQyNzNiMmY3YjMxZjE2YTRjODRhNjEyZjFkZDgzYTNlMjI=
