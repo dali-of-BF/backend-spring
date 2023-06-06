@@ -8,5 +8,12 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime
     environment:
-      - spring.profiles.active=dev
+        ACTIVE: ${ACTIVE}
+        LOG_IMPL: ${LOG_IMPL}
+        RD_HOST: ${RD_HOST}
+        RD_PASSWORD: ${RD_PASSWORD}
+        DB_USERNAME: ${DB_USERNAME}
+        DB_PASSWORD: ${DB_PASSWORD} 
+        HW_AK: ${HW_AK}
+        HW_SK: ${HW_SK}
     restart: always

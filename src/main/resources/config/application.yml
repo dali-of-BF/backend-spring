@@ -2,7 +2,7 @@ spring:
   application:
     name: backendSpring
   profiles:
-    active: dev
+    active: ${ACTIVE:dev}
   devtools:
     restart:
       enabled: true  #设置开启热部署
@@ -25,5 +25,10 @@ mybatis-plus:
   type-aliases-package: com.backend.entity
   configuration:
     #    mybatis-plus日志
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
+    log-impl: ${LOG_IMPL:org.apache.ibatis.logging.stdout.StdOutImpl}
+#    #!/bin/bash
+#image_name="backend-spring"
+#container_name=$image_name
+#tag="1.0"
+#jar_name="backend-spring-0.0.1-SNAPSHOT.jar"
+#yml_name="spring-compose.yml"

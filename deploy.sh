@@ -1,9 +1,9 @@
 #!/bin/bash
-image_name="backend-spring"
+image_name=$1
 container_name=$image_name
-tag="1.0"
-jar_name="backend-spring-0.0.1-SNAPSHOT.jar"
-yml_name="spring-compose.yml"
+tag=$2
+jar_name=$3
+yml_name=$4
 
 echo "Starting deploy -----------"
 echo "Stopping container......"
