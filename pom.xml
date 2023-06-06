@@ -49,6 +49,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+<!--                排除tomcat服务器-->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-start-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+<!--        引入Undertow容器技术-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
 <!--        AOP-->
         <dependency>
