@@ -17,14 +17,16 @@ import java.util.concurrent.*;
 @Configuration
 @Slf4j
 public class ThreadPoolConfig {
-    // 核心线程池大小
-    private int corePoolSize = 50;
+    // 核心线程池大小 2n n表示cpu核心 io任务大的时候 设置为2n+1
+    private int corePoolSize = 3;
 
-    // 最大可创建的线程数
-    private int maxPoolSize = 200;
+    // 最大可创建的线程数 2n*3 多一点
+    private int maxPoolSize = 15;
 
-    // 队列最大长度
-    private int queueCapacity = 1000;
+    /**
+     * 队列最大长度 当队列排满的情况下，开辟新的线程数，如果线程数大于最大线程数则触发拒绝策略
+     */
+    private int queueCapacity = 20;
 
     // 线程池维护线程所允许的空闲时间
     private int keepAliveSeconds = 300;
