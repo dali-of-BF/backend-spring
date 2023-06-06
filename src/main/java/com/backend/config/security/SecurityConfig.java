@@ -102,11 +102,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/i18n/**")
                 .antMatchers("/doc.html")
                 .antMatchers("/swagger-resources/**")
-                .antMatchers("/api-docs*")
+                .antMatchers("/api-docs")
                 .antMatchers("/webjars/**")
                 .antMatchers("/v2/api-docs")
                 .antMatchers("/druid/**")
                 .antMatchers("/captcha/**")
-                .antMatchers("/auth/register");
+                .antMatchers("/auth/register")
+                .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**","/**/*.ico")
+                .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**");
     }
 }

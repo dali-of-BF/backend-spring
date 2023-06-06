@@ -1,6 +1,7 @@
 package com.backend.security;
 
 import com.backend.annotation.Log;
+import com.backend.constants.Constant;
 import com.backend.constants.HeaderConstant;
 import com.backend.domain.entity.sys.SysAccount;
 import com.backend.domain.entity.sys.SysResource;
@@ -46,7 +47,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Log
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String appId = request.getHeader(HeaderConstant.APP_ID);
-        String[] split = username.split("-");
+        String[] split = username.split(Constant.DASH);
         username = split[0];
         String rememberMe = split[1];
         SysAccount sysAccount = Optional.ofNullable(sysAccountMapper.selectOne(new LambdaQueryWrapper<SysAccount>()
