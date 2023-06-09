@@ -19,7 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
-import org.springframework.web.filter.CorsFilter;
 
 /**
  * security配置
@@ -32,7 +31,7 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final RedisTokenProvider redisTokenProvider;
-    private final CorsFilter corsFilter;
+//    private final CorsFilter corsFilter;
     private final CustomAccessDecisionManager accessDecisionManager;
     private final CustomSecurityMetadataSource customSecurityMetadataSource;
     private final UserDetailServiceImpl userDetailService;
@@ -79,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             //关闭CSRF保护
             .csrf().disable()
 
-            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+//            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(new UsernamePasswordAuthenticationFilterImpl(this.authenticationManager(),redisTokenProvider,properties),UsernamePasswordAuthenticationFilter.class)
             .authorizeRequests()
             .anyRequest().authenticated()

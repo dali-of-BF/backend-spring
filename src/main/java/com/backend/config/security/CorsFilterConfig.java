@@ -1,45 +1,48 @@
 package com.backend.config.security;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.stereotype.Component;
+import org.springframework.web.cors.reactive.CorsUtils;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
+import reactor.core.publisher.Mono;
 
 /**
  * @author FPH
  * @since 2023年4月18日23:12:48
  *
  */
-@Configuration
-public class CorsFilterConfig implements WebMvcConfigurer {
+@Component
+public class CorsFilterConfig implements WebFilter {
+
+    private static final String ALL = "*";
+    private static final String MAX_AGE = "3600L";
+
+    @NotNull
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOriginPatterns("*")
-                .allowedMethods("GET", "HEAD", "POST","PUT", "DELETE", "OPTIONS")
-                .allowCredentials(true).maxAge(3600);
+    public Mono<Void> filter(ServerWebExchange exchange, @NotNull WebFilterChain chain) {
+        ServerHttpRequest request = exchange.getRequest();
+        if (!CorsUtils.isCorsRequest(request)) {
+            return chain.filter(exchange);
+        }
+
+        ServerHttpResponse response = exchange.getResponse();
+        HttpHeaders headers = response.getHeaders();
+        headers.add("Access-Control-Allow-Origin", ALL);
+        headers.add("Access-Control-Allow-Methods", ALL);
+        headers.add("Access-Control-Allow-Headers", ALL);
+        headers.add("Access-Control-Max-Age", MAX_AGE);
+        if (request.getMethod() == HttpMethod.OPTIONS) {
+            response.setStatusCode(HttpStatus.OK);
+            return Mono.empty();
+        }
+        return chain.filter(exchange);
     }
 
-    @Bean
-    public CorsFilter corsFilter(){
-        //1.添加CORS配置信息
-        CorsConfiguration config = new CorsConfiguration();
-        //放行哪些原始域
-        config.addAllowedOrigin("*");
-        //是否发送Cookie信息
-        config.setAllowCredentials(true);
-        //放行哪些原始域 (请求方式)
-        config.addAllowedMethod("*");
-        //放行哪些原始域 (头部信息)
-        config.addAllowedHeader("*");
-        //暴露哪些头部信息（因为跨域访问默认不能获取全部头部信息）
-        config.addExposedHeader("*");
-        //2.添加映射路径
-        UrlBasedCorsConfigurationSource configSource = new UrlBasedCorsConfigurationSource();
-        configSource.registerCorsConfiguration("/**", config);
-        //3.返回新的CorsFilter.
-        return new CorsFilter(configSource);
-    }
 }
