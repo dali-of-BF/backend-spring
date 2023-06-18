@@ -2,7 +2,6 @@ package com.backend.security.tokenProvider;
 
 import com.backend.config.ApplicationProperties;
 import com.backend.constants.Constant;
-import com.backend.constants.RedisConstants;
 import com.backend.security.domain.DomainUserDetails;
 import com.backend.utils.HeaderUtils;
 import com.backend.utils.JsonMapper;
@@ -34,7 +33,6 @@ public class RedisTokenProvider implements TokenProvider {
     private final RedisUtils redisUtils;
 
     private final ApplicationProperties properties;
-    private final HttpServletRequest httpServletRequest;
     private final HeaderUtils headerUtils;
 
     @Override
@@ -88,7 +86,7 @@ public class RedisTokenProvider implements TokenProvider {
         if (StringUtils.isEmpty(token)) {
             return false;
         }
-        String key = RedisConstants.AUTHORITIES_KEY.concat(token);
+        String key = AUTHORITIES_KEY.concat(headerUtils.getAppId()+Constant.REDIS_BLOCK+token);
         return redisUtils.deleteObject(key);
     }
 
