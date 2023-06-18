@@ -5,9 +5,23 @@
 <mapper namespace="com.backend.mapper.sys.SysResourceMapper">
 
     <select id="listByAccountId" resultType="com.backend.domain.entity.sys.SysResource">
-        # 目前暂时都是超管
-        select *
+        select sr.id, sr.resource_url, sr.tag, sr.remark, sr.resource_method, sr.app_id
         from sys_account sa
-        where app_id=#{appId}
+                 inner join sys_account_role sar on sar.account_id = sa.id
+                 inner join sys_role_menu srm on srm.role_id = sar.role_id
+                 inner join sys_role sro on srm.role_id = sro.id
+                 inner join sys_menu_resource smr  on smr.menu_id = srm.menu_id
+                 inner join sys_resource sr on sr.id = smr.resource_id and sa.app_id=sr.app_id
+        where sa.deleted = 0 and sar.deleted=0 and srm.deleted=0 and smr.deleted=0 and sr.deleted=0 and sro.deleted=0
+          and sa.status=1 and sro.status=1
+          and sa.is_super= 0
+          and sa.id=#{id} and sa.app_id = #{appId}
+        union
+        select sr.id, sr.resource_url, sr.tag, sr.remark, sr.resource_method, sr.app_id
+        from sys_account sa
+                 inner join sys_resource sr on sr.app_id=sa.app_id
+        where sa.deleted=0 and sr.deleted=0
+          and sa.is_super = 1 and sa.id = #{id} and sa.app_id = #{appId}
+
     </select>
 </mapper>
