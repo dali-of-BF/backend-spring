@@ -55,14 +55,10 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 //更新一下token的过期时间
                 redisTokenProvider.refreshExpiration(token,principal.getCurrent(),principal.isRememberMe());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            }else {
-                SecurityContextHolder.clearContext();
-                authenticationEntryPoint.commence(request, response, null);
-                return;
             }
         }catch (AuthenticationException e){
-            SecurityContextHolder.clearContext();
-            authenticationEntryPoint.commence(request, response, e);
+            log.error("JwtToken validity!! error={}", e.getMessage());
+            filterChain.doFilter(request, response);
             return;
         }
         filterChain.doFilter(request, response);
