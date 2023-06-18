@@ -33,7 +33,7 @@ public class LoginController {
     private final SysAccountService sysAccountService;
     @PostMapping("/login")
     @ApiOperation("登录")
-    public Result<LoginVO> login(@Valid @RequestBody LoginDTO login){
+    public Result<LoginVO> login(@Valid LoginDTO login){
         log.info("登录参数：{}",login);
         return null;
     }

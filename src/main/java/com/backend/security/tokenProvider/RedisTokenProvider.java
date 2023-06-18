@@ -2,9 +2,9 @@ package com.backend.security.tokenProvider;
 
 import com.backend.config.ApplicationProperties;
 import com.backend.constants.Constant;
-import com.backend.constants.HeaderConstant;
 import com.backend.constants.RedisConstants;
 import com.backend.security.domain.DomainUserDetails;
+import com.backend.utils.HeaderUtils;
 import com.backend.utils.JsonMapper;
 import com.backend.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
@@ -35,11 +35,12 @@ public class RedisTokenProvider implements TokenProvider {
 
     private final ApplicationProperties properties;
     private final HttpServletRequest httpServletRequest;
+    private final HeaderUtils headerUtils;
 
     @Override
     public String createToken(DomainUserDetails principal) {
         String token = UUID.randomUUID().toString();
-        String key = AUTHORITIES_KEY.concat(httpServletRequest.getHeader(HeaderConstant.APP_ID)+token);
+        String key = AUTHORITIES_KEY.concat(headerUtils.getAppId()+Constant.REDIS_BLOCK+token);
         redisUtils.setCacheObject(key,
                 principal,
                 principal.isRememberMe()?properties.getSecurity().getExpirationTime_rememberMe()
@@ -50,7 +51,7 @@ public class RedisTokenProvider implements TokenProvider {
     @Override
     public Authentication getAuthentication(String token) {
         DomainUserDetails userDetails = JsonMapper.covertValue(redisUtils
-                .getCacheObject(AUTHORITIES_KEY.concat(httpServletRequest.getHeader(HeaderConstant.APP_ID)+token)),DomainUserDetails.class);
+                .getCacheObject(AUTHORITIES_KEY.concat(headerUtils.getAppId()+Constant.REDIS_BLOCK+token)),DomainUserDetails.class);
         if (Objects.nonNull(userDetails)) {
             return new UsernamePasswordAuthenticationToken(userDetails, token, userDetails.getAuthorities());
         }
@@ -63,14 +64,14 @@ public class RedisTokenProvider implements TokenProvider {
      */
     @Override
     public boolean validateToken(String authToken) {
-        DomainUserDetails userDetails = redisUtils.getCacheObject(AUTHORITIES_KEY.concat(httpServletRequest.getHeader(HeaderConstant.APP_ID)+authToken));
+        DomainUserDetails userDetails = redisUtils.getCacheObject(AUTHORITIES_KEY.concat(headerUtils.getAppId()+Constant.REDIS_BLOCK+authToken));
         return Objects.nonNull(userDetails);
     }
 
 
     @Override
     public Boolean refreshExpiration(String token, String loginUserId,boolean rememberMe) {
-        String key = AUTHORITIES_KEY.concat(httpServletRequest.getHeader(HeaderConstant.APP_ID)+token);
+        String key = AUTHORITIES_KEY.concat(headerUtils.getAppId()+Constant.REDIS_BLOCK+token);
         //重置其时间
         redisUtils.expire(key,rememberMe ?
                 properties.getSecurity().getExpirationTime_rememberMe()

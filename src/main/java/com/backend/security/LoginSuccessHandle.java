@@ -24,7 +24,7 @@ public class LoginSuccessHandle implements AuthenticationSuccessHandler {
     private final ApplicationProperties properties;
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication){
-        DomainUserDetails userDetails = (DomainUserDetails) authentication.getPrincipal();
+        DomainUserDetails userDetails = (DomainUserDetails)authentication.getPrincipal();
         String token = redisTokenProvider.createToken(userDetails);
         LoginVO loginVO = LoginVO.builder()
                 .accessToken(token)

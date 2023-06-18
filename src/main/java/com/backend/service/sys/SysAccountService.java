@@ -2,11 +2,11 @@ package com.backend.service.sys;
 
 import com.backend.config.ApplicationProperties;
 import com.backend.config.security.SecurityConfig;
-import com.backend.constants.HeaderConstant;
 import com.backend.domain.dto.sys.SysAccountDTO;
 import com.backend.domain.entity.sys.SysAccount;
 import com.backend.exception.BusinessException;
 import com.backend.mapper.sys.SysAccountMapper;
+import com.backend.utils.HeaderUtils;
 import com.backend.utils.JsonMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -33,6 +33,7 @@ public class SysAccountService extends ServiceImpl<SysAccountMapper, SysAccount>
     private final ApplicationProperties properties;
     private final SysAccountMapper sysAccountMapper;
     private final SecurityConfig securityConfig;
+    private final HeaderUtils headerUtils;
 
     /**
      * 分页
@@ -58,7 +59,7 @@ public class SysAccountService extends ServiceImpl<SysAccountMapper, SysAccount>
         }
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         SysAccount sysAccount = JsonMapper.covertValue(dto, SysAccount.class);
-        sysAccount.setAppId(Optional.ofNullable(request.getHeader(HeaderConstant.APP_ID)).orElseThrow(()->new BusinessException("appId不存在")));
+        sysAccount.setAppId(Optional.ofNullable(headerUtils.getAppId()).orElseThrow(()->new BusinessException("appId不存在")));
         sysAccount.setPassword(bCryptPasswordEncoder.encode(properties.getSecurity().getDefaultPassword()));
         save(sysAccount);
         return sysAccount;
