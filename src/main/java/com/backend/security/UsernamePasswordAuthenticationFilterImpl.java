@@ -2,12 +2,8 @@ package com.backend.security;
 
 import com.backend.common.HttpStatus;
 import com.backend.common.result.Result;
-import com.backend.config.ApplicationProperties;
 import com.backend.constants.HeaderConstant;
-import com.backend.security.domain.DomainUserDetails;
 import com.backend.security.domain.LoginDTO;
-import com.backend.security.domain.LoginVO;
-import com.backend.security.tokenProvider.RedisTokenProvider;
 import com.backend.utils.JsonMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
@@ -32,14 +28,9 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
 
 
     private final AuthenticationManager authenticationManager;
-    private final RedisTokenProvider redisTokenProvider;
-    private final ApplicationProperties properties;
 
-    public UsernamePasswordAuthenticationFilterImpl(AuthenticationManager authenticationManager, RedisTokenProvider redisTokenProvider,
-                                                    ApplicationProperties properties) {
-        this.redisTokenProvider=redisTokenProvider;
+    public UsernamePasswordAuthenticationFilterImpl(AuthenticationManager authenticationManager) {
         this.authenticationManager=authenticationManager;
-        this.properties=properties;
         this.setFilterProcessesUrl("/auth/login");
         this.setPostOnly(Boolean.TRUE);
     }
@@ -90,29 +81,7 @@ public class UsernamePasswordAuthenticationFilterImpl extends UsernamePasswordAu
      */
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        Result<LoginVO> result = new Result<>();
-        DomainUserDetails userDetails = (DomainUserDetails) authResult.getPrincipal();
-        String token = redisTokenProvider.createToken(userDetails);
-        LoginVO loginVO = LoginVO.builder()
-                .accessToken(token)
-                .nickname(userDetails.getNickname())
-                .gender(userDetails.getGender())
-                .rememberMe(userDetails.isRememberMe())
-                .avatar(userDetails.getAvatar())
-                .phone(userDetails.getPhone())
-                .superAdmin(userDetails.isSuperAdmin())
-                .tokenPrefix(properties.getSecurity().getTokenPrefix())
-                .build();
-        result.setCode(HttpStatus.SUCCESS);
-        result.setData(loginVO);
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json;charset=UTF-8");
-        response.setStatus(HttpStatus.SUCCESS);
-        try {
-            response.getWriter().append(JsonMapper.writeValueAsString(result));
-        } catch (IOException e) {
-            throw new BadCredentialsException("LoginSuccessHandler ERROR \n Failed to decode basic authentication token");
-        }
+
     }
 
     /**

@@ -1,8 +1,14 @@
 package com.backend.security.domain;
 
+import com.backend.config.security.GrantedAuthorityDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
 
 /**
  * @author FPH
@@ -28,4 +34,11 @@ public class LoginVO {
 
     @ApiModelProperty(value = "记住我")
     private String tokenPrefix;
+
+    /**
+     * 权限
+     */
+    @JsonDeserialize(using = GrantedAuthorityDeserializer.class)
+    @Setter
+    private Collection<? extends GrantedAuthority> authorities;
 }

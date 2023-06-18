@@ -7,9 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -17,8 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 
 /**
  * security配置
@@ -33,9 +28,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 自定义未登录时：返回状态码401
      */
     private final UnAuthenticationEntryPoint unAuthenticationEntryPoint;
+    /**
+     * 自定义登录认证
+     */
+    private final SelfAuthenticationProvider authenticationProvider;
+
+
+    private final LoginSuccessHandle loginSuccessHandle;
 
     private final RedisTokenProvider redisTokenProvider;
-//    private final CorsFilter corsFilter;
+
     private final CustomAccessDecisionManager accessDecisionManager;
     private final CustomSecurityMetadataSource customSecurityMetadataSource;
     private final UserDetailServiceImpl userDetailService;
@@ -47,52 +49,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-
-    // AuthenticationProvider实现
-    // 使用UserDetailsService和PasswordEncoder来验证用户名和密码
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        //不隐藏用户找不到异常
-        provider.setHideUserNotFoundExceptions(Boolean.FALSE);
-        provider.setUserDetailsService(userDetailService);
-        provider.setPasswordEncoder(this.passwordEncoder());
-        return provider;
-    }
-
-    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
     /**
      * @param auth
      * @throws Exception
      */
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
+    protected void configure(AuthenticationManagerBuilder auth) {
+        //自定义登录认证
+        auth.authenticationProvider(authenticationProvider);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.logout().logoutUrl("/auth/logout")
-            .logoutSuccessHandler(new LogoutSuccessHandle(redisTokenProvider)).and()
-            //关闭CSRF保护
-            .csrf().disable()
+        // 关闭csrf验证(防止跨站请求伪造攻击)
+        http.csrf().disable();
+        // 未登录时：返回状态码401
+        http.exceptionHandling().authenticationEntryPoint(unAuthenticationEntryPoint);
 
-//            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(new UsernamePasswordAuthenticationFilterImpl(this.authenticationManager(),redisTokenProvider,properties),UsernamePasswordAuthenticationFilter.class)
-            .authorizeRequests()
-            .anyRequest().authenticated()
-             .withObjectPostProcessor(new FilterSecurityInterceptorPostProcessor(accessDecisionManager, customSecurityMetadataSource))
-            .and()
-            .headers()
-            .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN);
 
-        //把token校验过滤器添加到过滤器链中
-        http.addFilterBefore(new TokenAuthenticationFilter(redisTokenProvider,unAuthenticationEntryPoint), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
