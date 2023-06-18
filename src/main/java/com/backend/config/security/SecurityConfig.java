@@ -1,12 +1,12 @@
 package com.backend.config.security;
 
-import com.backend.config.ApplicationProperties;
 import com.backend.security.*;
 import com.backend.security.tokenProvider.RedisTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * security配置
@@ -44,7 +47,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 自定义权限不足处理器：返回状态码403
      */
     private final CustomAccessDeniedHandler accessDeniedHandler;
-
+    /**
+     * 登录成功处理类
+     */
     private final LoginSuccessHandle loginSuccessHandle;
 
     private final RedisTokenProvider redisTokenProvider;
@@ -56,9 +61,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 动态获取url权限配置
      */
     private final CustomSecurityMetadataSource customSecurityMetadataSource;
-    private final UserDetailServiceImpl userDetailService;
+    /**
+     * 登录失败处理类
+     */
+    private final LoginFailHandle loginFailHandle;
+    /**
+     * 身份验证详细信息源
+     */
+    private final AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource;
 
-    private final ApplicationProperties properties;
+    private final LogoutSuccessHandle logoutSuccessHandle;
+
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -102,8 +115,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     }
                 });
 
+        // 开启自动配置的登录功能
+        http.formLogin() //开启登录
+                .loginProcessingUrl("/auth/login") //自定义登录请求路径(post)
+                //自定义登录用户名密码属性名,默认为username和password
+                .usernameParameter("username").passwordParameter("password")
+                //验证成功处理器(前后端分离)：生成token及响应状态码200
+                .successHandler(loginSuccessHandle)
+                //验证失败处理器(前后端分离)：返回状态码402
+                .failureHandler(loginFailHandle)
+                .authenticationDetailsSource(authenticationDetailsSource); //身份验证详细信息源(登录验证中增加额外字段)
+
         // 将session策略设置为无状态的,通过token进行登录认证
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        // 开启自动配置的注销功能
+        http.logout() //用户注销, 清空session
+                //自定义注销请求路径
+                .logoutUrl("/auth/logout")
+                //注销成功处理器(前后端分离)：返回状态码200
+                .logoutSuccessHandler(logoutSuccessHandle);
 
     }
 

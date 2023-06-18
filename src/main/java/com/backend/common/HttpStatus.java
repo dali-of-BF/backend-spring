@@ -51,6 +51,10 @@ public class HttpStatus {
      * 未授权
      */
     public static final int UNAUTHORIZED = 401;
+    /**
+     * 登录失败
+     */
+    public static final int LOGIN_FAIL = 402;
 
     /**
      * 访问受限，授权过期
