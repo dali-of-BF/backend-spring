@@ -76,7 +76,8 @@ public class DomainUserDetails implements UserDetails, Serializable {
     /**
      * 是否记住密码
      */
-    private boolean rememberMe;
+    @Builder.Default
+    private boolean rememberMe = false;
     /**
      * 所属系统
      */

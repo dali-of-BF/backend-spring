@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * security配置
@@ -32,7 +33,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 自定义登录认证
      */
     private final SelfAuthenticationProvider authenticationProvider;
-
+    /**
+     *   JwtToken解析并生成authentication身份信息过滤器
+     */
+    private final TokenAuthenticationFilter authorizationTokenFilter;
+    /**
+     * 自定义权限不足处理器：返回状态码403
+     */
+    private final CustomAccessDeniedHandler accessDeniedHandler;
 
     private final LoginSuccessHandle loginSuccessHandle;
 
@@ -65,6 +73,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         // 未登录时：返回状态码401
         http.exceptionHandling().authenticationEntryPoint(unAuthenticationEntryPoint);
+
+        // JwtToken解析并生成authentication身份信息过滤器
+        http.addFilterBefore(authorizationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        // 无权访问时：返回状态码403
+        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+
 
 
     }

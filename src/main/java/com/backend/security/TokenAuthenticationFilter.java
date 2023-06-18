@@ -1,11 +1,16 @@
 package com.backend.security;
 
+import com.backend.config.ApplicationProperties;
+import com.backend.constants.Constant;
 import com.backend.security.domain.DomainUserDetails;
 import com.backend.security.tokenProvider.RedisTokenProvider;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -20,20 +25,17 @@ import java.util.Objects;
  * 如果找到与有效用户对应的标头，则过滤传入请求并安装 Spring Security 主体。
  */
 @Slf4j
+@Component
+@RequiredArgsConstructor
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
-    private final  RedisTokenProvider redisTokenProvider;
+    private final RedisTokenProvider redisTokenProvider;
 
-    private final   UnAuthenticationEntryPoint authenticationEntryPoint;
-
-
-
-    public TokenAuthenticationFilter(RedisTokenProvider redisTokenProvider,UnAuthenticationEntryPoint authenticationEntryPoint) {
-        this.redisTokenProvider=redisTokenProvider;
-        this.authenticationEntryPoint=authenticationEntryPoint;
-    }
+    private final UnAuthenticationEntryPoint authenticationEntryPoint;
+    private final ApplicationProperties applicationProperties;
 
     /**
+     * 解析token并生成authentication身份信息
      * @param request
      * @param response
      * @param filterChain
@@ -43,6 +45,10 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = redisTokenProvider.resolveToken(request);
+        if (StringUtils.isBlank(token)  || !token.startsWith(applicationProperties.getSecurity().getTokenPrefix() + Constant.SPACE)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         try {
             Authentication authentication = redisTokenProvider.getAuthentication(token);
             if(Objects.nonNull(authentication)){
