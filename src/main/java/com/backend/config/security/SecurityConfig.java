@@ -7,13 +7,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -47,6 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final RedisTokenProvider redisTokenProvider;
 
     private final CustomAccessDecisionManager accessDecisionManager;
+    /**
+     * 自定义权限判断管理器
+     */
     private final CustomSecurityMetadataSource customSecurityMetadataSource;
     private final UserDetailServiceImpl userDetailService;
 
@@ -79,7 +85,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 无权访问时：返回状态码403
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
+        // url权限认证处理
+        http.antMatcher("/**").authorizeRequests()
+                //.antMatchers("/security/user/**").hasRole("ADMIN") //需要ADMIN角色才可以访问
+                //.antMatchers("/connect").hasIpAddress("127.0.0.1") //只有ip[127.0.0.1]可以访问'/connect'接口
+                .anyRequest() //其他任何请求
+                .authenticated() //都需要身份认证
+                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+                    @Override
+                    public <O extends FilterSecurityInterceptor> O postProcess(O o) {
+                        o.setSecurityMetadataSource(customSecurityMetadataSource); //动态获取url权限配置
+                        o.setAccessDecisionManager(accessDecisionManager); //权限判断
+                        return o;
+                    }
+                });
 
+        // 将session策略设置为无状态的,通过token进行登录认证
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     }
 

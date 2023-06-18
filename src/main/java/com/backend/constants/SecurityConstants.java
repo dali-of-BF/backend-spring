@@ -18,6 +18,10 @@ public class SecurityConstants {
     public static final String APPID_WX = "wx";
 
     public static final String ANONYMOUS_USER = "anonymousUser";
+    /**
+     * 当此url找不到角色时，返回此字段用作判断
+     */
+    public static final String ROLE_LOGIN = "ROLE_LOGIN";
 
 
 

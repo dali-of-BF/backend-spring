@@ -24,4 +24,13 @@
           and sa.is_super = 1 and sa.id = #{id} and sa.app_id = #{appId}
 
     </select>
+    <select id="findRoleNameByMenuUrl" resultType="java.lang.String">
+        select *
+        from sys_role sr
+                 inner join sys_menu_resource smr on smr.resource_id = sr.id
+                 inner join sys_role_menu srm on srm.menu_id = smr.menu_id
+                 inner join sys_role srole on srole.id = srm.role_id
+        where sr.deleted=0 and smr.deleted=0 and srm.deleted = 0 and srole.deleted = 0
+          and srole.status = 1 and srole.system_code = #{sysCode} and sr.resource_url = #{url}
+    </select>
 </mapper>

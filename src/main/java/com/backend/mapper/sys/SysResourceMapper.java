@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author FPH
@@ -20,4 +21,13 @@ public interface SysResourceMapper extends BaseMapper<SysResource> {
      * @return
      */
     List<SysResource> listByAccountId(@Param("id") String id,@Param("appId") String appId);
+
+    /**
+     * 通过url查询那些角色拥有此权限
+     * @param url
+     * @param sysCode
+     * @return
+     */
+    Set<String> findRoleNameByMenuUrl(@Param("url") String url,
+                                      @Param("sysCode")String sysCode);
 }
