@@ -20,6 +20,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +40,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     private final HttpServletRequest request;
     private final SysResourceMapper sysResourceMapper;
     /**
-     * @param username {@link UsernamePasswordAuthenticationFilterImpl 登录处理类}将s如何改造
+     * @param username {@link UsernamePasswordAuthenticationFilter 登录处理类}将s如何改造
      * @return
      * @throws UsernameNotFoundException
      */
