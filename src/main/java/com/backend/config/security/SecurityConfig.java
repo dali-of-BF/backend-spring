@@ -48,10 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final LoginSuccessHandle loginSuccessHandle;
 
     private final RedisTokenProvider redisTokenProvider;
-
-    private final CustomAccessDecisionManager accessDecisionManager;
     /**
      * 自定义权限判断管理器
+     */
+    private final CustomAccessDecisionManager accessDecisionManager;
+    /**
+     * 动态获取url权限配置
      */
     private final CustomSecurityMetadataSource customSecurityMetadataSource;
     private final UserDetailServiceImpl userDetailService;

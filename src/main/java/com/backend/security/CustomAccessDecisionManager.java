@@ -1,8 +1,12 @@
 package com.backend.security;
 
+import com.backend.constants.SecurityConstants;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,6 +20,7 @@ import java.util.Collection;
  * @author FPH
  */
 @Component
+@Slf4j
 public class CustomAccessDecisionManager implements AccessDecisionManager {
     /**
      * @param authentication   the caller invoking the method (not null)
@@ -27,15 +32,30 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
      */
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
-        configAttributes.forEach(configAttribute -> {
-            //将访问所需资源与用户拥有资源进行比对
-            String attribute = configAttribute.getAttribute();
-            for (GrantedAuthority authority : authentication.getAuthorities()) {
-                if (attribute.trim().equals(authority.getAuthority())) {
+        // collection 当前请求需要的权限
+        log.debug("collection:{}", configAttributes);
+        // 当前用户所具有的权限
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        log.debug("principal:{} authorities:{}", authentication.getPrincipal().toString(), authorities);
+
+        for (ConfigAttribute configAttribute : configAttributes) {
+            // 当前请求需要的权限
+            String needRole = configAttribute.getAttribute();
+            if (SecurityConstants.ROLE_LOGIN.equals(needRole)) {
+                if (authentication instanceof AnonymousAuthenticationToken) {
+                    throw new BadCredentialsException("未登录");
+                } else {
                     return;
                 }
             }
-        });
+            // 当前用户所具有的权限
+            for (GrantedAuthority grantedAuthority : authorities) {
+                // 包含其中一个角色即可访问
+                if (grantedAuthority.getAuthority().equals(needRole)) {
+                    return;
+                }
+            }
+        }
         throw new AccessDeniedException("访问受限");
     }
 
