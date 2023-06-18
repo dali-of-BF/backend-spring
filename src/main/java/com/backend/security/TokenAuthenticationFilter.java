@@ -1,7 +1,6 @@
 package com.backend.security;
 
 import com.backend.config.ApplicationProperties;
-import com.backend.constants.Constant;
 import com.backend.security.domain.DomainUserDetails;
 import com.backend.security.tokenProvider.RedisTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +44,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = redisTokenProvider.resolveToken(request);
-        if (StringUtils.isBlank(token)  || !token.startsWith(applicationProperties.getSecurity().getTokenPrefix() + Constant.SPACE)) {
+        if (StringUtils.isBlank(token)) {
             filterChain.doFilter(request, response);
             return;
         }
