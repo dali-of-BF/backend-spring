@@ -44,7 +44,7 @@ public class ResponseUtils {
     }
 
     public static void forbidden(HttpServletResponse response,Object data){
-        buildResult(response,HttpStatus.FORBIDDEN,data);
+        buildResult(response,HttpStatus.UNAUTHORIZED,data);
     }
 
 }

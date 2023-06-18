@@ -29,13 +29,17 @@ import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWrite
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    /**
+     * 自定义未登录时：返回状态码401
+     */
+    private final UnAuthenticationEntryPoint unAuthenticationEntryPoint;
 
     private final RedisTokenProvider redisTokenProvider;
 //    private final CorsFilter corsFilter;
     private final CustomAccessDecisionManager accessDecisionManager;
     private final CustomSecurityMetadataSource customSecurityMetadataSource;
     private final UserDetailServiceImpl userDetailService;
-    private final UnAuthenticationEntryPoint unAuthenticationEntryPoint;
+
     private final ApplicationProperties properties;
 
     @Bean

@@ -13,6 +13,7 @@ import java.io.IOException;
 /**
  * @author FPH
  * @since 2023年4月21日14:42:26
+ * 自定义未登录时：返回状态码401
  */
 @Component
 public class UnAuthenticationEntryPoint implements AuthenticationEntryPoint {
