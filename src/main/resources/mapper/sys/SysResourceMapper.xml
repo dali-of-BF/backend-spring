@@ -16,7 +16,7 @@
           and sa.status=1 and sro.status=1
           and sa.is_super= 0
           and sa.id=#{id} and sa.app_id = #{appId}
-        union all
+        union
         select sr.id, sr.resource_url, sr.tag, sr.remark, sr.resource_method, sr.app_id
         from sys_account sa
                  inner join sys_resource sr on sr.app_id=sa.app_id
