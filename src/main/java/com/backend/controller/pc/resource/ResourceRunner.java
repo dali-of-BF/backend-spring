@@ -21,7 +21,7 @@ public class ResourceRunner implements CommandLineRunner {
      */
     @Override
     public void run(String... args) throws Exception {
-        if(ResourceEnum.INIT.getValue().equals(properties.getResource().getEnableResourceInit())){
+        if(ResourceEnum.YES.getValue().equals(properties.getResource().getEnableResourceInit())){
             sysSourceService.doRefreshResource();
         }
     }

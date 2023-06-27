@@ -47,7 +47,7 @@ public class ApplicationProperties {
     @Data
     public static class Resource{
         /**
-         * 项目启动时是否初始化资源表 init开启 unInit不开启
+         * 项目启动时是否初始化资源表 yes开启 no不开启
          */
         private String enableResourceInit;
     }
