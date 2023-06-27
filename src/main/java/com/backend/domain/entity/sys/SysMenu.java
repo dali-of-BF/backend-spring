@@ -73,4 +73,8 @@ public class SysMenu extends BaseEntity implements Serializable {
     @Length(max= 100,message="编码长度不能超过100")
     private String router;
 
+    /**
+     * 权限值
+     */
+    private String permission;
 }
