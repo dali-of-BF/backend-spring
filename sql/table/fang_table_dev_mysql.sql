@@ -85,7 +85,17 @@ CREATE TABLE `sys_menu`  (
                              PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
-SET FOREIGN_KEY_CHECKS = 1;
+ALTER TABLE `base_spring`.`sys_menu`
+    MODIFY COLUMN `menu_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '菜单名称' AFTER `id`,
+    ADD COLUMN `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标志位' AFTER `last_modified_date`,
+    ADD COLUMN `parent_id` varchar(36) NOT NULL DEFAULT 0 COMMENT '父级id' AFTER `deleted`,
+    ADD COLUMN `menu_level` tinyint(1) NOT NULL DEFAULT 1 COMMENT '菜单层级' AFTER `parent_id`,
+    ADD COLUMN `menu_type` tinyint(1) NOT NULL COMMENT '菜单类型（1模块2菜单3按钮）' AFTER `menu_level`,
+    ADD COLUMN `sort` int NULL COMMENT '排序' AFTER `menu_type`,
+    ADD COLUMN `router` varchar(100) NULL COMMENT '路由' AFTER `sort`;
+
+ALTER TABLE `base_spring`.`sys_menu`
+    ADD COLUMN `permission` varchar(100) NULL COMMENT '权限值' AFTER `router`;
 
 DROP TABLE IF EXISTS `sys_resource`;
 CREATE TABLE `base_spring`.`sys_resource`  (
@@ -104,14 +114,7 @@ CREATE TABLE `base_spring`.`sys_resource`  (
 )ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 
-ALTER TABLE `base_spring`.`sys_menu`
-    MODIFY COLUMN `menu_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '菜单名称' AFTER `id`,
-    ADD COLUMN `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标志位' AFTER `last_modified_date`,
-ADD COLUMN `parent_id` varchar(36) NOT NULL DEFAULT 0 COMMENT '父级id' AFTER `deleted`,
-ADD COLUMN `menu_level` tinyint(1) NOT NULL DEFAULT 1 COMMENT '菜单层级' AFTER `parent_id`,
-ADD COLUMN `menu_type` tinyint(1) NOT NULL COMMENT '菜单类型（1模块2菜单3按钮）' AFTER `menu_level`,
-ADD COLUMN `sort` int NULL COMMENT '排序' AFTER `menu_type`,
-ADD COLUMN `router` varchar(100) NULL COMMENT '路由' AFTER `sort`;
+
 
 -- ----------------------------
 -- Table structure for sys_account_role
