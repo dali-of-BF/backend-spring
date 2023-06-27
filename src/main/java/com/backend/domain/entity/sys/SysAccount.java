@@ -65,4 +65,8 @@ public class SysAccount extends BaseEntity implements Serializable {
      * 头像
      */
     private String avatar;
+    /**
+     * 记住我
+     */
+    private Integer rememberMe;
 }
