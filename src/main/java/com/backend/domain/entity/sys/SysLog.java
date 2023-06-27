@@ -51,7 +51,7 @@ public class SysLog extends BaseEntity {
      */
     private String error;
     /**
-     * 操作方法
+     * 请求方式
      */
     private String method;
 }
