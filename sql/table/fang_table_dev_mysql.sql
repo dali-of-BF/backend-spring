@@ -113,3 +113,20 @@ ADD COLUMN `menu_type` tinyint(1) NOT NULL COMMENT '菜单类型（1模块2菜�
 ADD COLUMN `sort` int NULL COMMENT '排序' AFTER `menu_type`,
 ADD COLUMN `router` varchar(100) NULL COMMENT '路由' AFTER `sort`;
 
+-- ----------------------------
+-- Table structure for sys_account_role
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_account_role`;
+CREATE TABLE `sys_account_role`  (
+                                     `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                     `account_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+                                     `role_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+                                     `deleted` tinyint(1) NOT NULL DEFAULT 0,
+                                     `created_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+                                     `created_date` timestamp(6) NULL DEFAULT NULL,
+                                     `last_modified_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+                                     `last_modified_date` timestamp(6) NULL DEFAULT NULL,
+                                     PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;
