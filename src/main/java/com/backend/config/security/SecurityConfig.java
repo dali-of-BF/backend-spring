@@ -123,7 +123,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //验证成功处理器(前后端分离)：生成token及响应状态码200
                 .successHandler(loginSuccessHandle)
                 //验证失败处理器(前后端分离)：返回状态码402
-                //.failureHandler(loginFailHandle)
+                .failureHandler(loginFailHandle)
                 .authenticationDetailsSource(authenticationDetailsSource); //身份验证详细信息源(登录验证中增加额外字段)
 
         // 将session策略设置为无状态的,通过token进行登录认证
