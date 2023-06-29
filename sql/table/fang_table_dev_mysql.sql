@@ -70,6 +70,7 @@ CREATE TABLE `sys_role`  (
                              `created_date` timestamp(6) NULL DEFAULT NULL,
                              `last_modified_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
                              `last_modified_date` timestamp(6) NULL DEFAULT NULL,
+                             `deleted` tinyint(1) NOT NULL DEFAULT 0,
                              PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
