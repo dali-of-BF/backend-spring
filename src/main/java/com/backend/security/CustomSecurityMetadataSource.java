@@ -46,7 +46,7 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
     public Collection<ConfigAttribute> getAttributes(Object o) throws IllegalArgumentException {
         Set<ConfigAttribute> set = new HashSet<>();
         // 获取请求地址
-        String requestUrl = ((FilterInvocation) o).getRequestUrl();
+        String requestUrl = contextPath.concat(((FilterInvocation) o).getRequestUrl());
         Set<String> menuUrl = sysSourceService.getResource().stream().map(SysResource::getResourceUrl).collect(Collectors.toSet());
         for (String url : menuUrl) {
             if (antPathMatcher.match(url, requestUrl)) {
