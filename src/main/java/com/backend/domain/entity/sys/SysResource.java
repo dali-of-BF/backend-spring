@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author FPH
  * @since 2023年4月15日22:40:46
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
 @TableName("sys_resource")
 @AllArgsConstructor
 @NoArgsConstructor
-public class SysResource extends BaseEntity {
+public class SysResource extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -2740448887007453452L;
     /**
      * url
