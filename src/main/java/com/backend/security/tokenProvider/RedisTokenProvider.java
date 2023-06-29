@@ -79,15 +79,15 @@ public class RedisTokenProvider implements TokenProvider {
 
     /**
      * 移除token
+     *
      * @param token
-     * @return
      */
-    public Boolean removeToken(@NotNull String token) {
+    public void removeToken(@NotNull String token) {
         if (StringUtils.isEmpty(token)) {
-            return false;
+            return;
         }
         String key = AUTHORITIES_KEY.concat(headerUtils.getAppId()+Constant.REDIS_BLOCK+token);
-        return redisUtils.deleteObject(key);
+        redisUtils.deleteObject(key);
     }
 
     /**
