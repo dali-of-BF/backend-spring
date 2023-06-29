@@ -1,8 +1,10 @@
 package com.backend;
 
 import com.backend.config.ApplicationProperties;
+import com.backend.utils.SpringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.Resource;
 
@@ -15,7 +17,7 @@ class BackEndSpringApplicationTests {
 
 
     @Test
-    void testClass(){
-        System.out.println(applicationProperties.getSecurity().getBase64Secret());
+    void encode(){
+        System.out.println(SpringUtils.getBean(PasswordEncoder.class).encode("123456"));
     }
 }

@@ -53,6 +53,12 @@ ALTER TABLE `base_spring`.`sys_account`
     ADD COLUMN `remember_me` tinyint(1) NOT NULL DEFAULT 0 COMMENT '记住我 0不记住' AFTER `avatar`;
 
 -- ----------------------------
+-- Records of sys_account
+-- ----------------------------
+INSERT INTO `sys_account` VALUES ('1', 'admin', '18206004582', '$2a$10$I2nceupoe8KEDKzRy50vuOp2xlop6vxAKyx1tvVSZsuyxz3I9AMTq', 0, NULL, NULL, NULL, NULL, '1', 1, NULL, 'pc', 1, NULL, 0);
+
+
+-- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role`;
