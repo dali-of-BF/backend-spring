@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author FPH
@@ -48,7 +49,7 @@ public class ResourceController {
 
     @GetMapping("/get-resources-by-redis")
     @ApiOperation("获取资源表信息，先从redis开始")
-    public Result<List<SysResource>> getResourceByRedis() {
+    public Result<Set<SysResource>> getResourceByRedis() {
         return Result.success(sysSourceService.getResource()) ;
     }
     @PostMapping("/do-refresh-resource")

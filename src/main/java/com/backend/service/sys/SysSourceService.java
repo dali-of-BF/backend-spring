@@ -27,9 +27,7 @@ import springfox.documentation.service.Documentation;
 import springfox.documentation.spring.web.DocumentationCache;
 import springfox.documentation.swagger2.mappers.ServiceModelToSwagger2Mapper;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -57,7 +55,9 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
         log.info("===> 扫描资源结束，耗时：{} 毫秒，总条数：{}", stopWatch.getLastTaskTimeMillis(),resources.size());
         List<SysResource> sysResources = addOrRemove(resources);
         //插入到redis中
-        redisUtils.setCacheList(RedisConstants.SOURCE_KEY,sysResources);
+        redisUtils.deleteObject(RedisConstants.SOURCE_KEY);
+        //删除redis后再set集合，否则会不断累加个数
+        redisUtils.setCacheSet(RedisConstants.SOURCE_KEY,new HashSet<>(sysResources));
         log.info("sysResource已更新:\n{}",sysResources);
         return sysResources;
     }
@@ -157,13 +157,13 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
      * 获取resource表集合（先查缓存再查数据库）
      * @return
      */
-    public List<SysResource> getResource(){
-        List<SysResource> sysResource = redisUtils.getCacheList(RedisConstants.SOURCE_KEY);
+    public Set<SysResource> getResource(){
+        Set<SysResource> sysResource = redisUtils.getCacheSet(RedisConstants.SOURCE_KEY);
         if (Objects.isNull(sysResource)){
-            List<SysResource> list = this.list(new LambdaQueryWrapper<SysResource>()
-                    .eq(SysResource::getDeleted, DeletedEnum.UNDELETED.getValue()));
+            Set<SysResource> list = new HashSet<>(this.list(new LambdaQueryWrapper<SysResource>()
+                    .eq(SysResource::getDeleted, DeletedEnum.UNDELETED.getValue())));
             //插入redis
-            redisUtils.setCacheList(RedisConstants.SOURCE_KEY,list);
+            redisUtils.setCacheSet(RedisConstants.SOURCE_KEY,list);
             return list;
         }
         return sysResource;
