@@ -25,14 +25,15 @@ public class SelfAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         log.debug("authentication >> {}", JSONObject.toJSONString(authentication, SerializerFeature.WriteMapNullValue));
-        CustomWebAuthenticationDetails customWebAuthenticationDetails = (CustomWebAuthenticationDetails) authentication.getDetails(); //获取身份验证详细信息
+        //获取身份验证详细信息
+        CustomWebAuthenticationDetails customWebAuthenticationDetails = (CustomWebAuthenticationDetails) authentication.getDetails();
         String remoteAddress = customWebAuthenticationDetails.getRemoteAddress();
         String sessionId = customWebAuthenticationDetails.getSessionId();
         log.debug("remoteAddress >> " + remoteAddress);
         log.debug("sessionId >> " + sessionId);
         log.debug("details >> " + JSONObject.toJSONString(customWebAuthenticationDetails, SerializerFeature.WriteMapNullValue));
-        log.debug("macAddress >> " + customWebAuthenticationDetails.getMacAddress()); //用于校验mac地址白名单(这里只是打个比方，登录验证中增加的额外字段)
-        log.debug("rememberMe >> " + customWebAuthenticationDetails.getRememberMe()); //记住我
+//        log.debug("macAddress >> " + customWebAuthenticationDetails.getMacAddress()); //用于校验mac地址白名单(这里只是打个比方，登录验证中增加的额外字段)
+//        log.debug("rememberMe >> " + customWebAuthenticationDetails.getRememberMe()); //记住我
 
         //表单输入的用户名
         String username = (String) authentication.getPrincipal();

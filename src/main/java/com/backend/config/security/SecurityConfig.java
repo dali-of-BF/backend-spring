@@ -78,6 +78,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+//    @Bean
+//    public JsonAuthenticationFilter authenticationFilter() throws Exception {
+//        JsonAuthenticationFilter filter = new JsonAuthenticationFilter();
+//        filter.setAuthenticationManager(authenticationManagerBean());
+//        filter.setAuthenticationSuccessHandler(loginSuccessHandle);
+//        filter.setAuthenticationFailureHandler(loginFailHandle);
+//        filter.setFilterProcessesUrl("/auth/login");
+//        filter.setPostOnly(true);
+//        return filter;
+//    }
+
     /**
      * @param auth
      * @throws Exception
@@ -97,6 +108,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // JwtToken解析并生成authentication身份信息过滤器
         http.addFilterBefore(authorizationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        //http.addFilterBefore(this.authenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         // 无权访问时：返回状态码403
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
