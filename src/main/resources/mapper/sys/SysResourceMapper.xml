@@ -26,7 +26,7 @@
     </select>
     <select id="findRoleNameByMenuUrl" resultType="java.lang.String">
         select *
-        from sys_role sr
+        from sys_resource sr
                  inner join sys_menu_resource smr on smr.resource_id = sr.id
                  inner join sys_role_menu srm on srm.menu_id = smr.menu_id
                  inner join sys_role srole on srole.id = srm.role_id
