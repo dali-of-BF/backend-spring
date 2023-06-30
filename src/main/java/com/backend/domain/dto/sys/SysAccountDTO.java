@@ -31,9 +31,6 @@ public class SysAccountDTO {
     @NotBlank(message = "性别不可为空")
     private String gender;
 
-    @ApiModelProperty("状态")
-    private Integer status;
-
     @ApiModelProperty("身份证号码")
     private String idCard;
 }
