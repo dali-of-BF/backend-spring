@@ -83,4 +83,4 @@ application:
     defaultPassword: 123456
   resource:
     #如果不加引号，则代码会将其读取为true or false
-    enableResourceInit: "no"
+    enableResourceInit: ${ENABLE_RESOURCE_INIT:"no"}
