@@ -16,4 +16,5 @@ services:
         DB_PASSWORD: ${DB_PASSWORD} 
         HW_AK: ${HW_AK}
         HW_SK: ${HW_SK}
+        ENABLE_RESOURCE_INIT: ${ENABLE_RESOURCE_INIT}
     restart: always
