@@ -68,7 +68,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         String version = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
         return new ApiInfoBuilder()
-                .title("springboot基础框架")
+                .title("BACKEND SPRING API")
                 .description("fph基础框架构建")
                 .version("v2."+version)
                 .license("Apache License Version 2.0")
