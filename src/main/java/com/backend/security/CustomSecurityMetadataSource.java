@@ -1,14 +1,15 @@
 package com.backend.security;
 
-import com.backend.constants.SecurityConstants;
 import com.backend.domain.entity.sys.SysResource;
 import com.backend.service.sys.SysSourceService;
 import com.backend.utils.HeaderUtils;
+import com.backend.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Component;
@@ -38,6 +39,7 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
      * 判定当前请求对应的资源权限
      * 如果在权限表中，则返回给decide方法，用来判定用户是否有此权限
      * 如果不在权限表中则放行
+     * 当返回为空时，不走此方法{@link CustomAccessDecisionManager#decide(Authentication, Object, Collection) decide}
      * @param o the object being secured
      * @return
      * @throws IllegalArgumentException
@@ -47,20 +49,27 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
         Set<ConfigAttribute> set = new HashSet<>();
         // 获取请求地址
         String requestUrl = contextPath.concat(((FilterInvocation) o).getRequestUrl());
-        Set<String> menuUrl = sysSourceService.getResource().stream().map(SysResource::getResourceUrl).collect(Collectors.toSet());
-        for (String url : menuUrl) {
-            if (antPathMatcher.match(url, requestUrl)) {
-                //当前请求需要的权限
-                Set<String> roleNames = sysSourceService.getBaseMapper().findRoleNameByMenuUrl(url,headerUtils.getAppId());
-                roleNames.forEach(roleName -> {
-                    SecurityConfig securityConfig = new SecurityConfig(roleName);
-                    set.add(securityConfig);
-                });
+        //请求方式
+        String method = ((FilterInvocation) o).getHttpRequest().getMethod();
+        String appId = SecurityUtils.getAppId();
+        boolean isSuper = SecurityUtils.isSuper();
+        Set<SysResource> resources = sysSourceService.getResource();
+        if (isSuper && StringUtils.isNotEmpty(appId)) {
+            //如果是超管，则返回空集合，不走decide方法
+            Set<SysResource> uriSet = resources.stream().filter(i -> appId.equals(i.getAppId())).collect(Collectors.toSet());
+            for (SysResource uri : uriSet) {
+                if (uri.getResourceMethod().equals(method) && antPathMatcher.match(uri.getResourceUrl(), requestUrl)){
+                    return SecurityConfig.createList();
+                }
             }
         }
-        if (ObjectUtils.isEmpty(set)) {
-            return SecurityConfig.createList(SecurityConstants.ROLE_LOGIN);
-        }
+        //如果不是超管，则返回其resourceId至decide
+        resources.stream().filter(resource -> {
+                    String uri = resource.getResourceUrl();
+                    return resource.getResourceMethod().equals(method) &&
+                            antPathMatcher.match(uri, requestUrl);
+                })
+                .forEach(resource -> set.add(new SecurityConfig(String.valueOf(resource.getId()))));
         return set;
     }
 
