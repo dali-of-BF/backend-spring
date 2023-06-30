@@ -8,7 +8,7 @@ import lombok.Getter;
  */
 
 @Getter
-public enum SystemCodeEnum implements IEnum<String> {
+public enum AppIdEnum implements IEnum<String> {
 
     PC("pc", "pc端"),
     WX("wx", "wx端");
@@ -16,7 +16,7 @@ public enum SystemCodeEnum implements IEnum<String> {
     private final String value;
     private final String desc;
 
-    SystemCodeEnum(String value, String desc) {
+    AppIdEnum(String value, String desc) {
         this.value = value;
         this.desc = desc;
     }
