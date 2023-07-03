@@ -19,6 +19,6 @@ import java.io.IOException;
 public class LoginFailHandle implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        ResponseUtils.error(response,exception.getMessage());
+        ResponseUtils.error(response,exception.getMessage(),exception.getMessage());
     }
 }

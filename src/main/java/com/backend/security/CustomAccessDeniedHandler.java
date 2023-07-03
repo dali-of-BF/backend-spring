@@ -27,6 +27,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest httpServletRequest,
                        HttpServletResponse httpServletResponse,
                        AccessDeniedException e){
-        ResponseUtils.forbidden(httpServletResponse,"权限不足");
+        ResponseUtils.forbidden(httpServletResponse,"权限不足","权限不足");
     }
 }

@@ -37,6 +37,6 @@ public class LoginSuccessHandle implements AuthenticationSuccessHandler {
                 .authorities(userDetails.getAuthorities())
                 .tokenPrefix(properties.getSecurity().getTokenPrefix())
                 .build();
-        ResponseUtils.success(response,loginVO);
+        ResponseUtils.success(response,loginVO,"登录成功");
     }
 }

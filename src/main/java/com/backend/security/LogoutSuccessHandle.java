@@ -37,6 +37,6 @@ public class LogoutSuccessHandle implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication){
         redisTokenProvider.removeToken(redisTokenProvider.resolveToken(request));
-        ResponseUtils.success(response,"退出成功");
+        ResponseUtils.success(response,"退出成功","退出成功");
     }
 }

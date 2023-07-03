@@ -15,10 +15,11 @@ import java.io.IOException;
 public class ResponseUtils {
     private ResponseUtils(){}
 
-    private static void buildResult(HttpServletResponse response,Integer code,Object data) {
+    private static void buildResult(HttpServletResponse response,Integer code,Object data,String message) {
         Result<Object> result = new Result<>();
         result.setCode(code);
         result.setData(data);
+        result.setMessage(message);
         //如果是非200的错误异常，则error也写入状态码与错误信息
         if(!code.equals(HttpStatus.SUCCESS)){
             result.getError().setCode(code);
@@ -35,21 +36,21 @@ public class ResponseUtils {
     }
 //Utility classes, which are collections of static members, are not meant to be instantiated. Even abstract utility classes, which can be extended, should not have public constructors.
 //Java adds an implicit public constructor to every class which does not define at least one explicitly. Hence, at least one non-public constructor should be defined.
-    public static void success(HttpServletResponse response,Object data){
-        buildResult(response,HttpStatus.SUCCESS,data);
+    public static void success(HttpServletResponse response,Object data,String message){
+        buildResult(response,HttpStatus.SUCCESS,data,message);
     }
 
-    public static void error(HttpServletResponse response,Object data){
-        buildResult(response,HttpStatus.ERROR,data);
+    public static void error(HttpServletResponse response,Object data,String message){
+        buildResult(response,HttpStatus.ERROR,data,message);
     }
 
-    public static void forbidden(HttpServletResponse response,Object data){
-        buildResult(response,HttpStatus.FORBIDDEN,data);
+    public static void forbidden(HttpServletResponse response,Object data,String message){
+        buildResult(response,HttpStatus.FORBIDDEN,data,message);
     }
-    public static void fail(HttpServletResponse response,Object data){
-        buildResult(response,HttpStatus.LOGIN_FAIL,data);
+    public static void fail(HttpServletResponse response,Object data,String message){
+        buildResult(response,HttpStatus.LOGIN_FAIL,data,message);
     }
-    public static void unauthorized(HttpServletResponse response,Object data){
-        buildResult(response,HttpStatus.UNAUTHORIZED,data);
+    public static void unauthorized(HttpServletResponse response,Object data,String message){
+        buildResult(response,HttpStatus.UNAUTHORIZED,data,message);
     }
 }
