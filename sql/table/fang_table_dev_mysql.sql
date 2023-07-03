@@ -13,7 +13,7 @@
 
  Date: 24/03/2023 05:33:09
 */
-use base_spring;
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
