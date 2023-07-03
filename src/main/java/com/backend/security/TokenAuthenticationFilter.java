@@ -22,6 +22,7 @@ import java.util.Objects;
 /**
  * @author FPH
  * 如果找到与有效用户对应的标头，则过滤传入请求并安装 Spring Security 主体。
+ * 每一次的请求都会走这里
  */
 @Slf4j
 @Component
