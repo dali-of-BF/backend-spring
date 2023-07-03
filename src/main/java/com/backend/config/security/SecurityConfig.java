@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,9 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * security配置
@@ -68,9 +64,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 身份验证详细信息源
      */
-    private final AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource;
+//    private final AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource;
 
     private final LogoutSuccessHandle logoutSuccessHandle;
+
+    private final CustomAuthenticationDetailsSource customAuthenticationDetailsSource;
 
 
     @Bean
@@ -78,16 +76,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public JsonAuthenticationFilter authenticationFilter() throws Exception {
-//        JsonAuthenticationFilter filter = new JsonAuthenticationFilter();
-//        filter.setAuthenticationManager(authenticationManagerBean());
-//        filter.setAuthenticationSuccessHandler(loginSuccessHandle);
-//        filter.setAuthenticationFailureHandler(loginFailHandle);
-//        filter.setFilterProcessesUrl("/auth/login");
-//        filter.setPostOnly(true);
-//        return filter;
-//    }
+    @Bean
+    public JsonAuthenticationFilter authenticationFilter() throws Exception {
+        JsonAuthenticationFilter filter = new JsonAuthenticationFilter();
+        filter.setAuthenticationManager(authenticationManagerBean());
+        filter.setAuthenticationSuccessHandler(loginSuccessHandle);
+        filter.setAuthenticationFailureHandler(loginFailHandle);
+        filter.setAuthenticationDetailsSource(customAuthenticationDetailsSource);
+        filter.setFilterProcessesUrl("/auth/login");
+        filter.setPostOnly(true);
+        return filter;
+    }
 
     /**
      * @param auth
@@ -108,7 +107,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // JwtToken解析并生成authentication身份信息过滤器
         http.addFilterBefore(authorizationTokenFilter, UsernamePasswordAuthenticationFilter.class);
-        //http.addFilterBefore(this.authenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(this.authenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         // 无权访问时：返回状态码403
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
@@ -136,7 +135,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(loginSuccessHandle)
                 //验证失败处理器(前后端分离)：返回状态码402
                 .failureHandler(loginFailHandle)
-                .authenticationDetailsSource(authenticationDetailsSource); //身份验证详细信息源(登录验证中增加额外字段)
+                .authenticationDetailsSource(customAuthenticationDetailsSource); //身份验证详细信息源(登录验证中增加额外字段)
 
         // 将session策略设置为无状态的,通过token进行登录认证
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
