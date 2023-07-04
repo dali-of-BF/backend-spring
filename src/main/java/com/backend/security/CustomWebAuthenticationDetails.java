@@ -1,6 +1,7 @@
 package com.backend.security;
 
 import com.backend.exception.BusinessException;
+import com.backend.utils.BodyReaderHttpServletRequestWrapper;
 import com.backend.utils.JsonMapper;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,8 @@ public class CustomWebAuthenticationDetails extends WebAuthenticationDetails imp
 //        }
         Map<String, Object> authenticationBean = new HashMap<>();
         try {
-            authenticationBean = JsonMapper.readValue(httpServletRequest.getInputStream(), Map.class);
+            BodyReaderHttpServletRequestWrapper requestWrapper = new BodyReaderHttpServletRequestWrapper(httpServletRequest);
+            authenticationBean = JsonMapper.readValue(requestWrapper.getInputStream(), Map.class);
         }catch (Exception e){
             log.error(e.getMessage());
             throw new BusinessException(e.getMessage());

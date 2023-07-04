@@ -1,6 +1,7 @@
 package com.backend.security;
 
 import com.backend.constants.HeaderConstant;
+import com.backend.utils.BodyReaderHttpServletRequestWrapper;
 import com.backend.utils.JsonMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
@@ -41,15 +42,15 @@ public class JsonAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         if (StringUtils.isBlank(clientCode)) {
             throw new AuthenticationServiceException("APP_ID can not be null");
         }
-
         try {
-            Map<String, String> authenticationBean = JsonMapper.readValue(request.getInputStream(), Map.class);
+            BodyReaderHttpServletRequestWrapper requestWrapper = new BodyReaderHttpServletRequestWrapper(request);
+            Map<String, String> authenticationBean = JsonMapper.readValue(requestWrapper.getInputStream(), Map.class);
             UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
                     authenticationBean.get(SPRING_SECURITY_FORM_USERNAME_KEY), authenticationBean.get(SPRING_SECURITY_FORM_PASSWORD_KEY));
-            this.setDetails(request, authRequest);
+            this.setDetails(requestWrapper, authRequest);
             return this.getAuthenticationManager().authenticate(authRequest);
         } catch (IOException e) {
-            throw new AuthenticationServiceException("IO Exception");
+            throw new AuthenticationServiceException(e.getMessage());
         }
     }
 }
