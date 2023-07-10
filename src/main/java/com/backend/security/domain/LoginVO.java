@@ -35,6 +35,9 @@ public class LoginVO {
     @ApiModelProperty(value = "记住我")
     private String tokenPrefix;
 
+    @ApiModelProperty(value = "系统标识")
+    private String appId;
+
     /**
      * 权限
      */

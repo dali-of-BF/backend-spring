@@ -36,6 +36,7 @@ public class LoginSuccessHandle implements AuthenticationSuccessHandler {
                 .superAdmin(userDetails.isSuperAdmin())
                 .authorities(userDetails.getAuthorities())
                 .tokenPrefix(properties.getSecurity().getTokenPrefix())
+                .appId(userDetails.getAppId())
                 .build();
         ResponseUtils.success(response,loginVO,"登录成功");
     }
