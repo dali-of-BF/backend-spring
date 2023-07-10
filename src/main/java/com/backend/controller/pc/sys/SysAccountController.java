@@ -4,6 +4,7 @@ import com.backend.annotation.Log;
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
 import com.backend.domain.dto.sys.SysAccountPwdChangeDTO;
+import com.backend.domain.dto.sys.UpdateUserInfoDTO;
 import com.backend.domain.entity.base.BasePageDTO;
 import com.backend.domain.entity.sys.SysAccount;
 import com.backend.service.sys.SysAccountService;
@@ -55,10 +56,9 @@ public class SysAccountController {
         return Result.success("修改成功");
     }
 
-//    @PostMapping("update")
-//    @ApiOperation("修改用户信息")
-//    public Result<String> updateUserInfo(@Valid @RequestBody SysAccountPwdChangeDTO dto){
-//        sysAccountService.updateUserInfo();
-//        return Result.success("修改成功");
-//    }
+    @PostMapping("update")
+    @ApiOperation("修改用户信息")
+    public Result<SysAccount> updateUserInfo(@Valid @RequestBody UpdateUserInfoDTO dto){
+        return Result.success(sysAccountService.updateUserInfo(dto),"修改成功");
+    }
 }

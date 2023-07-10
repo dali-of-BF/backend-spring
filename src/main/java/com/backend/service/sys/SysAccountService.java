@@ -3,6 +3,7 @@ package com.backend.service.sys;
 import com.backend.config.ApplicationProperties;
 import com.backend.config.security.SecurityConfig;
 import com.backend.domain.dto.sys.RegisterUserDTO;
+import com.backend.domain.dto.sys.UpdateUserInfoDTO;
 import com.backend.domain.entity.sys.SysAccount;
 import com.backend.exception.BusinessException;
 import com.backend.mapper.sys.SysAccountMapper;
@@ -14,12 +15,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -95,6 +98,17 @@ public class SysAccountService extends ServiceImpl<SysAccountMapper, SysAccount>
         }
         account.setPassword(securityConfig.passwordEncoder().encode(password));
         this.updateById(account);
-        // TODO: 2023/5/19 移除token
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public SysAccount updateUserInfo(UpdateUserInfoDTO dto) {
+        SysAccount sysAccount = this.getById(dto.getId());
+        sysAccount.setAvatar(StringUtils.isNotBlank(dto.getAvatar())? dto.getAvatar() : sysAccount.getAvatar());
+        sysAccount.setGender(StringUtils.isNotBlank(dto.getGender())? dto.getGender() : sysAccount.getGender());
+        sysAccount.setPhone(StringUtils.isNotBlank(dto.getPhone())? dto.getPhone() : sysAccount.getPhone());
+        sysAccount.setIdCard(StringUtils.isNotBlank(dto.getIdCard())? dto.getIdCard() : sysAccount.getIdCard());
+        sysAccount.setStatus(Objects.nonNull(dto.getStatus())? dto.getStatus() : sysAccount.getStatus());
+        this.updateById(sysAccount);
+        return sysAccount;
     }
 }
