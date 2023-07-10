@@ -1,4 +1,4 @@
-package com.backend.controller.pc.resource;
+package com.backend.controller.common.resource;
 
 import com.backend.annotation.Log;
 import com.backend.common.result.Result;

@@ -2,7 +2,7 @@ package com.backend.service.sys;
 
 import com.backend.config.ApplicationProperties;
 import com.backend.config.security.SecurityConfig;
-import com.backend.domain.dto.sys.SysAccountDTO;
+import com.backend.domain.dto.sys.RegisterUserDTO;
 import com.backend.domain.entity.sys.SysAccount;
 import com.backend.exception.BusinessException;
 import com.backend.mapper.sys.SysAccountMapper;
@@ -51,7 +51,7 @@ public class SysAccountService extends ServiceImpl<SysAccountMapper, SysAccount>
      * @param dto 保存实体
      */
     @Transactional(rollbackFor = Exception.class)
-    public SysAccount register(SysAccountDTO dto){
+    public SysAccount register(RegisterUserDTO dto){
         //用户名不可重复
         List<SysAccount> sysAccounts = sysAccountMapper.selectList(new LambdaQueryWrapper<SysAccount>().eq(SysAccount::getUsername, dto.getUsername()));
         if(CollectionUtils.isNotEmpty(sysAccounts)){

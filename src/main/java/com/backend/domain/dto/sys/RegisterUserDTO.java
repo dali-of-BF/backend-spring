@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SysAccountDTO {
+public class RegisterUserDTO {
 
     @ApiModelProperty("用户名")
     @Length(max = 50,message = "用户名长度不可超出五十字符")

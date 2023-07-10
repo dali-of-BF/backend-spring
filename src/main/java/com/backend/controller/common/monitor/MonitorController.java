@@ -1,4 +1,4 @@
-package com.backend.controller.pc.monitor;
+package com.backend.controller.common.monitor;
 
 import com.backend.annotation.Log;
 import com.backend.common.result.Result;

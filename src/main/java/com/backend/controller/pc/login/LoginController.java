@@ -3,7 +3,7 @@ package com.backend.controller.pc.login;
 import com.backend.annotation.Log;
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
-import com.backend.domain.dto.sys.SysAccountDTO;
+import com.backend.domain.dto.sys.RegisterUserDTO;
 import com.backend.domain.entity.sys.SysAccount;
 import com.backend.security.domain.LoginDTO;
 import com.backend.security.domain.LoginVO;
@@ -47,7 +47,7 @@ public class LoginController {
 
     @PostMapping("register")
     @ApiOperation("注册")
-    public Result<SysAccount> register(@Valid @RequestBody SysAccountDTO dto) {
+    public Result<SysAccount> register(@Valid @RequestBody RegisterUserDTO dto) {
         return Result.success(sysAccountService.register(dto),"注册成功");
     }
 }

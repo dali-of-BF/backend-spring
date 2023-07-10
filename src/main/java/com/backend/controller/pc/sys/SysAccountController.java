@@ -54,4 +54,11 @@ public class SysAccountController {
         sysAccountService.changePassword(SecurityUtils.getAccountId(),dto.getNewPassword(), dto.getOldPassword());
         return Result.success("修改成功");
     }
+
+//    @PostMapping("update")
+//    @ApiOperation("修改用户信息")
+//    public Result<String> updateUserInfo(@Valid @RequestBody SysAccountPwdChangeDTO dto){
+//        sysAccountService.updateUserInfo();
+//        return Result.success("修改成功");
+//    }
 }
