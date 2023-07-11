@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
-public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource> {
+public class SysSourceService extends ServiceImpl<SysResourceMapper, SysResource> {
 
     private final DocumentationCache documentationCache;
     private final ServiceModelToSwagger2Mapper serviceModelToSwagger2Mapper;
@@ -54,27 +54,28 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
         stopWatch.start("扫描接口资源");
         List<SysResource> resources = getResourceByGroupNameList(allFieldValue);
         stopWatch.stop();
-        log.info("===> 扫描资源结束，耗时：{} 毫秒，总条数：{}", stopWatch.getLastTaskTimeMillis(),resources.size());
+        log.info("===> 扫描资源结束，耗时：{} 毫秒，总条数：{}", stopWatch.getLastTaskTimeMillis(), resources.size());
         List<SysResource> sysResources = addOrRemove(resources);
         //插入到redis中
         redisUtils.deleteObject(RedisConstants.SOURCE_KEY);
         //删除redis后再set集合，否则会不断累加个数
-        redisUtils.setCacheSet(RedisConstants.SOURCE_KEY,new HashSet<>(sysResources));
-        log.info("sysResource已更新:\n{}",sysResources);
+        redisUtils.setCacheSet(RedisConstants.SOURCE_KEY, new HashSet<>(sysResources));
+        log.info("sysResource已更新:\n{}", sysResources);
         return sysResources;
     }
 
     /**
      * 针对扫描出来的sysResource信息进行相对应的添加修改与删除
+     *
      * @param sysResources
      */
     @Transactional(rollbackFor = Exception.class)
-    public List<SysResource> addOrRemove(List<SysResource> sysResources){
+    public List<SysResource> addOrRemove(List<SysResource> sysResources) {
         List<SysResource> dataResource = this.list();
-        sysResources.forEach(i->{
+        sysResources.forEach(i -> {
             SysResource sysResource = dataResource.stream().filter(j -> j.getResourceUrl().equals(i.getResourceUrl()))
                     .findFirst().orElse(null);
-            i.setId(Objects.nonNull(sysResource)?sysResource.getId():null);
+            i.setId(Objects.nonNull(sysResource) ? sysResource.getId() : null);
         });
         List<String> removeUrlList = dataResource.stream()
                 .map(SysResource::getResourceUrl)
@@ -84,10 +85,10 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
         this.saveOrUpdateBatch(sysResources);
 
         removeUrlList.removeAll(sysResources.stream()
-                        .map(SysResource::getResourceUrl)
-                        .collect(Collectors.toList()));
+                .map(SysResource::getResourceUrl)
+                .collect(Collectors.toList()));
         //此时多余出来的集合为需要被删除的部分
-        if(CollectionUtils.isNotEmpty(removeUrlList)) {
+        if (CollectionUtils.isNotEmpty(removeUrlList)) {
             this.remove(new LambdaQueryWrapper<SysResource>().in(SysResource::getResourceUrl, removeUrlList));
         }
 
@@ -96,21 +97,22 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
 
     /**
      * 通过分组集合获取资源信息
+     *
      * @param groupNameList
      * @return
      */
     public List<SysResource> getResourceByGroupNameList(List<String> groupNameList) {
         List<SysResource> resultList = Lists.newArrayList();
-        groupNameList.forEach(i-> resultList.addAll(this.getResourceByGroupName(i)));
+        groupNameList.forEach(i -> resultList.addAll(this.getResourceByGroupName(i)));
         return resultList;
     }
 
     /**
      * 根据分组获取接口资源信息
      *
-     * @param groupName    分组名称
-    //     * @param ignoreList   忽略的uri集合
-    //     * @param ignorePrefix 忽略的uri前缀集合
+     * @param groupName 分组名称
+     *                  //     * @param ignoreList   忽略的uri集合
+     *                  //     * @param ignorePrefix 忽略的uri前缀集合
      * @return 资源信息
      */
     public List<SysResource> getResourceByGroupName(String groupName) {
@@ -158,15 +160,16 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
 
     /**
      * 获取resource表集合（先查缓存再查数据库）
+     *
      * @return
      */
-    public Set<SysResource> getResource(){
+    public Set<SysResource> getResource() {
         Set<SysResource> sysResource = redisUtils.getCacheSet(RedisConstants.SOURCE_KEY);
-        if (Objects.isNull(sysResource)){
+        if (Objects.isNull(sysResource)) {
             Set<SysResource> list = new HashSet<>(this.list(new LambdaQueryWrapper<SysResource>()
                     .eq(SysResource::getDeleted, DeletedEnum.UNDELETED.getValue())));
             //插入redis
-            redisUtils.setCacheSet(RedisConstants.SOURCE_KEY,list);
+            redisUtils.setCacheSet(RedisConstants.SOURCE_KEY, list);
             return list;
         }
         return sysResource;
