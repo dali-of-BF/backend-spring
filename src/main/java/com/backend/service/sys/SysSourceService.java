@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StopWatch;
 import springfox.documentation.service.Documentation;
@@ -37,6 +38,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
 public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource> {
 
     private final DocumentationCache documentationCache;
@@ -88,6 +90,7 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper,SysResource>
         if(CollectionUtils.isNotEmpty(removeUrlList)) {
             this.remove(new LambdaQueryWrapper<SysResource>().in(SysResource::getResourceUrl, removeUrlList));
         }
+
         return sysResources;
     }
 
