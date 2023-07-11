@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 自定义权限不足处理器：返回状态码403
      */
-    private final CustomAccessDeniedHandler accessDeniedHandler;
+//    private final CustomAccessDeniedHandler accessDeniedHandler;
     /**
      * 登录成功处理类
      */
@@ -109,7 +109,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 未登录时：返回状态码401
         http.exceptionHandling().authenticationEntryPoint(unAuthenticationEntryPoint);
         // 无权访问时：返回状态码403
-        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+        http.exceptionHandling().accessDeniedHandler(unAuthenticationEntryPoint);
 
         // url权限认证处理
         http.antMatcher("/**").authorizeRequests()
