@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +45,9 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper, SysResource
     private final DocumentationCache documentationCache;
     private final ServiceModelToSwagger2Mapper serviceModelToSwagger2Mapper;
     private final RedisUtils redisUtils;
+
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
 
 
     public List<SysResource> doRefreshResource() throws IllegalAccessException {
@@ -76,6 +80,12 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper, SysResource
             SysResource sysResource = dataResource.stream().filter(j -> j.getResourceUrl().equals(i.getResourceUrl()))
                     .findFirst().orElse(null);
             i.setId(Objects.nonNull(sysResource) ? sysResource.getId() : null);
+            //处理APPID
+            String resourceUrl = i.getResourceUrl();
+            //获取前缀，保存在appId中
+            String substring = resourceUrl.substring(contextPath.length() + 1);
+            String appId = substring.substring(0, substring.indexOf("/"));
+            i.setAppId(appId);
         });
         List<String> removeUrlList = dataResource.stream()
                 .map(SysResource::getResourceUrl)

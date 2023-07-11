@@ -2,7 +2,6 @@ package com.backend.security;
 
 import com.backend.domain.entity.sys.SysResource;
 import com.backend.service.sys.SysSourceService;
-import com.backend.utils.HeaderUtils;
 import com.backend.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -29,7 +28,6 @@ import java.util.stream.Collectors;
 public class CustomSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
     private final SysSourceService sysSourceService;
-    private final HeaderUtils headerUtils;
 
     @Value("${server.servlet.context-path}")
     private String contextPath;
