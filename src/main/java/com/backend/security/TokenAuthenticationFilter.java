@@ -1,6 +1,5 @@
 package com.backend.security;
 
-import com.backend.config.ApplicationProperties;
 import com.backend.security.domain.DomainUserDetails;
 import com.backend.security.tokenProvider.RedisTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -30,9 +29,6 @@ import java.util.Objects;
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final RedisTokenProvider redisTokenProvider;
-
-    private final UnAuthenticationEntryPoint authenticationEntryPoint;
-    private final ApplicationProperties applicationProperties;
 
     /**
      * 解析token并生成authentication身份信息

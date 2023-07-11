@@ -2,6 +2,7 @@ package com.backend.security.tokenProvider;
 
 import com.backend.config.ApplicationProperties;
 import com.backend.constants.Constant;
+import com.backend.constants.SecurityRedisConstants;
 import com.backend.security.domain.DomainUserDetails;
 import com.backend.utils.HeaderUtils;
 import com.backend.utils.JsonMapper;
@@ -49,7 +50,7 @@ public class RedisTokenProvider implements TokenProvider {
     @Override
     public Authentication getAuthentication(String token) {
         DomainUserDetails userDetails = JsonMapper.covertValue(redisUtils
-                .getCacheObject(AUTHORITIES_KEY.concat(headerUtils.getAppId()+Constant.REDIS_BLOCK+token)),DomainUserDetails.class);
+                .getCacheObject(SecurityRedisConstants.AUTHORITIES_KEY.concat(headerUtils.getAppId()+Constant.REDIS_BLOCK+token)),DomainUserDetails.class);
         if (Objects.nonNull(userDetails)) {
             return new UsernamePasswordAuthenticationToken(userDetails, token, userDetails.getAuthorities());
         }

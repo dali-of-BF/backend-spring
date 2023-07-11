@@ -102,12 +102,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // 关闭csrf验证(防止跨站请求伪造攻击)
         http.csrf().disable();
-        // 未登录时：返回状态码401
-        http.exceptionHandling().authenticationEntryPoint(unAuthenticationEntryPoint);
 
         // JwtToken解析并生成authentication身份信息过滤器
         http.addFilterBefore(authorizationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(this.authenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        // 未登录时：返回状态码401
+        http.exceptionHandling().authenticationEntryPoint(unAuthenticationEntryPoint);
         // 无权访问时：返回状态码403
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
