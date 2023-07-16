@@ -111,4 +111,8 @@ public class SysAccountService extends ServiceImpl<SysAccountMapper, SysAccount>
         this.updateById(sysAccount);
         return sysAccount;
     }
+
+    public SysAccount getDetail(String id) {
+        return this.getById(id);
+    }
 }

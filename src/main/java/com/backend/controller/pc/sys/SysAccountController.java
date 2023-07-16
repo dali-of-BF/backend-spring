@@ -35,6 +35,12 @@ public class SysAccountController {
         return Result.success(sysAccountService.getPage(dto.getPage(), dto.getSize()));
     }
 
+    @GetMapping("detail")
+    @ApiOperation("详情")
+    public Result<SysAccount> getDetail(String id){
+        return Result.success(sysAccountService.getDetail(id));
+    }
+
     @DeleteMapping("deleteById/{id}")
     @ApiOperation("通过用户ID删除用户")
     public Result<String> deleteById(@PathVariable("id") String id){
