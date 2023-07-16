@@ -46,7 +46,9 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
     public Collection<ConfigAttribute> getAttributes(Object o) throws IllegalArgumentException {
         Set<ConfigAttribute> set = new HashSet<>();
         // 获取请求地址
-        String requestUrl = contextPath.concat(((FilterInvocation) o).getRequestUrl());
+        String nativeReqUrl = contextPath.concat(((FilterInvocation) o).getRequestUrl());
+        //get请求后缀会拼接
+        String requestUrl=nativeReqUrl.replaceAll("\\?(.+)","");
         //请求方式
         String method = ((FilterInvocation) o).getHttpRequest().getMethod();
         String appId = SecurityUtils.getAppId();
