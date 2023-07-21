@@ -2,13 +2,16 @@ package com.backend.service.sys;
 
 import com.backend.config.ApplicationProperties;
 import com.backend.config.security.SecurityConfig;
-import com.backend.domain.dto.sys.RegisterUserDTO;
-import com.backend.domain.dto.sys.UpdateUserInfoDTO;
+import com.backend.domain.dto.common.IdDTO;
+import com.backend.domain.dto.sys.account.RegisterUserDTO;
+import com.backend.domain.dto.sys.account.UpdateUserInfoDTO;
 import com.backend.domain.entity.sys.SysAccount;
+import com.backend.enums.sys.StatusEnum;
 import com.backend.exception.BusinessException;
 import com.backend.mapper.sys.SysAccountMapper;
 import com.backend.utils.HeaderUtils;
 import com.backend.utils.JsonMapper;
+import com.backend.utils.SecurityUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -20,7 +23,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -32,7 +34,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class SysAccountService extends ServiceImpl<SysAccountMapper, SysAccount> {
-    private final HttpServletRequest request;
+
     private final ApplicationProperties properties;
     private final SysAccountMapper sysAccountMapper;
     private final SecurityConfig securityConfig;
@@ -114,5 +116,16 @@ public class SysAccountService extends ServiceImpl<SysAccountMapper, SysAccount>
 
     public SysAccount getDetail(String id) {
         return this.getById(id);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updateHeaderImage(IdDTO dto) {
+        SysAccount account = Optional.ofNullable(this.getById(SecurityUtils.getAccountId()))
+                .orElseThrow(() -> new BusinessException("查无此人"));
+        if (StatusEnum.DISABLE.getValue().equals(account.getStatus())) {
+            throw new BusinessException("当前用户状态异常");
+        }
+        account.setAvatar(dto.getId());
+        this.updateById(account);
     }
 }

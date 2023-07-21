@@ -1,4 +1,4 @@
-package com.backend.domain.dto.sys;
+package com.backend.domain.dto.sys.account;
 
 import com.backend.domain.dto.common.StatusDTO;
 import io.swagger.annotations.ApiModelProperty;

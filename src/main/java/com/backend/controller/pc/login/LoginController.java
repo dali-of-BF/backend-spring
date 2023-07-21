@@ -3,7 +3,7 @@ package com.backend.controller.pc.login;
 import com.backend.annotation.Log;
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
-import com.backend.domain.dto.sys.RegisterUserDTO;
+import com.backend.domain.dto.sys.account.RegisterUserDTO;
 import com.backend.domain.entity.sys.SysAccount;
 import com.backend.security.domain.LoginDTO;
 import com.backend.security.domain.LoginVO;
