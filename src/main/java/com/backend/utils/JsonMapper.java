@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 /**
  * 对jackson 的objectMapper进一步封装
  *
- * @author chenjp
+ * @author FPH
  */
 public class JsonMapper {
 
