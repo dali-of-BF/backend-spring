@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Objects;
-
 
 /**
  * @author FPH
@@ -31,14 +29,11 @@ public class HweiObsConfig {
 
 
     /**
-     * 创建实例 单例
+     * 创建实例
      * @return
      */
     public ObsClient getInstance(){
-        if (Objects.isNull(obsClient)){
-            obsClient = new ObsClient(accessKey,securityKey,endPoint);
-        }
-        return obsClient;
+        return new ObsClient(accessKey,securityKey,endPoint);
     }
 
     /**
