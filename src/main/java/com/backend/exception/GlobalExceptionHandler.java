@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public Result<Object> handlerHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e,HttpServletRequest request){
-        return Result.error(e.getMessage(),"请求路径为->"+request.getRequestURI(),"请求方式异常");
+        return Result.error(e.getMessage(),"请求路径为->"+request.getRequestURI(),"请求方式异常",HttpStatus.ERROR,e.getMessage());
     }
 
     /**
