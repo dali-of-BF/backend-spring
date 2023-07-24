@@ -3,7 +3,6 @@ package com.backend.controller.pc.sys;
 import com.backend.annotation.Log;
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
-import com.backend.domain.dto.common.IdDTO;
 import com.backend.domain.dto.sys.account.SysAccountPwdChangeDTO;
 import com.backend.domain.dto.sys.account.UpdateUserInfoDTO;
 import com.backend.domain.entity.base.BasePageDTO;
@@ -71,8 +70,8 @@ public class SysAccountController {
 
     @PostMapping("update-header-image")
     @ApiOperation("修改此用户头像")
-    public Result<String> updateHeaderImage(@Valid @RequestBody IdDTO dto){
-        sysAccountService.updateHeaderImage(dto);
+    public Result<String> updateHeaderImage(@RequestBody String filename){
+        sysAccountService.updateHeaderImage(filename);
         return Result.success("修改成功");
     }
 }

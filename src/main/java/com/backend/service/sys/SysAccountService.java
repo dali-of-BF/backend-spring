@@ -2,7 +2,6 @@ package com.backend.service.sys;
 
 import com.backend.config.ApplicationProperties;
 import com.backend.config.security.SecurityConfig;
-import com.backend.domain.dto.common.IdDTO;
 import com.backend.domain.dto.sys.account.RegisterUserDTO;
 import com.backend.domain.dto.sys.account.UpdateUserInfoDTO;
 import com.backend.domain.entity.sys.SysAccount;
@@ -119,13 +118,13 @@ public class SysAccountService extends ServiceImpl<SysAccountMapper, SysAccount>
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void updateHeaderImage(IdDTO dto) {
+    public void updateHeaderImage(String filename) {
         SysAccount account = Optional.ofNullable(this.getById(SecurityUtils.getAccountId()))
                 .orElseThrow(() -> new BusinessException("查无此人"));
         if (StatusEnum.DISABLE.getValue().equals(account.getStatus())) {
             throw new BusinessException("当前用户状态异常");
         }
-        account.setAvatar(dto.getId());
+        account.setAvatar(filename);
         this.updateById(account);
     }
 }
