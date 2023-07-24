@@ -20,6 +20,8 @@ public class LoginVO {
     private String accessToken;
     @ApiModelProperty(value = "用户名")
     private String nickname;
+    @ApiModelProperty(value = "用户id")
+    private String id;
     @ApiModelProperty(value = "手机号")
     private String phone;
     @ApiModelProperty(value = "头像")

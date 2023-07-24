@@ -28,6 +28,7 @@ public class LoginSuccessHandle implements AuthenticationSuccessHandler {
         String token = redisTokenProvider.createToken(userDetails);
         LoginVO loginVO = LoginVO.builder()
                 .accessToken(token)
+                .id(userDetails.getCurrent())
                 .nickname(userDetails.getNickname())
                 .gender(userDetails.getGender())
                 .rememberMe(userDetails.isRememberMe())
