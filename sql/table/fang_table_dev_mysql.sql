@@ -160,6 +160,9 @@ CREATE TABLE `sys_log`  (
                             `last_modified_date` timestamp(6) NULL DEFAULT NULL,
                             PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+ALTER TABLE `base_spring`.`sys_log`
+    MODIFY COLUMN `cost_time` datetime(3) NULL DEFAULT NULL COMMENT '运行持续时间' AFTER `oper_time`;
 -- ----------------------------
 -- Table structure for sys_menu_resource
 -- ----------------------------
