@@ -54,4 +54,12 @@ public class SysLog extends BaseEntity {
      * 请求方式
      */
     private String method;
+    /**
+     * 请求参数
+     */
+    private String reqParam;
+    /**
+     * 返回参数
+     */
+    private String rspParam;
 }

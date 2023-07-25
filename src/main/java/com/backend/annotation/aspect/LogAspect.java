@@ -4,10 +4,7 @@ import com.backend.annotation.Log;
 import com.backend.domain.entity.sys.SysLog;
 import com.backend.enums.sys.StatusEnum;
 import com.backend.mapper.sys.SysLogMapper;
-import com.backend.utils.AsyncManager;
-import com.backend.utils.SecurityUtils;
-import com.backend.utils.SpringUtils;
-import com.backend.utils.TimeUtils;
+import com.backend.utils.*;
 import com.backend.utils.http.IpUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,10 +46,11 @@ public class LogAspect {
      * 处理完请求后执行
      *
      * @param joinPoint 切点
+     * @param jsonResult 返回体信息
      */
     @AfterReturning(pointcut = "@annotation(com.backend.annotation.Log) || @within(com.backend.annotation.Log)", returning = "jsonResult")
     public void doAfterReturning(JoinPoint joinPoint, Object jsonResult) {
-        handleLog(joinPoint, springUtils.getAnnotation(joinPoint, Log.class), null);
+        handleLog(joinPoint, springUtils.getAnnotation(joinPoint, Log.class), null,jsonResult);
     }
 
     /**
@@ -63,16 +61,27 @@ public class LogAspect {
      */
     @AfterThrowing(value = "@annotation(log)||@within(log)", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Log log, Exception e) {
-        handleLog(joinPoint, springUtils.getAnnotation(joinPoint, Log.class), e);
+        handleLog(joinPoint, springUtils.getAnnotation(joinPoint, Log.class), e,null);
     }
 
-    protected void handleLog(final JoinPoint joinPoint, Log controllerLog, final Exception e) {
+    /**
+     *
+     * @param joinPoint 切点
+     * @param controllerLog 日志注解
+     * @param e 异常信息
+     * @param jsonResult 服务器返回参数
+     */
+    protected void handleLog(final JoinPoint joinPoint, Log controllerLog, final Exception e,final Object jsonResult) {
         try {
             //当遇到排除请求则不记录
             Set<HttpMethod> fieldSet = new HashSet<>(Arrays.asList(controllerLog.excludeMethodType()));
             if (Boolean.TRUE.equals(fieldSet.contains(HttpMethod.resolve(request.getMethod())))) {
                 return;
             }
+            //请求参数
+            String reqParam = JsonMapper.writeValueAsString(joinPoint.getArgs());
+            //返回参数
+            String rspParam = JsonMapper.writeValueAsString(jsonResult);
             // 获取当前的用户名
             String username = SecurityUtils.getUsername();
 
@@ -82,6 +91,8 @@ public class LogAspect {
             // TODO: 2023/5/27 请求的地址
             String ip = IpUtils.getHostIp();
             operLog.setIp(ip);
+            operLog.setReqParam(reqParam);
+            operLog.setRspParam(rspParam);
             operLog.setUrl(StringUtils.substring(request.getRequestURI(), 0, 255));
             if (StringUtils.isNotBlank(username)) {
                 operLog.setOperBy(username);
