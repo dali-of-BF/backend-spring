@@ -22,7 +22,7 @@ public class AddressUtils {
     // 未知地址
     public static final String UNKNOWN = "XX XX";
 
-    public static String getRealAddressByIP(String ip) {
+    public static String getRealAddressByIp(String ip) {
         // 内网不查询
         if (IpUtils.internalIp(ip)) {
             return "内网IP";

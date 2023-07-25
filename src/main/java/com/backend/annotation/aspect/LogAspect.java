@@ -116,7 +116,7 @@ public class LogAspect {
                 @Override
                 public void run() {
                     //获取真实地址
-                    operLog.setOperLocal(AddressUtils.getRealAddressByIP(operLog.getIp()));
+                    operLog.setOperLocal(AddressUtils.getRealAddressByIp(operLog.getIp()));
                     sysLogMapper.insert(operLog);
                 }
             });
