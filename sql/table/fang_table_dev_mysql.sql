@@ -171,7 +171,7 @@ ALTER TABLE `base_spring`.`sys_log`
 
 ALTER TABLE `base_spring`.`sys_log`
     ADD COLUMN `req_param` varchar(1000) NULL COMMENT '请求参数' AFTER `method`,
-    ADD COLUMN `rsp_param` varchar(1000) NULL COMMENT '返回参数' AFTER `req_param`;
+    ADD COLUMN `rsp_param` varchar(2000) NULL COMMENT '返回参数' AFTER `req_param`;
 -- ----------------------------
 -- Table structure for sys_menu_resource
 -- ----------------------------
