@@ -1,6 +1,7 @@
 package com.backend.domain.entity.monitor;
 
 import com.backend.utils.ArithUtils;
+import com.backend.utils.SpringUtils;
 import com.backend.utils.TimeUtils;
 import com.backend.utils.http.IpUtils;
 import io.swagger.annotations.ApiModelProperty;
@@ -98,7 +99,7 @@ public class Server {
     private void setSysInfo() {
         Properties props = System.getProperties();
         sys.setComputerName(IpUtils.getHostName());
-        sys.setComputerIp(IpUtils.getHostIp());
+        sys.setComputerIp(SpringUtils.getBean(IpUtils.class).getHostIp());
         sys.setOsName(props.getProperty("os.name"));
         sys.setOsArch(props.getProperty("os.arch"));
         sys.setUserDir(props.getProperty("user.dir"));

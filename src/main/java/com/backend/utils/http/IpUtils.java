@@ -1,5 +1,9 @@
 package com.backend.utils.http;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -7,11 +11,11 @@ import java.net.UnknownHostException;
  * @author FPH
  * @since 2023年4月13日16:16:53
  */
+@Component
+@RequiredArgsConstructor
 public class IpUtils {
-    /**
-     * 都是静态方法，不会初始化此类，添加一个私有的构造函数
-     */
-    private IpUtils(){}
+
+    private final HttpServletRequest request;
     /**
      * 获取主机名
      *
@@ -34,15 +38,41 @@ public class IpUtils {
      *
      * @return 本地IP地址
      */
-    public static String getHostIp()
+    public  String getHostIp()
     {
-        try
-        {
-            return InetAddress.getLocalHost().getHostAddress();
+        String ipAddress = null;
+        try {
+            ipAddress = request.getHeader("x-forwarded-for");
+            if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
+                ipAddress = request.getHeader("Proxy-Client-IP");
+            }
+            if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
+                ipAddress = request.getHeader("WL-Proxy-Client-IP");
+            }
+            if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
+                ipAddress = request.getRemoteAddr();
+                if (ipAddress.equals("127.0.0.1")) {
+                    // 根据网卡取本机配置的IP
+                    InetAddress inet = null;
+                    try {
+                        inet = InetAddress.getLocalHost();
+                    } catch (UnknownHostException e) {
+                        e.printStackTrace();
+                    }
+                    ipAddress = inet.getHostAddress();
+                }
+            }
+            // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
+            if (ipAddress != null && ipAddress.length() > 15) {
+                // "***.***.***.***".length()= 15
+                if (ipAddress.indexOf(",") > 0) {
+                    ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
+                }
+            }
+        } catch (Exception e) {
+            ipAddress="";
         }
-        catch (UnknownHostException e)
-        {
-        }
-        return "127.0.0.1";
+        // ipAddress = this.getRequest().getRemoteAddr();
+        return ipAddress;
     }
 }

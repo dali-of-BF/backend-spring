@@ -37,6 +37,7 @@ public class LogAspect {
     private final HttpServletRequest request;
     private final SysLogMapper sysLogMapper;
     private final SpringUtils springUtils;
+    private final IpUtils ipUtils;
     @Before(value = "@within(com.backend.annotation.Log) || @annotation(com.backend.annotation.Log)")
     public void boBefore(JoinPoint joinPoint) {
         TIME_THREADLOCAL.set(System.currentTimeMillis());
@@ -88,8 +89,8 @@ public class LogAspect {
             // *========数据库日志=========*//
             SysLog operLog = new SysLog();
             operLog.setStatus(StatusEnum.ENABLE.getValue());
-            // TODO: 2023/5/27 请求的地址
-            String ip = IpUtils.getHostIp();
+
+            String ip = ipUtils.getHostIp();
             operLog.setIp(ip);
             operLog.setReqParam(reqParam);
             operLog.setRspParam(rspParam);
