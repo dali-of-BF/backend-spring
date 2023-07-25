@@ -168,6 +168,10 @@ CREATE TABLE `sys_log`  (
 
 ALTER TABLE `base_spring`.`sys_log`
     MODIFY COLUMN `cost_time` datetime(3) NULL DEFAULT NULL COMMENT '运行持续时间' AFTER `oper_time`;
+
+ALTER TABLE `base_spring`.`sys_log`
+    ADD COLUMN `req_param` varchar(1000) NULL COMMENT '请求参数' AFTER `method`,
+    ADD COLUMN `rsp_param` varchar(1000) NULL COMMENT '返回参数' AFTER `req_param`;
 -- ----------------------------
 -- Table structure for sys_menu_resource
 -- ----------------------------
