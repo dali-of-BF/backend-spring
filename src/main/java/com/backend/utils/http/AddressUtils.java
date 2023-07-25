@@ -29,15 +29,16 @@ public class AddressUtils {
         }
 
         try {
-            String rspStr = HttpUtils.sendGet(IP_URL,"ip=" + ip + "&json=true", Constant.GBK);
+            String rspStr = HttpUtils.sendGet(IP_URL, "ip=" + ip + "&json=true", Constant.GBK);
             if (StringUtils.isEmpty(rspStr)) {
                 log.error("获取地理位置异常 {}", ip);
                 return UNKNOWN;
             }
             JSONObject obj = JSONObject.parseObject(rspStr);
-            String region = obj.getString("pro");
-            String city = obj.getString("city");
-            return String.format("%s %s", region, city);
+            //  String region = obj.getString("pro");
+            //  String city = obj.getString("city");
+            //  return String.format("%s %s", region, city);
+            return obj.getString("addr");
         } catch (Exception e) {
             log.error("获取地理位置异常 {}", ip);
         }
