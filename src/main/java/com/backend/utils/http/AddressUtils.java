@@ -2,6 +2,7 @@ package com.backend.utils.http;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.backend.constants.Constant;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,7 @@ public class AddressUtils {
         }
 
         try {
-            String rspStr = HttpHelper.get(IP_URL+"?ip=" + ip + "&json=true",String.class);
+            String rspStr = HttpUtils.sendGet(IP_URL,"ip=" + ip + "&json=true", Constant.GBK);
             if (StringUtils.isEmpty(rspStr)) {
                 log.error("获取地理位置异常 {}", ip);
                 return UNKNOWN;

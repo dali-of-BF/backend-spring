@@ -114,6 +114,10 @@ public final class Constant {
     public static final String UNDERSCORE = "_";
 
     public static final String UTF_8 = "UTF-8";
+    /**
+     * GBK 字符集
+     */
+    public static final String GBK = "GBK";
 
     public static final String US_ASCII = "US-ASCII";
 
