@@ -62,4 +62,8 @@ public class SysLog extends BaseEntity {
      * 返回参数
      */
     private String rspParam;
+    /**
+     * 真实地址
+     */
+    private String operLocal;
 }

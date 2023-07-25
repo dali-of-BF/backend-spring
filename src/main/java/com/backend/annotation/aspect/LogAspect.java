@@ -5,6 +5,7 @@ import com.backend.domain.entity.sys.SysLog;
 import com.backend.enums.sys.StatusEnum;
 import com.backend.mapper.sys.SysLogMapper;
 import com.backend.utils.*;
+import com.backend.utils.http.AddressUtils;
 import com.backend.utils.http.IpUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,6 @@ public class LogAspect {
     private final HttpServletRequest request;
     private final SysLogMapper sysLogMapper;
     private final SpringUtils springUtils;
-    private final IpUtils ipUtils;
     @Before(value = "@within(com.backend.annotation.Log) || @annotation(com.backend.annotation.Log)")
     public void boBefore(JoinPoint joinPoint) {
         TIME_THREADLOCAL.set(System.currentTimeMillis());
@@ -90,7 +90,7 @@ public class LogAspect {
             SysLog operLog = new SysLog();
             operLog.setStatus(StatusEnum.ENABLE.getValue());
 
-            String ip = ipUtils.getHostIp();
+            String ip = IpUtils.getIpAddr(request);
             operLog.setIp(ip);
             operLog.setReqParam(reqParam);
             operLog.setRspParam(rspParam);
@@ -115,6 +115,8 @@ public class LogAspect {
             AsyncManager.me().execute(new TimerTask() {
                 @Override
                 public void run() {
+                    //获取真实地址
+                    operLog.setOperLocal(AddressUtils.getRealAddressByIP(operLog.getIp()));
                     sysLogMapper.insert(operLog);
                 }
             });
