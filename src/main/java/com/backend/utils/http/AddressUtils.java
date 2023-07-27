@@ -38,7 +38,8 @@ public class AddressUtils {
             //  String region = obj.getString("pro");
             //  String city = obj.getString("city");
             //  return String.format("%s %s", region, city);
-            return obj.getString("addr");
+            String addr = obj.getString("addr");
+            return StringUtils.isBlank(addr)?"":addr.trim();
         } catch (Exception e) {
             log.error("获取地理位置异常 {}", ip);
         }
