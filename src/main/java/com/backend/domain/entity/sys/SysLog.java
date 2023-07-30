@@ -40,7 +40,7 @@ public class SysLog extends BaseEntity {
     /**
      * 运行持续时间
      */
-    @JsonFormat(timezone = "Asia/Shanghai",pattern = "HH:mm:ss.SSS")
+    @JsonFormat(timezone = "Asia/Shanghai",pattern = "ss.SSS")
     private Date costTime;
     /**
      * 操作人
