@@ -172,7 +172,9 @@ ALTER TABLE `base_spring`.`sys_log`
 ALTER TABLE `base_spring`.`sys_log`
     ADD COLUMN `req_param` json NULL COMMENT '请求参数' AFTER `method`,
     ADD COLUMN `rsp_param` json NULL COMMENT '返回参数' AFTER `req_param`,
-    ADD COLUMN `oper_local` varchar(100) NULL COMMENT '真实地址' AFTER `rsp_param`;
+    ADD COLUMN `oper_local` varchar(100) NULL COMMENT '真实地址' AFTER `rsp_param`,
+    ADD COLUMN `operating_system` varchar(50) NULL COMMENT '操作系统' AFTER `oper_local`,
+    ADD COLUMN `browser` varchar(50) NULL COMMENT '浏览器' AFTER `operating_system`;
 
 -- ----------------------------
 -- Table structure for sys_menu_resource

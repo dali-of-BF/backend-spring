@@ -66,4 +66,12 @@ public class SysLog extends BaseEntity {
      * 真实地址
      */
     private String operLocal;
+    /**
+     * 操作系统
+     */
+    private String operatingSystem;
+    /**
+     * 浏览器
+     */
+    private String browser;
 }

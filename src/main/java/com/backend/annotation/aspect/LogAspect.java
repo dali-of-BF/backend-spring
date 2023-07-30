@@ -4,9 +4,11 @@ import com.backend.annotation.Log;
 import com.backend.domain.entity.sys.SysLog;
 import com.backend.enums.sys.StatusEnum;
 import com.backend.mapper.sys.SysLogMapper;
+import com.backend.service.userAgent.UserAgentService;
 import com.backend.utils.*;
 import com.backend.utils.http.AddressUtils;
 import com.backend.utils.http.IpUtils;
+import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -38,6 +40,8 @@ public class LogAspect {
     private final HttpServletRequest request;
     private final SysLogMapper sysLogMapper;
     private final SpringUtils springUtils;
+    private final UserAgentService userAgentService;
+
     @Before(value = "@within(com.backend.annotation.Log) || @annotation(com.backend.annotation.Log)")
     public void boBefore(JoinPoint joinPoint) {
         TIME_THREADLOCAL.set(System.currentTimeMillis());
@@ -111,6 +115,10 @@ public class LogAspect {
             operLog.setCostTime(TimeUtils.toDate(System.currentTimeMillis() - TIME_THREADLOCAL.get(), TimeUtils.TIME_SSS));
             //操作时间
             operLog.setOperTime(TimeUtils.toDate(TIME_THREADLOCAL.get(),TimeUtils.DATE_TIME_FORMAT));
+            //获取用户操作系统信息
+            UserAgent agent = userAgentService.getAgent(request);
+            operLog.setBrowser(agent.getBrowser().getName());
+            operLog.setOperatingSystem(agent.getOperatingSystem().getName());
             // 保存数据库
             AsyncManager.me().execute(new TimerTask() {
                 @Override
