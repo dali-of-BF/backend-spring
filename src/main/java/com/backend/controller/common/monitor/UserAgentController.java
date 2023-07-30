@@ -4,7 +4,6 @@ import com.backend.annotation.Log;
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
 import com.backend.service.userAgent.UserAgentService;
-import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.UserAgent;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,17 +33,5 @@ public class UserAgentController {
     @ApiOperation("获取用户Agent")
     public Result<UserAgent> getAgent(HttpServletRequest request){
         return Result.success(userAgentService.getAgent(request),"");
-    }
-
-    @GetMapping("/get-browser")
-    @ApiOperation("获取浏览器对象")
-    public Result<Browser> getBrowserDetail(HttpServletRequest request){
-        return Result.success(userAgentService.getBrowserDetail(request));
-    }
-
-    @GetMapping("/get-operation-system")
-    @ApiOperation("获取操作系统对象")
-    public Result<Browser> getOperationSystem(HttpServletRequest request){
-        return Result.success(userAgentService.getOperationSystem(request));
     }
 }
