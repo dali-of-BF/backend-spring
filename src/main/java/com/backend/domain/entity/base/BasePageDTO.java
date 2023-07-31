@@ -30,6 +30,6 @@ public class BasePageDTO implements Serializable {
 
     public BasePageDTO(){
         this.page=1L;
-        this.size=-1L;
+        this.size=10L;
     }
 }
