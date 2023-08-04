@@ -8,7 +8,6 @@ import com.backend.domain.entity.base.BasePageDTO;
 import com.backend.domain.entity.sys.SysResource;
 import com.backend.service.sys.SysSourceService;
 import com.backend.utils.ClassUtils;
-import com.backend.utils.RedisUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -17,13 +16,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author FPH
@@ -38,24 +35,12 @@ import java.util.Set;
 public class ResourceController {
 
     private final SysSourceService sysSourceService;
-    private final RedisUtils redisUtils;
 
     @GetMapping("/get-resources")
     @ApiOperation("通过swagger获取系统接口集合")
     public Result<List<SysResource>> getResourceByGroupName(String groupName) throws IllegalAccessException {
         return Result.success(sysSourceService.getResourceByGroupNameList(StringUtils.isNotBlank(groupName) ?
                 Collections.singletonList(groupName):ClassUtils.getAllFieldValue(SwaggerGroupConstants.class))) ;
-    }
-
-    @GetMapping("/get-resources-by-redis")
-    @ApiOperation("获取资源表信息，先从redis开始")
-    public Result<Set<SysResource>> getResourceByRedis() {
-        return Result.success(sysSourceService.getResource()) ;
-    }
-    @PostMapping("/do-refresh-resource")
-    @ApiOperation("扫描接口并且更新资源表与redis")
-    public Result<List<SysResource>> doRefreshResource() throws IllegalAccessException {
-        return Result.success(sysSourceService.doRefreshResource()) ;
     }
 
     @GetMapping("/page")

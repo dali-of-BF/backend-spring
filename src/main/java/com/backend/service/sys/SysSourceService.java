@@ -1,5 +1,6 @@
 package com.backend.service.sys;
 
+import com.backend.annotation.Log;
 import com.backend.constants.RedisConstants;
 import com.backend.constants.SwaggerGroupConstants;
 import com.backend.domain.entity.sys.SysResource;
@@ -125,6 +126,7 @@ public class SysSourceService extends ServiceImpl<SysResourceMapper, SysResource
      *                  //     * @param ignorePrefix 忽略的uri前缀集合
      * @return 资源信息
      */
+    @Log
     public List<SysResource> getResourceByGroupName(String groupName) {
         List<SysResource> result = Lists.newArrayList();
         Documentation documentation = documentationCache.documentationByGroup(groupName);
