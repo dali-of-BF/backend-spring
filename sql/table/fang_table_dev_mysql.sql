@@ -108,7 +108,8 @@ ALTER TABLE `base_spring`.`sys_menu`
     ADD COLUMN `router` varchar(100) NULL COMMENT '路由' AFTER `sort`;
 
 ALTER TABLE `base_spring`.`sys_menu`
-    ADD COLUMN `permission` varchar(100) NULL COMMENT '权限值' AFTER `router`;
+    ADD COLUMN `permission` varchar(100) NULL COMMENT '权限值' AFTER `router`,
+    ADD COLUMN `app_id` varchar(10) NULL COMMENT '所属系统' AFTER `permission`;
 
 DROP TABLE IF EXISTS `sys_resource`;
 CREATE TABLE `base_spring`.`sys_resource`  (

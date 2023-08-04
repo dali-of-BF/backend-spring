@@ -25,7 +25,6 @@ import java.io.Serializable;
 @TableName("sys_menu")
 public class SysMenu extends BaseEntity implements Serializable {
 
-
     /**
     * 菜单名称
     */
@@ -77,4 +76,8 @@ public class SysMenu extends BaseEntity implements Serializable {
      * 权限值
      */
     private String permission;
+    /**
+     * 所属系统
+     */
+    private String appId;
 }
