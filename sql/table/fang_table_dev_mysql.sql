@@ -111,6 +111,9 @@ ALTER TABLE `base_spring`.`sys_menu`
     ADD COLUMN `permission` varchar(100) NULL COMMENT '权限值' AFTER `router`,
     ADD COLUMN `app_id` varchar(10) NULL COMMENT '所属系统' AFTER `permission`;
 
+ALTER TABLE `base_spring`.`sys_menu`
+    MODIFY COLUMN `parent_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '父级id' AFTER `deleted`;
+
 DROP TABLE IF EXISTS `sys_resource`;
 CREATE TABLE `base_spring`.`sys_resource`  (
                                            `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
