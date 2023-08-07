@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping(ApiPathConstants.COM_MENU)
 @RequiredArgsConstructor
 @Api(tags = "菜单重构控制器")
-@Log
+@Log(excludeMethodType = {})
 public class MenuFlushController {
     private final SysMenuService sysMenuService;
     @GetMapping("/refactor-menu")
