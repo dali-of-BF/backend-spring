@@ -25,7 +25,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(ApiPathConstants.SYS_ACCOUNT)
 @RequiredArgsConstructor
-@Api(tags = "系统用户管理")
+@Api(tags = "用户管理")
 @Log
 public class SysAccountController {
     private final SysAccountService sysAccountService;
