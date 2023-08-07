@@ -17,7 +17,6 @@ import java.lang.annotation.*;
 public @interface Log {
     /**
      * 排除请求，默认get请求不记录至日志
-     * @return
      */
     HttpMethod[] excludeMethodType() default {HttpMethod.GET};
 }
