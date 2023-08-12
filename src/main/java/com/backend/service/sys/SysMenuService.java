@@ -2,15 +2,19 @@ package com.backend.service.sys;
 
 import com.backend.domain.entity.sys.SysMenu;
 import com.backend.domain.entity.sys.SysResource;
+import com.backend.domain.vo.pc.MenuTreeVO;
 import com.backend.enums.sys.AppIdEnum;
 import com.backend.enums.sys.MenuTypeEnum;
 import com.backend.enums.sys.StatusEnum;
 import com.backend.mapper.sys.SysMenuMapper;
+import com.backend.utils.JsonMapper;
+import com.backend.utils.SecurityUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -99,5 +103,42 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
         });
         this.saveBatch(menuList);
         return menuList;
+    }
+
+    /**
+     * 获取菜单树结构
+     * @return
+     */
+    public List<MenuTreeVO> getMenuTree(){
+        List<SysMenu> menuList = this.list(new LambdaQueryWrapper<SysMenu>().eq(SysMenu::getAppId, SecurityUtils.getAppId()));
+        List<MenuTreeVO> menuTreeVO = JsonMapper.covertList(menuList, MenuTreeVO.class);
+        return getChildMenuTree(menuTreeVO,MenuTypeEnum.initMenuType(),"0");
+    }
+
+    /**
+     * 递归获取菜单
+     * @param menuList
+     * @param menuType
+     * @param parentId
+     * @return
+     */
+    public List<MenuTreeVO> getChildMenuTree(List<MenuTreeVO> menuList,MenuTypeEnum menuType,String parentId){
+        if(Objects.isNull(menuType)||CollectionUtils.isEmpty(menuList)){
+            return Lists.newArrayList();
+        }
+        //通过级别和父节点获取集合并返回
+        List<MenuTreeVO> sysMenuStream = menuList.stream()
+                .filter(i -> menuType.getValue().equals(i.getMenuLevel()))
+                .filter(i -> parentId.equals(i.getParentId()))
+                .sorted(Comparator.comparing(MenuTreeVO::getSort))
+                .collect(Collectors.toList());
+        sysMenuStream.forEach(i->{
+            //查询下一级的且父节点为此节点
+            List<MenuTreeVO> childMenuTree = this.getChildMenuTree(menuList, MenuTypeEnum.nextMenuType(menuType), i.getParentId());
+            if (CollectionUtils.isNotEmpty(childMenuTree)) {
+                i.setChildMenuList(childMenuTree);
+            }
+        });
+        return sysMenuStream;
     }
 }

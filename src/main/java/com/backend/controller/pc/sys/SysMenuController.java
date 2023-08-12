@@ -4,6 +4,7 @@ import com.backend.annotation.Log;
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
 import com.backend.domain.entity.sys.SysMenu;
+import com.backend.domain.vo.pc.MenuTreeVO;
 import com.backend.service.sys.SysMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,9 +26,9 @@ public class SysMenuController {
     private final SysMenuService sysMenuService;
 
     @GetMapping("list")
-    @ApiOperation("获取分页集合（没有根据角色权限划分）")
-    public Result<List<SysMenu>> list(){
-        return Result.success(sysMenuService.list());
+    @ApiOperation("获取分页集合")
+    public Result<List<MenuTreeVO>> list(){
+        return Result.success(sysMenuService.getMenuTree());
     }
     @PostMapping("save")
     @ApiOperation("保存菜单")

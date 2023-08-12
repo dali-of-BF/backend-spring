@@ -1,8 +1,11 @@
 package com.backend.domain.vo.pc;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * @author FPH
@@ -13,19 +16,20 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class MenuTreeVO {
     private String id;
     private String menuName;
     private Integer status;
     private String parentId;
-    private String menuLevel;
-    private String menuType;
-    private String sort;
+    private Integer menuLevel;
+    private Integer menuType;
+    private Integer sort;
     private String router;
     private String appId;
     private String permission;
     /**
      * 菜单孩子节点
      */
-    private MenuTreeVO childMenuList;
+    private List<MenuTreeVO> childMenuList;
 }
