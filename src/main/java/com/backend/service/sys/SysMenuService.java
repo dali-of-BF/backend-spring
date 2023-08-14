@@ -134,7 +134,7 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
                 .collect(Collectors.toList());
         sysMenuStream.forEach(i->{
             //查询下一级的且父节点为此节点
-            List<MenuTreeVO> childMenuTree = this.getChildMenuTree(menuList, MenuTypeEnum.nextMenuType(menuType), i.getParentId());
+            List<MenuTreeVO> childMenuTree = this.getChildMenuTree(menuList, MenuTypeEnum.nextMenuType(menuType), i.getId());
             if (CollectionUtils.isNotEmpty(childMenuTree)) {
                 i.setChildMenuList(childMenuTree);
             }
