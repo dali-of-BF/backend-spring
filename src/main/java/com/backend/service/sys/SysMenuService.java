@@ -107,7 +107,6 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
 
     /**
      * 获取菜单树结构
-     * @return
      */
     public List<MenuTreeVO> getMenuTree(){
         List<SysMenu> menuList = this.list(new LambdaQueryWrapper<SysMenu>().eq(SysMenu::getAppId, SecurityUtils.getAppId()));
