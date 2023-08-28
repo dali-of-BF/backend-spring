@@ -15,6 +15,7 @@ public class ApiPathConstants {
     public static final String MONITOR = COMMON + "/monitor";
     public static final String AUTH="/auth";
     public static final String SYS_ACCOUNT=SYS+"/account";
+    public static final String SYS_DOU_YIN=SYS+"/dou-yin";
     public static final String SYS_MENU=SYS+"/menu";
     public static final String COM_MENU=COMMON+"/menu";
     public static final String SYS_LOG=SYS+"/log";
