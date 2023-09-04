@@ -234,7 +234,7 @@
             <version>1.16.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.github.binarywang/wx-java -->
-        <!--        微信开发SDK-->
+        <!--        微信支付SDK 微信小程序SDK 微信开放平台 公众号（包括订阅号和服务号） 企业号/企业微信-->
         <dependency>
             <groupId>com.github.binarywang</groupId>
             <artifactId>wx-java</artifactId>
