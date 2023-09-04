@@ -40,29 +40,29 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <!--oauth2-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.security.oauth</groupId>-->
-<!--            <artifactId>spring-security-oauth2</artifactId>-->
-<!--            <version>2.3.5.RELEASE</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.security.oauth</groupId>-->
+        <!--            <artifactId>spring-security-oauth2</artifactId>-->
+        <!--            <version>2.3.5.RELEASE</version>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <exclusions>
-<!--                排除tomcat服务器-->
+                <!--                排除tomcat服务器-->
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-start-tomcat</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
-<!--        引入Undertow容器技术-->
+        <!--        引入Undertow容器技术-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
-<!--        AOP-->
+        <!--        AOP-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
@@ -114,10 +114,10 @@
         </dependency>
 
         <!--postgresql驱动包-->
-<!--        <dependency>-->
-<!--            <groupId>org.postgresql</groupId>-->
-<!--            <artifactId>postgresql</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.postgresql</groupId>-->
+        <!--            <artifactId>postgresql</artifactId>-->
+        <!--        </dependency>-->
 
 
         <dependency>
@@ -200,7 +200,7 @@
             <artifactId>hutool-all</artifactId>
             <version>5.8.12</version>
         </dependency>
-<!--        谷歌包-->
+        <!--        谷歌包-->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -213,7 +213,7 @@
             <artifactId>oshi-core</artifactId>
             <version>6.4.0</version>
         </dependency>
-<!--        热部署-->
+        <!--        热部署-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -227,13 +227,20 @@
             <version>3.23.3.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
-<!--        网页爬虫-->
+        <!--        网页爬虫-->
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.16.1</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/com.github.binarywang/wx-java -->
+        <!--        微信开发SDK-->
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>wx-java</artifactId>
+            <version>4.5.0</version>
+            <type>pom</type>
+        </dependency>
 
 
     </dependencies>
