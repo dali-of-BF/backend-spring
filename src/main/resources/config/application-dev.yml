@@ -85,5 +85,5 @@ application:
     #如果不加引号，则代码会将其读取为true or false
     enable-resource-init: ${ENABLE_RESOURCE_INIT:no}
   wechat:
-    app-id: ${WX_APP_ID:xxx}
-    app-secret: ${WX_APP_SECRET:xxx}
+    app-id: ${WX_APP_ID:wx2de9f32ccb8372e5}
+    app-secret: ${WX_APP_SECRET:f4da78fff2a88c63cb7d8a2f9f928896}

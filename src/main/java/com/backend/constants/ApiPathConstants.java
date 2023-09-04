@@ -8,6 +8,7 @@ package com.backend.constants;
 public class ApiPathConstants {
     //PC端接口
     public static final String PC="/pc";
+    public static final String WX="/wx";
     //公共接口
     public static final String COMMON="/common";
     public static final String SYS= PC + "/sys";
@@ -22,6 +23,7 @@ public class ApiPathConstants {
     public static final String TEST="/test";
 
     public static final String TEST_REDIS =TEST+"/redis";
+    public static final String TEST_WX =TEST+WX;
     public static final String USER_AGENT=COMMON + "/user-agent";
     public static final String RESOURCE=COMMON + "/resource";
 
