@@ -13,6 +13,7 @@ public class ApplicationProperties {
 
     private final Security security = new Security();
     private final Resource resource = new Resource();
+    private final Wechat wechat = new Wechat();
 
 
     @Data
@@ -50,5 +51,17 @@ public class ApplicationProperties {
          * 项目启动时是否初始化资源表 yes开启 no不开启
          */
         private String enableResourceInit;
+    }
+
+    @Data
+    public static class Wechat{
+        /**
+         * 微信小程序APPID
+         */
+       private String appId;
+        /**
+         * 微信小程序密钥
+         */
+       private String appSecret;
     }
 }

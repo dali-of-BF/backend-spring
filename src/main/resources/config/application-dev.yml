@@ -74,13 +74,16 @@ huawei:
 
 application:
   security:
-    base64Secret: MDVlZmQxYTdlNzc4YzQ1NzdjYWIxZTdmYTAyMmM4NGQxODFlY2JmODczZjY4YzQ2YzE3Y2IyZjFjNWMxODQxYTQ0NGJhMWQzZDBhZmZhODYyNzRjNDA5OGM2YmY5YWQyNzNiMmY3YjMxZjE2YTRjODRhNjEyZjFkZDgzYTNlMjI=
+    base64-secret: MDVlZmQxYTdlNzc4YzQ1NzdjYWIxZTdmYTAyMmM4NGQxODFlY2JmODczZjY4YzQ2YzE3Y2IyZjFjNWMxODQxYTQ0NGJhMWQzZDBhZmZhODYyNzRjNDA5OGM2YmY5YWQyNzNiMmY3YjMxZjE2YTRjODRhNjEyZjFkZDgzYTNlMjI=
     tokenSignKey: bcdedit
-    expirationTime_rememberMe: 720000000
+    expiration-time-remember-me: 720000000
     #两小时过期
-    expirationTime_no_rememberMe: 7200000
-    tokenPrefix: Bearer
-    defaultPassword: 123456
+    expiration-time-no-remember-me: 7200000
+    token-prefix: Bearer
+    default-password: 123456
   resource:
     #如果不加引号，则代码会将其读取为true or false
-    enableResourceInit: ${ENABLE_RESOURCE_INIT:"no"}
+    enable-resource-init: ${ENABLE_RESOURCE_INIT:no}
+  wechat:
+    app-id: ${WX_APP_ID:xxx}
+    app-secret: ${WX_APP_SECRET:xxx}
