@@ -189,5 +189,6 @@ public final class Constant {
 
     public static final String GMT8 = "GMT+8";
     public static final String REDIS_BLOCK = "::";
+    public static final String JSON = "json";
 
 }

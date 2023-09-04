@@ -1,16 +1,21 @@
 package com.backend.controller.test;
 
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
+import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
-import com.backend.constants.Constant;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.mp.api.WxMpService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import me.chanjar.weixin.common.error.WxErrorException;
+import org.springframework.web.bind.annotation.*;
 
-import java.net.URLEncoder;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author FPH
@@ -23,18 +28,30 @@ import java.net.URLEncoder;
 @Api(tags = "微信小程序测试类")
 @Slf4j
 public class WxTestController {
-    private final WxMpService wxMpService;
 
-    @GetMapping("/authorize")
-    public String authorize(String returnUrl){
-        String url = "https://qianguxuanyu.cn/backend/test/wx/userinfo";
-        String encode = null;
-        try {
-            encode = URLEncoder.encode(returnUrl, Constant.UTF8);
-        }catch (Exception e){
-            log.error(e.getMessage());
-        }
-//        String redirectUrl = wxMpService.getOAuth2Service();
-        return null;
+    private final WxMaService wxMaService;
+
+    @ApiOperation("获取微信授权信息")
+    @ApiImplicitParam(name = "code",value = "前端授权登录后传来的code", required = true,paramType = "query")
+    @PostMapping(value = "/wechatSession")
+    public Result<WxMaJscode2SessionResult> wechatSession(@RequestParam String code) throws WxErrorException {
+        //获取openId、unionid、session_key
+        return Result.success(wxMaService.getUserService().getSessionInfo(code));
     }
+
+
+    @ApiOperation("小程序手机号登录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "sessionKey", value = "sessionKey", paramType = "query", dataType = "string", required = true),
+            @ApiImplicitParam(name = "encryptedData", value = "加密串", paramType = "query", dataType = "string", required = true),
+            @ApiImplicitParam(name = "iv", value = "偏移量", paramType = "query", dataType = "string", required = true)
+    })
+    @PostMapping(value = "/wechatLogin")
+    @ResponseBody
+    public Result<WxMaJscode2SessionResult> wechatLogin(HttpServletRequest request,
+                                                        @RequestParam @NotBlank(message = "sessionKey不能为空") String code) throws WxErrorException {
+        WxMaPhoneNumberInfo phoneInfo = wxMaService.getUserService().getPhoneNoInfo(code);
+        return Result.success(phoneInfo.getPurePhoneNumber());
+    }
+
 }
