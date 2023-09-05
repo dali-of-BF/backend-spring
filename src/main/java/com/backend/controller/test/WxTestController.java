@@ -3,19 +3,19 @@ package com.backend.controller.test;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
+import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
+import cn.binarywang.wx.miniapp.util.WxMaConfigHolder;
 import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
+import com.backend.exception.BusinessException;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotBlank;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author FPH
@@ -31,27 +31,76 @@ public class WxTestController {
 
     private final WxMaService wxMaService;
 
-    @ApiOperation("获取微信授权信息")
-    @ApiImplicitParam(name = "code",value = "前端授权登录后传来的code", required = true,paramType = "query")
-    @PostMapping(value = "/wechatSession")
-    public Result<WxMaJscode2SessionResult> wechatSession(@RequestParam String code) throws WxErrorException {
-        //获取openId、unionid、session_key
-        return Result.success(wxMaService.getUserService().getSessionInfo(code));
+    /**
+     * 登陆接口
+     */
+    @GetMapping("/login")
+    public Result<WxMaJscode2SessionResult> login(String appid, String code) {
+        if (StringUtils.isBlank(code)) {
+            return Result.error("empty jscode");
+        }
+        if (!wxMaService.switchover(appid)) {
+            throw new IllegalArgumentException(String.format("未找到对应appid=[%s]的配置，请核实！", appid));
+        }
+        try {
+            WxMaJscode2SessionResult session = wxMaService.getUserService().getSessionInfo(code);
+            log.info(session.getSessionKey());
+            log.info(session.getOpenid());
+            //TODO 可以增加自己的逻辑，关联业务相关数据
+            return Result.success(session);
+        } catch (WxErrorException e) {
+            log.error(e.getMessage(), e);
+            return Result.error(e.getMessage());
+        } finally {
+            WxMaConfigHolder.remove();//清理ThreadLocal
+        }
     }
 
+    /**
+     * <pre>
+     * 获取用户信息接口
+     * </pre>
+     */
+    @GetMapping("/info")
+    public Result<WxMaUserInfo> info(String appid, String sessionKey,
+                       String signature, String rawData, String encryptedData, String iv) {
+        if (!wxMaService.switchover(appid)) {
+            throw new IllegalArgumentException(String.format("未找到对应appid=[%s]的配置，请核实！", appid));
+        }
 
-    @ApiOperation("小程序手机号登录")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "sessionKey", value = "sessionKey", paramType = "query", dataType = "string", required = true),
-            @ApiImplicitParam(name = "encryptedData", value = "加密串", paramType = "query", dataType = "string", required = true),
-            @ApiImplicitParam(name = "iv", value = "偏移量", paramType = "query", dataType = "string", required = true)
-    })
-    @PostMapping(value = "/wechatLogin")
-    @ResponseBody
-    public Result<WxMaJscode2SessionResult> wechatLogin(HttpServletRequest request,
-                                                        @RequestParam @NotBlank(message = "sessionKey不能为空") String code) throws WxErrorException {
-        WxMaPhoneNumberInfo phoneInfo = wxMaService.getUserService().getPhoneNoInfo(code);
-        return Result.success(phoneInfo.getPurePhoneNumber());
+        // 用户信息校验
+        if (!wxMaService.getUserService().checkUserInfo(sessionKey, rawData, signature)) {
+            WxMaConfigHolder.remove();//清理ThreadLocal
+            return Result.error("user check failed");
+        }
+
+        // 解密用户信息
+        WxMaUserInfo userInfo = wxMaService.getUserService().getUserInfo(sessionKey, encryptedData, iv);
+        WxMaConfigHolder.remove();//清理ThreadLocal
+        return Result.success(userInfo);
+    }
+
+    /**
+     * <pre>
+     * 获取用户绑定手机号信息
+     * </pre>
+     */
+    @GetMapping("/phone")
+    public Result<WxMaPhoneNumberInfo> phone(String appid, String sessionKey, String signature,
+                        String rawData, String encryptedData, String iv) {
+        if (!wxMaService.switchover(appid)) {
+            throw new BusinessException(String.format("未找到对应appid=[%s]的配置，请核实！", appid));
+        }
+
+        // 用户信息校验
+        if (!wxMaService.getUserService().checkUserInfo(sessionKey, rawData, signature)) {
+            WxMaConfigHolder.remove();//清理ThreadLocal
+            return Result.error("user check failed");
+        }
+        // 解密
+        WxMaPhoneNumberInfo phoneNoInfo = wxMaService.getUserService().getPhoneNoInfo(sessionKey, encryptedData, iv);
+        WxMaConfigHolder.remove();//清理ThreadLocal
+        return Result.success(phoneNoInfo);
     }
 
 }
