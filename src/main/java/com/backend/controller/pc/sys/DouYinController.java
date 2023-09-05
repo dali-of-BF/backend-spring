@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(ApiPathConstants.SYS_DOU_YIN)
 @RequiredArgsConstructor
+@Deprecated
 @Api(tags = "抖音")
 @Log(excludeMethodType={})
 public class DouYinController {
