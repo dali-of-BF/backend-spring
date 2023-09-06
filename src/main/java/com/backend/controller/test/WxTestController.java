@@ -9,6 +9,7 @@ import com.backend.common.result.Result;
 import com.backend.constants.ApiPathConstants;
 import com.backend.exception.BusinessException;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -35,6 +36,7 @@ public class WxTestController {
      * 登陆接口
      */
     @GetMapping("/login")
+    @ApiOperation("登陆接口")
     public Result<WxMaJscode2SessionResult> login(String appid, String code) {
         if (StringUtils.isBlank(code)) {
             return Result.error("empty jscode");
@@ -62,6 +64,7 @@ public class WxTestController {
      * </pre>
      */
     @GetMapping("/info")
+    @ApiOperation("获取用户信息接口")
     public Result<WxMaUserInfo> info(String appid, String sessionKey,
                        String signature, String rawData, String encryptedData, String iv) {
         if (!wxMaService.switchover(appid)) {
@@ -86,6 +89,7 @@ public class WxTestController {
      * </pre>
      */
     @GetMapping("/phone")
+    @ApiOperation("获取用户绑定手机号信息")
     public Result<WxMaPhoneNumberInfo> phone(String appid, String sessionKey, String signature,
                         String rawData, String encryptedData, String iv) {
         if (!wxMaService.switchover(appid)) {
