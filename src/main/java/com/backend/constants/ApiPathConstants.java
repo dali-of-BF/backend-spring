@@ -23,6 +23,7 @@ public class ApiPathConstants {
     public static final String TEST="/test";
 
     public static final String TEST_REDIS =TEST+"/redis";
+    public static final String TEST_CONFIG =TEST+"/config";
     public static final String TEST_WX =TEST+WX;
     public static final String USER_AGENT=COMMON + "/user-agent";
     public static final String RESOURCE=COMMON + "/resource";

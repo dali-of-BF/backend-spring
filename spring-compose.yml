@@ -17,4 +17,6 @@ services:
         HW_AK: ${HW_AK}
         HW_SK: ${HW_SK}
         ENABLE_RESOURCE_INIT: ${ENABLE_RESOURCE_INIT}
+        WX_APP_ID: ${WX_APP_ID}
+        WX_APP_SECRET: ${WX_APP_SECRET}
     restart: always
