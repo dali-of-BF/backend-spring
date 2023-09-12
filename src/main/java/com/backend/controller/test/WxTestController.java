@@ -6,6 +6,7 @@ import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import cn.binarywang.wx.miniapp.util.WxMaConfigHolder;
 import com.backend.common.result.Result;
+import com.backend.config.ApplicationProperties;
 import com.backend.constants.ApiPathConstants;
 import com.backend.exception.BusinessException;
 import io.swagger.annotations.Api;
@@ -31,16 +32,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class WxTestController {
 
     private final WxMaService wxMaService;
+    private final ApplicationProperties applicationProperties;
 
     /**
      * 登陆接口
      */
     @GetMapping("/login")
     @ApiOperation("登陆接口")
-    public Result<WxMaJscode2SessionResult> login(String appid, String code) {
+    public Result<WxMaJscode2SessionResult> login(String code) {
         if (StringUtils.isBlank(code)) {
             return Result.error("empty jscode");
         }
+        String appid = applicationProperties.getWechat().getAppId();
         if (!wxMaService.switchover(appid)) {
             throw new IllegalArgumentException(String.format("未找到对应appid=[%s]的配置，请核实！", appid));
         }
